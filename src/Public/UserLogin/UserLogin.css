@@ -1,0 +1,70 @@
+.loginPage{
+    width: 100%;
+    min-height: 90vh;
+    background: linear-gradient(to bottom, rgb(208, 187, 255) , rgb(216, 213, 255));
+}
+
+.loginContainer{
+    width: 90%;
+    min-height: 90vh;
+    max-width: 35rem;
+    border-style: solid;
+    margin: auto;
+    text-align: center;
+    color: white;
+    background-color: rgba(38, 52, 130, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titleLogin{
+    margin: 4rem 0;
+}
+
+.loginForm label{
+    display: block;
+    text-align: left;
+}
+
+.loginForm{
+    width: 70%;
+    font-size: 1.2rem;
+    min-width: 15rem;
+    max-width: 25rem;
+}
+
+input[name = "LoginMyKad"]{
+    display: block;
+    width: 100%;
+    height: 2rem;
+    font-size: 1.2rem;
+    margin-top: 0.8rem;
+}
+
+.otherLinks{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.otherlink{
+    color: white;
+}
+
+.otherlink:hover{
+    color: rgb(4, 4, 63);
+}
+
+.loginForm button[type = "Submit"]{
+    display: block;
+    margin: 2rem auto;
+    padding: 0.5rem;
+    background-color: rgb(180, 191, 255);
+    border-radius: 15px;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+}

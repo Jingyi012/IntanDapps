@@ -1,0 +1,80 @@
+.daftarheader{
+    display: flex;
+    align-items: center;
+    padding: 25px 0 25px 0;
+}
+
+.backbutton{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    margin-left: 10px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.backicon{
+    width: 100%;
+}
+
+.informasiprogram{
+    display: grid;
+    grid-template-columns: 175px max-content auto;
+    justify-items: left;
+}
+
+.informasiprogramtitle{
+background-color: #3F51B5;
+color: white;
+display: flex;
+padding: 20px 0 20px 50px;
+}
+
+.informasicontent{
+    margin-left: 30px;
+}
+
+.programtitle{
+    margin: 20px 0 20px 50px;
+}
+
+.smallback{
+    font-size: 10px;
+    margin-top: 15px;
+    margin-left: 30px;
+}
+
+.statussijil{
+    width: 10%;
+}
+
+.kehadiran{
+    width: 8%;
+}
+
+.sijilaktiviti{
+    width: 250px;
+}
+
+.sijill{
+    display: flex;
+    gap: 20px;
+    border: none;
+}
+
+.subtitle{
+    font-size: 1.5rem;
+    margin: 40px 0px 20px 0px;
+}
+
+.informasibox{
+    border: 1px solid #3F51B5;
+}
+
+.daftaradmin{
+    display: flex;
+    margin: 0px;
+    padding-left: 50px;
+}

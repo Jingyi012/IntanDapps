@@ -1,0 +1,24 @@
+.footerContainer{
+    color: rgb(227, 227, 227);
+    background-color: #3F51B5;
+    width: 100%;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.footerContent{
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    
+    list-style: none;
+}

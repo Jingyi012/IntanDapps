@@ -1,0 +1,43 @@
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,th,td{
+    border: 3px solid #DFDFDF;
+    font-size: 20px;
+}
+
+td{
+    text-align: left;
+    padding: 10px 0 10px 20px;
+    font-size: 15px;
+}
+
+th{
+    color: white;
+    font-size: 15px;
+    padding: 10px 0 10px 20px;
+    text-align: left;
+    background-color: #3F51B5;
+}
+
+.aktiviti{
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    border: 0;
+    text-decoration: underline;
+}
+
+.nomykad{
+    width: 10%;
+}
+
+.pesertaaktiviti{
+    width: 18%;
+}
+
+.row1{
+    background-color: rgb(241, 241, 241);
+}

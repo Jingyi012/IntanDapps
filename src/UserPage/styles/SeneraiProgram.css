@@ -1,0 +1,92 @@
+.tableSenerai {
+	justify-content: center;
+	text-align: left;
+	width: 95%;
+	margin: 0 auto;
+	font-family: Arial, sans-serif;
+	font-size: 17px;
+}
+
+.tableSenerai h1 {
+	text-align: left;
+	font-weight: bold;
+	padding-top: 1.2rem;
+	padding-left: 0.3rem;
+}
+
+.header {
+	background-color: #3f51b5;
+	color: white;
+}
+
+.Senerai {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.Senerai th,
+td {
+	height: 50px;
+	border: #dfdfdf solid 3px;
+	padding-left: 1rem;
+}
+
+.Senerai .kod {
+	width: 10%;
+}
+
+.Senerai .NameKursus {
+	width: 60%;
+}
+
+.Senerai .Tarikh {
+	width: 18%;
+}
+
+.Senerai .Aktiviti {
+	width: 10%;
+	padding-left: 1.5rem;
+}
+
+.Search {
+	justify-content: right;
+	display: flex;
+	flex-direction: row;
+	padding-right: 1rem;
+	padding-bottom: 0.5rem;
+}
+
+.searchicon {
+	background-color: #fff;
+	padding: 0.2rem 0.5rem;
+	margin-left: 0.2rem;
+	border-radius: 3px;
+	height: 1.6rem;
+	width: 1rem;
+	justify-content: center;
+	align-content: center;
+}
+
+.textboxsearch {
+	height: 1rem;
+	width: 9rem;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	color: black;
+	background-color: white;
+	border: 1px solid #f4f4f4;
+	border-radius: 3px;
+	padding: 8px;
+}
+
+.even {
+	background-color: #f4f4f4;
+}
+
+.odd {
+	background-color: #fff;
+}
+
+.Semaklink {
+	text-decoration: underline;
+}

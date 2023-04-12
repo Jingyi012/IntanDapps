@@ -1,0 +1,62 @@
+.infoSijil-container{
+    width: 100vw;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.infoSection{
+    margin-top: 2rem;
+    width: 90%;
+    text-align: center;
+    display: block;
+}
+
+.infoContent{
+    margin: 2rem 0;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.info{
+    width: 80%;
+    display: flex;
+    margin: 0.8rem 0;
+    justify-content: space-between;
+}
+
+.label{
+    display: inline-block;
+    width: 40%;
+    text-align: left;
+}
+
+.data{
+    display: inline-block;
+    width: 60%;
+}
+
+.viewPdf{
+    text-align: center;
+    height: 100vh;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.infoSijil-title{
+    display: flex;
+}
+
+.backbtn{
+    width: 2rem;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.infoSection h1{
+    text-align: center;
+    width: 95%;
+}

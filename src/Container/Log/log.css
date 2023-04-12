@@ -1,0 +1,47 @@
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,th,td{
+    border: 3px solid #DFDFDF;
+    font-size: 20px;
+}
+
+td{
+    text-align: left;
+    padding: 10px 0 10px 20px;
+    font-size: 15px;
+}
+
+th{
+    color: white;
+    font-size: 15px;
+    padding: 10px 0 10px 20px;
+    text-align: left;
+    background-color: #3F51B5;
+}
+
+.aktiviti{
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    border: 0;
+    text-decoration: underline;
+}
+
+.tarikhmasa{
+    width: 15%;
+}
+
+.namaadmin{
+    width: 11%;
+}
+
+.logbutton{
+    border: none;
+    background-color: white;
+    font-size: 14px;
+    padding: 0px;
+    cursor: pointer;
+}

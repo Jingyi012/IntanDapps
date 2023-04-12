@@ -1,0 +1,50 @@
+.semakSijilContainer{
+    width: 100%;
+    min-height: 80vh;
+    background-color: hsla(230, 82%, 78%, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3rem;
+    padding-top: 5rem;
+}
+
+.searchBar-title{
+    font-size: 3rem;
+}
+
+.searchBar{
+    width: 60vw;
+    height: 10vh;
+    max-width: 50rem;
+    min-width: 20rem;
+}
+
+input[name = "search-id"]{
+    width: 100%;
+    height: 2rem;
+    display: block;
+    font-size: 1.2rem;
+}
+
+.searchBar button[type = "Submit"]{
+    display: block;
+    margin: 2rem auto;
+    padding: 0.5rem;
+    background-color: rgb(180, 191, 255);
+    border-radius: 15px;
+    border: none;
+    font-size: 1.2rem;
+    color: black;
+}
+
+button[type = "Submit"]:hover{
+    background-color: rgb(136, 142, 254);
+    cursor: pointer;
+}
+
+
+
+
+

@@ -1,0 +1,242 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar{
+    background-color: #3F51B5;
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    align-items: center;
+    max-width: 1500px;
+}
+
+.nav-logo{
+    display: flex;
+    width: 8rem;
+    height: 2.5rem;
+    margin: 0.75rem 0 0.75rem 0.75rem;
+    cursor: pointer;
+    justify-self: start;
+}
+
+#logo{
+    height: 2.5rem;
+    justify-content: left;
+}
+
+.nav-menu {
+    list-style: none;
+    text-align: center;
+    width: auto;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 4rem;
+}
+
+.nav-menu > li {
+    color: #ffffff;
+    padding: 0;
+    display: inline-block;
+    position: relative;
+    font-weight: bold;
+    width: auto;
+    height: 100%;
+}
+
+.nav-menu > li:hover{
+    background: rgba(255, 255, 255, .5);
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.navlink, .akaun{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 0.7rem 0 0.5rem;
+    height: 100%;
+    color: white;
+}
+
+.nav-menu li ul.sub-menu {
+    width: 100%;
+    background-color: #3F51B5;
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    z-index: 999;
+    height: 0;
+    transition: height 0.3s linear;
+    transition-delay: 0.1s;
+}
+
+.nav-menu li:hover ul.sub-menu {
+    display: block;
+    transition: height 0.3s linear;
+    height: 6rem;
+}
+
+.nav-menu li ul.sub-menu li{
+    overflow: hidden;
+    transition: height 0.3s linear;
+    height: 0;
+}
+
+.nav-menu li:hover ul.sub-menu li{
+    display: block;
+    height: 3rem;
+}
+
+.sub-menu li:hover{
+    background: rgba(255, 255, 255, .5);
+    width: 100%;
+}
+
+.menu-has-children{
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.bi.active, .active{
+    color: rgb(11, 11, 75);
+}
+
+.menu-icon{
+    color: white;
+    display: none;
+}
+
+.bi{
+    margin: 0.2rem;
+}
+
+@media screen and (max-width: 960px){
+
+    .navbar-container{
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        align-items: center;
+    }
+
+    .menu-icon{
+        display: block;
+        font-size: 1.8rem;
+        cursor: pointer; 
+    }
+
+    .nav-logo {
+        cursor: pointer;
+    }
+    
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 4rem;
+        right: 5%;
+        width: 12rem;
+        height: 9rem;
+        z-index: 999;
+        background: #3F51B5;
+    }
+
+    .nav-menu.active {
+        display: block;
+    }
+
+    .nav-menu > li{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+        height: 3rem;
+        padding-left: 0;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .nav-menu > li:hover{
+        height: 3rem;
+    }
+
+    .sub-menu{
+        background: none !important;
+        margin: 0;
+        top: 3rem !important;
+        text-align: left;
+        height: 6rem !important;
+    }
+
+    .sub-menu.active{
+        display: block !important;
+    }
+
+    .sub-menu.active li{
+        display: block !important;
+        height: 3rem !important;
+        
+    }
+
+    .sub-menu li{
+        display: flex;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        height: 0 !important;
+        transition: height 0.3s linear !important;
+        background-color: #3F51B5 !important;
+    }
+    
+    .navlink, .akaun {
+        display: block;
+        padding: 1rem 0 0 0.6rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .navlink.subItem{
+        padding: 0 0 0 0.5rem;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .sub-menu li:hover{
+        background: rgba(251, 255, 255, 0.5);
+        width: 100%;
+    }
+
+    .menu-has-children.active{
+        background: rgba(251, 255, 255, 0.5);
+    }
+
+    .menu-has-children .akaun:after{
+        content: '\F229';
+        font-family: "bootstrap-icons";
+        font-size: 0.7rem;
+        margin-left: 0.5rem;
+    }
+
+    .menu-has-children.active .akaun:after{
+        content: '\F235';
+        font-family: "bootstrap-icons";
+        font-size: 0.7rem;
+        margin-left: 0.5rem;
+    }
+}
