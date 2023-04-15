@@ -18,10 +18,11 @@
     background-color: none;
 }
 
-.title{
+.description .title{
     font-size: 3rem;
-    margin-bottom: 2rem;
+    margin: 0 0 2rem 0;
     font-family: serif;
+    padding: 0;
 }
 
 .lineBreak{
