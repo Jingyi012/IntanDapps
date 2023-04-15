@@ -68,3 +68,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### extension needed
+1. react-router-dom `npm i react-router-dom`
+2. react pdf viewver [https://react-pdf-viewer.dev/docs/getting-started/]
+3. react pdf viewer default layout `npm i @react-pdf-viewer/default-layout`
