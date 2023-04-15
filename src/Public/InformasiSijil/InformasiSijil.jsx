@@ -4,20 +4,12 @@ import {Worker, Viewer} from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import './InformasiSijil.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-import Sijil from '../../SijilExample.pdf';
 import backicon from '../../img/arrow.png';
 
 function InformasiSijil(){
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
     const navigate = useNavigate();
-    const [sijil, setSijil] = useState(null);
-    console.log(Sijil);
-    {/* get sijil url from database
-    useEffect(()=>{
-    getDownloadURL(ref(storage, 'sijil.pdf')).then((url)=>{
-      setSijil(url);
-    })
-  },[]) */}
+ 
     return(
         <>
             <div className='infoSijil-container'>
@@ -34,10 +26,9 @@ function InformasiSijil(){
                         <div className='info'><span className='label'>ALGORAND EXPLORER</span><span>:</span><div className='data'>ALGORAND EXPLORER</div></div>
                     </div>
                     
-                    {/*View pdf*/}
                     <div className="viewPdf">
                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                            <Viewer fileUrl="/static/media/SijilExample.77c24c37a27aaff01234.pdf" plugins={[defaultLayoutPluginInstance]}></Viewer>
+                            <Viewer fileUrl="" plugins={[defaultLayoutPluginInstance]}></Viewer>
                         </Worker>
                     </div>
                     
