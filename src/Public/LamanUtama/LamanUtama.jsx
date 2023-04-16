@@ -18,10 +18,9 @@ export default function LamanUtama(){
               </NavLink>
               </button>
             </div>
-          
-            <div className='content-pic'>
+          </div>
+          <div className='content-pic'>
 
-            </div>
           </div>
         </div>
       </>  

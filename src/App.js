@@ -37,6 +37,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <div className="body">
       <Routes>
         {/*No login required */}
         <Route path='/' element={<LamanUtama/>}/>
@@ -71,7 +72,8 @@ function App() {
         <Route path="/user/profile" exact element={<Profile/>}/>
 
       </Routes>
-      
+      </div>
+      <Footer />
     </div>
   );
 }
