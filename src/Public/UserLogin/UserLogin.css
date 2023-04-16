@@ -1,7 +1,9 @@
 .loginPage{
     width: 100%;
     min-height: 90vh;
-    background: linear-gradient(to bottom, rgb(208, 187, 255) , rgb(216, 213, 255));
+    background-image: url(https://www.dtims.intan.my/theme/images/homeslider/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: 120%;
 }
 
 .loginContainer{
@@ -12,7 +14,7 @@
     margin: auto;
     text-align: center;
     color: white;
-    background-color: rgba(38, 52, 130, 0.6);
+    background-color: rgba(38, 52, 130, 0.8);
     display: flex;
     flex-direction: column;
     align-items: center;
