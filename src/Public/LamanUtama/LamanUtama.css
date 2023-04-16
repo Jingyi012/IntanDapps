@@ -1,20 +1,22 @@
 .mainPageContent{
+    display: flex;
     width: 100%;
     height: auto;
-    display: flex;
-    background-image: linear-gradient(to bottom, rgb(228, 216, 255) , rgb(216, 213, 255));
+    min-height: 90vh;
+    background-image: url(https://www.dtims.intan.my/theme/images/homeslider/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: 120%;
 }
 .content-container{
     width: 45%;
-    height: 100%;
-    display: inline-block;
-    background-color: rgb(251, 225, 255);
+    min-height: 90vh;
+    background-color: rgba(38, 52, 130, 0.8);
+    border: white solid 3px;
 }
 
 .content-pic{
     width: 55%;
     height: 100%;
-    display: inline-block;
     background-color: none;
 }
 
@@ -36,8 +38,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: top;
-    padding: 6.5rem 0;
+    justify-content: center;
+    color: white;
 }
 
 .description p{
