@@ -3,7 +3,7 @@
     min-height: 90vh;
     background-image: url(https://www.dtims.intan.my/theme/images/homeslider/bg.jpg);
     background-repeat: no-repeat;
-    background-size: 120%;
+    background-size: cover;
 }
 
 .registerContainer{
@@ -37,6 +37,7 @@
 }
 
 input[name = "RegisterMyKad"]{
+    padding-left: 10px;
     width: 100%;
     height: 2rem;
     font-size: 1.2rem;
@@ -61,16 +62,17 @@ input[name = "RegisterMyKad"]{
 
 .RegisterForm button[type = "Submit"]{
     display: block;
-    margin: 2rem auto;
+    margin: 5rem auto 4rem;
     padding: 0.5rem;
-    background-color: rgb(180, 191, 255);
-    border-radius: 15px;
+    background-color: rgb(136, 142, 254);
+    border-radius: 20px;
     border: none;
     font-size: 1.2rem;
     color: white;
+    width: 9rem;
 }
 
 .RegisterForm button[type = "Submit"]:hover{
-    background-color: rgb(136, 142, 254);
+    background-color: rgb(113, 118, 209);
     cursor: pointer;
 }

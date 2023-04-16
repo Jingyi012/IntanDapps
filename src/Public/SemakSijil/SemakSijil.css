@@ -22,6 +22,7 @@
 }
 
 input[name = "search-id"]{
+    padding-left: 10px;
     width: 100%;
     height: 2rem;
     display: block;
@@ -30,17 +31,18 @@ input[name = "search-id"]{
 
 .searchBar button[type = "Submit"]{
     display: block;
-    margin: 2rem auto;
+    margin: 5rem auto 4rem;
     padding: 0.5rem;
-    background-color: rgb(180, 191, 255);
-    border-radius: 15px;
+    background-color: rgb(136, 142, 254);
+    border-radius: 20px;
     border: none;
     font-size: 1.2rem;
-    color: black;
+    color: white;
+    width: 9rem;
 }
 
 button[type = "Submit"]:hover{
-    background-color: rgb(136, 142, 254);
+    background-color: rgb(113, 118, 209);
     cursor: pointer;
 }
 

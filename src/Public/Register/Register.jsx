@@ -17,7 +17,7 @@ export default function Register(){
               <label htmlFor='RegisterMyKad'>No. MyKad: 
                 <input id='RegisterMyKad' name='RegisterMyKad' type='text' placeholder='No. MyKad'/>
               </label>
-              <button className='register' type='Submit'>Daftar Masuk</button>
+              <button className='register' type='Submit'>Daftar Akaun</button>
             </form>
             <div className='otherLinks'>
               <NavLink className='otherlink' to='/login'>Telah mempunyai akaun? Sila log masuk</NavLink>
