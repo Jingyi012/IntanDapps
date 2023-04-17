@@ -10,8 +10,10 @@
 .tableSenerai h1 {
 	text-align: left;
 	font-weight: bold;
-	padding-top: 1.2rem;
-	padding-left: 0.3rem;
+	padding-top: 2rem;
+	padding-left: 2rem;
+	font-family: sans-serif,lato;
+	color:#333333;
 }
 
 .header {
@@ -56,9 +58,9 @@ td {
 	padding-bottom: 0.5rem;
 }
 
-.searchicon {
+.tableSenerai .searchicon {
 	background-color: #fff;
-	padding: 0.2rem 0.5rem;
+	padding: 0.5rem 0.5rem 0rem;
 	margin-left: 0.2rem;
 	border-radius: 3px;
 	height: 1.6rem;
@@ -69,7 +71,7 @@ td {
 
 .textboxsearch {
 	height: 1rem;
-	width: 9rem;
+	width: 15rem;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	color: black;

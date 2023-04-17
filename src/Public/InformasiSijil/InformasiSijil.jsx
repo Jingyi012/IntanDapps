@@ -26,11 +26,11 @@ function InformasiSijil(){
                         <div className='info'><span className='label'>ALGORAND EXPLORER</span><span>:</span><div className='data'>ALGORAND EXPLORER</div></div>
                     </div>
                     
-                    {/* <div className="viewPdf">
+                    <div className="viewPdf">
                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                             <Viewer fileUrl="" plugins={[defaultLayoutPluginInstance]}></Viewer>
                         </Worker>
-                    </div> */}
+                    </div>
                     
                 </div>
             </div>
