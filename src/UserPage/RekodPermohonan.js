@@ -81,16 +81,23 @@ function RekodPermohonan() {
                             </table>
                             {showMohon && (
                                 <div className="Rekod-modal">
-                                    <Modal isOpen={showMohon} onClose={handleCloseMohon}>
+                                   <Modal isOpen={showMohon} onClose={handleCloseMohon}>
                                         <div className="confirmation-message ">
+                                            <div className="headpopout">
+                                                <p>Alert</p>
+                                            </div>
                                             <button className="close" onClick={handleCloseMohon}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                                                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                                                 </svg>
                                             </button>
 
-                                            <p>Tekan ya untuk sahkan permohonan kursus, tekan tidak untuk batalkan permohonana kursus</p>
-
+                                            <div className="contentpopout">
+                                                <p>
+                                                    Tekan ya untuk sahkan permohonan kursus, tekan tidak untuk
+                                                    batalkan perdaftaran kursus
+                                                </p>
+                                            </div>
                                             <div className="buttonrekod">
                                                 <div className="comfirmya">
                                                     <button className="option">Ya</button>
@@ -137,7 +144,7 @@ function RekodPermohonan() {
                                 <div className="Rekod-modal">
                                     <Modal isOpen={showMohon} onClose={handleCloseMohon}>
                                         <div className="confirmation-message ">
-                                            <div className="headpop">
+                                            <div className="headpopout">
                                                 <p>Alert</p>
                                             </div>
                                             <button className="close" onClick={handleCloseMohon}>
@@ -148,7 +155,7 @@ function RekodPermohonan() {
 
                                             <div className="contentpopout">
                                                 <p>
-                                                    Tekan yaaaaa untuk sahkan permohonan kursus, tekan tidak untuk
+                                                    Tekan ya untuk sahkan permohonan kursus, tekan tidak untuk
                                                     batalkan perdaftaran kursus
                                                 </p>
                                             </div>

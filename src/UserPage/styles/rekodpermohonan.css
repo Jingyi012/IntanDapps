@@ -145,6 +145,12 @@ td {
 	top:1.2rem;
 	left:2.25rem;
 }
+.Rekod-modal .headpopout p{
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	font-size:23px;
+}
 
 
 .Rekod-modal .contentpopout{
