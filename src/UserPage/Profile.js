@@ -1,13 +1,15 @@
 import React from "react";
+import "@fortawesome/fontawesome-free/css/all.css";
 import "./styles/profile.css";
-//import "@fortawesome/fontawesome-free/css/all.css";
+
 import NavbarU from "../Component/userNavbar/NavbarU";
 
 const ImgUpload = ({ onChange, src }) => (
   <div className="upload-file">
     <label htmlFor="photo-upload" >
       <span className="upload-icon">
-      <i class="bi bi-upload" style={{color: "#ffffff"}}></i>
+      <i class="fa-solid fa-upload fa-xl" style={{color: "#ffffff"}}></i>
+      
       </span>
     </label>
     <div className="img-wrap img-upload">
