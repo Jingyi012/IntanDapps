@@ -86,7 +86,7 @@
     display: block;
     transition: opacity 0.2s;
     opacity: 1;
-    height: 6rem;
+    height: auto;
 }
 
 .nav-menu li ul.sub-menu li{
