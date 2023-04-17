@@ -77,16 +77,16 @@
     position: absolute;
     top: 4rem;
     right: 0;
-    z-index: 999;
-    transition-delay: 0.1s; 
-    transition: opacity 0.3s;
+    z-index: 999; 
     opacity: 0;
+    height: 0;
 }
 
 .nav-menu li:hover ul.sub-menu {
     display: block;
     transition: opacity 0.2s;
     opacity: 1;
+    height: 6rem;
 }
 
 .nav-menu li ul.sub-menu li{
