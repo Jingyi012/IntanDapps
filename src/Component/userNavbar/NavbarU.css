@@ -1,5 +1,5 @@
 .userNav{
-    margin-top: 0.5rem;
+    margin: 1rem 0.5rem;
     width: 100vw;
     display: flex;
     margin-left:0.5rem;
@@ -34,8 +34,8 @@
     background-color: rgb(221, 221, 255);
 }
 
-.active{
-    color: rgb(11, 11, 75);
+.userNav .active{
+    color: rgb(122, 122, 255);
 }
 /*
 

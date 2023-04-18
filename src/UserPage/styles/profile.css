@@ -5,7 +5,6 @@
 	justify-content: center;
 	background: white;
 	display: flex;
-	padding-top: 20px;
 }
 
 .profileform {
@@ -121,6 +120,7 @@
 	padding: 1rem;
 	border-radius: 100%;
 	z-index: 25;
+	cursor: pointer;
 }
 
 input[type="file"] {

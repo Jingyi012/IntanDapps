@@ -7,7 +7,7 @@ function NavbarU() {
 		<div className="userNav">
 			<ul className="userNav-container">
 				<li className="bar">
-					<NavLink className="uNavMenu" to="/user/senerai-program-sedia-ada">
+					<NavLink className="uNavMenu" to="/user/senarai-program-sedia-ada">
 						Senarai Program Sedia Ada
 					</NavLink>
 				</li>

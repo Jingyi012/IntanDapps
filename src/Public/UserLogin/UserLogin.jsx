@@ -1,14 +1,21 @@
 import {React, useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import './UserLogin.css';
 
 function UserLogin(){
+  const navigate = useNavigate();
   const [mykad, setMykad] = useState("");
   const onChangeMykad = (e) =>{
     const regex = /^[0-9\b]+$/;
     if(e.target.value === "" || regex.test(e.target.value)){
       setMykad(e.target.value);
     }
+  }
+  const userLogin = (e) => {
+    e.preventDefault();
+    localStorage.setItem("user", JSON.stringify({role: "USER"}));
+    navigate("/user/senarai-program-sedia-ada");
+    window.location.reload();
   }
     return(
       <>
@@ -19,9 +26,9 @@ function UserLogin(){
               <p>Sebagai User</p>
             </div>
             
-            <form className='loginForm' action="/user/profile">
+            <form className='loginForm' action="senarai-program-sedia-ada" onSubmit={userLogin}>
               <label htmlFor='LoginMyKad'>No. MyKad: 
-                <input id='LoginMyKad' name='LoginMyKad' type='text' placeholder='No. MyKad' minlength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>
+                <input id='LoginMyKad' name='LoginMyKad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>
               </label>
               <button className='login' type='Submit'>Daftar Masuk</button>
             </form>

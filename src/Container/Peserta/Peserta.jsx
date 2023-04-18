@@ -135,7 +135,7 @@ const Peserta = () => {
           <td>{item.nomykad}</td>
           <td>{item.name}</td>
           <td>
-            <NavLink to='/admin/PesertaSemak' className='aktiviti'>Semak</NavLink>
+            <NavLink to='/admin/peserta-semak' className='aktiviti'>Semak</NavLink>
           </td>
       </tr>
         ))}

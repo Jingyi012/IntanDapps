@@ -1,5 +1,4 @@
 import React from "react";
-import "@fortawesome/fontawesome-free/css/all.css";
 import "./styles/profile.css";
 
 import NavbarU from "../Component/userNavbar/NavbarU";
@@ -27,7 +26,7 @@ const Nama = ({ onChange, value }) => (
       id="name"
       type="text"
       onChange={onChange}
-      maxlength="25"
+      maxLength="25"
       value={value}
     />
   </div>
@@ -41,7 +40,8 @@ const MyKad = ({ onChange, value }) => (
       id="mykad"
       type="text"
       onChange={onChange}
-      maxlength="14"
+      maxLength="12"
+      minLength="12"
       value={value}
     />
   </div>
@@ -207,10 +207,13 @@ export default class profile extends React.Component {
   };
 
   editmyKad = (e) => {
-    const myKad = e.target.value;
-    this.setState({
-      myKad,
+    const regex = /^[0-9\b]+$/;
+    if(e.target.value === "" || regex.test(e.target.value)){
+      this.setState({
+      myKad: e.target.value,
     });
+    }
+    //const myKad = e.target.value;
   };
 
   editemelrasmi = (e) => {
@@ -276,11 +279,9 @@ export default class profile extends React.Component {
             <form onSubmit={this.handleSubmit} className="profileform">
               <div className="leftSide">
                 <ImgUpload onChange={this.photoUpload} src={imagePreviewUrl} />
-                {/*<div className="buttonn">*/}
                   <button type="submit" className="savebutton">
                     Save{" "}
                   </button>
-                {/*</div>*/}
               </div>
               <div className="frame">
                 <div className="headerProfileU">

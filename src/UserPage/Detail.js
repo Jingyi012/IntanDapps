@@ -3,7 +3,7 @@ import "./styles/Detail.css";
 import Modal from "./Modal";
 import { NavLink } from "react-router-dom";
 
-function SeneraiProgramSediaAda() {
+function SenaraiProgramSediaAda() {
   const [showDaftar, setShowDaftar] = useState(false);
   const handleShowDaftar = () => {
     setShowDaftar(true);
@@ -14,7 +14,7 @@ function SeneraiProgramSediaAda() {
   return (
     <div class="Detail">
       <div class="Detailheader">
-        <NavLink to="/user/senerai-program-sedia-ada" class="Detailbackicon">
+        <NavLink to="/user/senarai-program-sedia-ada" class="Detailbackicon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="30"
@@ -116,4 +116,4 @@ function SeneraiProgramSediaAda() {
   );
 }
 
-export default SeneraiProgramSediaAda;
+export default SenaraiProgramSediaAda;
