@@ -37,7 +37,7 @@ const PesertaSemak = () => {
         </div>
         </div>
         </div>
-    <div className='subtitle'>SENERAI PROGRAM</div>
+    <div className='subtitle'>SENARAI PROGRAM</div>
     <div className='program'>
       <table className='progtable'>
         <thead>
