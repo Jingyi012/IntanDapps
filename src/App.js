@@ -22,7 +22,7 @@ import InformasiSijil from './Public/InformasiSijil/InformasiSijil';
 //import {LamanUtama, UserLogin, AdminLogin, Register, SemakSijil, Penyemak, InformasiSijil, NotFound} from './Public';
 import Footer from './Component/footer/Footer.jsx';
 import Header from './Component/header/Header.jsx';
-
+import HeaderUser from "./Component/header/HeaderUser";
 import SeneraiProgramSediaAda from './UserPage/SeneraiProgramSediaAda';
 import RekodPermohonan from './UserPage/RekodPermohonan';
 import Detail from './UserPage/Detail';

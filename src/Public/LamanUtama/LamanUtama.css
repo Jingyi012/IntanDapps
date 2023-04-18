@@ -5,7 +5,7 @@
     min-height: 90vh;
     background-image: url(https://www.dtims.intan.my/theme/images/homeslider/bg.jpg);
     background-repeat: no-repeat;
-    background-size: 120%;
+    background-size: cover;
 }
 .content-container{
     width: 45%;

@@ -32,9 +32,9 @@ function SeneraiProgramSediaAda() {
         <h1 class="titleDetail">Database</h1>
       </div>
       <div class="blue">
-        <p>INFORMASI PROGRAM</p>
+        <p>Informasi Program</p>
       </div>
-      <div class="info">
+      <div class="infoDetail">
         <div class="info1">
           <p>Nama Pengajur</p>
           <p>Tempoh</p>
@@ -77,6 +77,9 @@ function SeneraiProgramSediaAda() {
         <div className="Detail-modal">
           <Modal isOpen={showDaftar} onClose={handleCloseDaftar}>
             <div className="confirmation-message ">
+              <div className="headpopout">
+                <p>Alert</p>
+              </div>
               <button className="close" onClick={handleCloseDaftar}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -90,10 +93,12 @@ function SeneraiProgramSediaAda() {
                 </svg>
               </button>
 
-              <p>
-                Tekan ya untuk sahkan perdaftaran kursus, tekan tidak untuk
-                batalkan perdaftaran kursus
-              </p>
+              <div className="contentpopout">
+                <p>
+                  Tekan ya untuk sahkan perdaftaran kursus, tekan tidak untuk
+                  batalkan perdaftaran kursus
+                </p>
+              </div>
 
               <div className="buttonrekod">
                 <div className="comfirmya">

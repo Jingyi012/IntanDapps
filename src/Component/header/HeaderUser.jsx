@@ -27,6 +27,9 @@ function HeaderUser() {
       if (!menuRef.current.contains(e.target)) {
         setClick(false);
       }
+      if(!subMenuRef.current.contains(e.target)){
+        setSubmenuClick(false);
+      }
     };
 
     document.addEventListener("mousedown", handler);
@@ -53,7 +56,7 @@ function HeaderUser() {
             <div className="menu-icon" onClick={handleClick}>
               <i className={!click ? "bi bi-list" : "bi bi-x-lg"}></i>
             </div>
-            <ul className={click ? "nav-menu active" : "nav-menu"}>
+            <ul className={click ? "nav-menu active" : "nav-menu"} ref={subMenuRef}>
               <NavItem
                 cn="navlink"
                 path="/"
