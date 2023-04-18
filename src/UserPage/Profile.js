@@ -11,7 +11,7 @@ const ImgUpload = ({ onChange, src }) => (
       </span>
     </label>
     <div className="img-wrap img-upload">
-        <img for="photo-upload" src={src} alt="profile" />
+        <img for="photo-upload" src={src} alt="profile" className="profile-pic"/>
       </div>
       <input id="photo-upload" type="file" onChange={onChange} />
   </div>

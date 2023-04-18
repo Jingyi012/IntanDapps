@@ -1,27 +1,63 @@
 import React, { useState } from 'react'
-import { Program,Menuheader } from '../../Component'
-
+import { Menuheader } from '../../Component'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
 import '../Log/log.css'
 
 const Log = () => {
   const [selectedValue, setSelectedValue] = useState('');
-  
-  const handleSelectChange = (event) => {
-    const selectedOption = event.target.options[event.target.selectedIndex];
-    const displayValue = selectedOption.getAttribute('data-display-value');
-    selectedOption.textContent = displayValue;
-    
-    if (selectedOption.value === "None"){
-      selectedOption.value = "Susunan";
-    }
-    setSelectedValue(selectedOption.value);
-    
-  };
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredValue, setFilteredValue] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
+  const data=[{tarikh:"10 May 2023 04:00 PM",name:"Admin z",aktiviti:"Add the admin"},
+  {tarikh:"20 May 2023 04:00 PM",name:"Admin C",aktiviti:"Delete the admin"}
+  ]
+
+
+  const tarikhfilter = () => {
+      const sorted = data.sort((a, b) => a.tarikh - b.tarikh);
+      setSearchValue(sorted)}
+
+  const namefilter = () => {
+      const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+      setSearchValue(sorted)}
+
+    const handleSelectChange = (event) => {
+      const selectedOption = event.target.options[event.target.selectedIndex];
+      const displayValue = selectedOption.getAttribute('data-display-value');
+      selectedOption.textContent = displayValue;
+      
+      if (selectedOption.value === "None"){
+        selectedOption.value = "Susunan";
+      }
+      setSelectedValue(selectedOption.value);
+      if (selectedOption.value === "Tarikh&Masa"){tarikhfilter();}
+      else if (selectedOption.value === "NamaAdmin"){namefilter();}
+      else if (selectedOption.value === "Susunan"){setSearchValue(data)}
+
+
+    };
+
+    const handleSubmit = async () => {
+      if (isSearching) {
+        return;
+      }
+      setIsSearching(true);
+      try{
+    const filtered = data.filter(item => item.name.toLowerCase().includes(filteredValue.toLowerCase()));
+    setSearchValue(filtered);
+      await new Promise((resolve) => setTimeout(resolve, 2000));}
+      catch (error) {
+        console.error('Search failed:', error);
+      } finally {
+        // Set the isSearching flag back to false to indicate search is completed
+        setIsSearching(false);
+      }
+    }
+  
   return (
-    <div>
+    <div className='app_box'>
       <Menuheader/>
       <div className='programsec'>
         <h1 className='title'>
@@ -43,11 +79,11 @@ const Log = () => {
             </form>
             <form className='search'>
                 <div className='searchbox'>
-                    <input type="text" placeholder="Nama Admin" className='searchtype'/>
+                    <input value={filteredValue} type="text" placeholder="Nama Admin" className='searchtype' onChange={e => setFilteredValue(e.target.value)}/>
                 </div>
                 <div className='filtericon'>
-                    <button type="button" className="searchbutton">
-                        <img src={searchpic} alt='This is a search button.' type="submit" className="searchpic"/>
+                    <button className="searchbutton" onClick={handleSubmit} disabled={isSearching}>
+                        <img src={searchpic} alt='This is a search button.' className="searchpic"/>
                     </button>
                 </div>
             </form>
@@ -62,13 +98,26 @@ const Log = () => {
               <th className='colaktiviti'>Aktiviti</th>
             </tr>
         </thead>
+      {searchValue===""?(
         <tbody>
-          <tr className='row1'>
-              <td>10 May 2023 04:00 PM</td>
-              <td>Admin A</td>
-              <td>sssssss</td>
-          </tr>
+        {data.map((item,index)=>(
+          <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
+            <td>{item.tarikh}</td>
+            <td>{item.name}</td>
+            <td>{item.aktiviti}</td>
+      </tr>
+        ))}
+        </tbody>):(
+        <tbody>
+        {searchValue.map((item,index)=>(
+          <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
+          <td>{item.tarikh}</td>
+          <td>{item.name}</td>
+          <td>{item.aktiviti}</td>
+      </tr>
+        ))}
         </tbody>
+    )}
       </table>
     </div>
     </div>

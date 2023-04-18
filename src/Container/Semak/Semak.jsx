@@ -9,10 +9,10 @@ const Semak = ({title}) => {
   const [isOpen,setIsOpen]= useState(false);
   const navigate = useNavigate();
   return (
-    <div>
-      <div className='daftarheader'>
-      <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} className="backicon"/></button>
-      <h1 className='daftaradmin'>{title}</h1>
+    <div className='app_box'>
+      <div className='semakdaftarheader'>
+      <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} className="backicon" alt='It is a back icon.'/></button>
+      <h1 className='semakdaftaradmin'>{title}</h1>
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/{title}</div>
       </div>
       <div className='informasibox'>
@@ -50,12 +50,12 @@ const Semak = ({title}) => {
             </tr>
         </thead>
         <tbody>
-          <tr className='row1'>
+          <tr className='row2'>
               <td>SECK0233</td>
               <td>s</td>
               <td>80%</td>
               <td><Sejarah title="Dicipta"/></td>
-              <td className='sijill'>
+              <td>
                 <NavLink to='/admin/cipta-sijil' className="aktivititype">Cipta</NavLink>
                 <NavLink to='/admin/edit-sijil' className="aktivititype">Edit</NavLink>
                 <NavLink to='/admin/semak-program' className="aktivititype">Semak</NavLink>

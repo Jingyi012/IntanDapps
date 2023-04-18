@@ -53,8 +53,8 @@
 }
 
 .closebutton{
-    width: 30px;
-    height: 30px;
+    width: 1.5rem;
+    height: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,17 +63,16 @@
     background-color: #3F51B5;
     border-radius: 100%;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 0.5rem;
 }
 
 .closeicon{
-    width:70%;
+    width:40%;
     margin:0;
 }
 
 .sejarahheader{
     display: flex;
-    align-items: center;
     justify-content: space-between;
     margin-top: 10px;
     margin-bottom: 20px;

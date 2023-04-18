@@ -1,4 +1,4 @@
-.daftarheader{
+.semakdaftarheader{
     display: flex;
     align-items: center;
     padding: 25px 0 25px 0;
@@ -6,8 +6,8 @@
 
 .backbutton{
     display: flex;
-    width: 30px;
-    height: 30px;
+    width: 2rem;
+    height: 2rem;
     align-items: center;
     margin-left: 10px;
     background-color: white;
@@ -16,7 +16,7 @@
 }
 
 .backicon{
-    width: 100%;
+    width: 60%;
 }
 
 .informasiprogram{
@@ -58,12 +58,6 @@ padding: 20px 0 20px 50px;
     width: 250px;
 }
 
-.sijill{
-    display: flex;
-    gap: 20px;
-    border: none;
-}
-
 .subtitle{
     font-size: 1.5rem;
     margin: 40px 0px 20px 0px;
@@ -73,8 +67,8 @@ padding: 20px 0 20px 50px;
     border: 1px solid #3F51B5;
 }
 
-.daftaradmin{
+.semakdaftaradmin{
     display: flex;
     margin: 0px;
-    padding-left: 50px;
+    padding-left: 1.5rem;
 }
