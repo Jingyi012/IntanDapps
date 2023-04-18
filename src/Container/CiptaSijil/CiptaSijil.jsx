@@ -7,11 +7,11 @@ import backicon from '../../img/arrow.png'
 const CiptaSijil = ({backpage}) => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className='app_box'>
       
-      <div className='daftarheader'>
+      <div className='semakdaftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
-      <h1 className='daftaradmin'>CIPTA SIJIL</h1>
+      <h1 className='semakdaftaradmin'>CIPTA SIJIL</h1>
       {backpage==='/peserta-semak' &&
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PESERTA</NavLink>/EDIT SIJIL</div>}
       {backpage==='/semak' &&

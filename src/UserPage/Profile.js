@@ -12,7 +12,7 @@ const ImgUpload = ({ onChange, src }) => (
       </span>
     </label>
     <div className="img-wrap img-upload">
-        <img for="photo-upload" src={src} alt="profile" />
+        <img for="photo-upload" src={src} alt="profile" className="profile-pic"/>
       </div>
       <input id="photo-upload" type="file" onChange={onChange} />
   </div>
@@ -127,7 +127,7 @@ const Profile = ({
     <form onSubmit={onSubmit} className="profileform">
       <div className="leftSide">
         <div className="img-wrap">
-          <img for="photo-upload" src={src} alt="profile" />
+          <img for="photo-upload" src={src} alt="profile" className="profile-pic" />
         </div>
 
         <button type="submit" className="editbutton">
@@ -213,7 +213,6 @@ export default class profile extends React.Component {
       myKad: e.target.value,
     });
     }
-    //const myKad = e.target.value;
   };
 
   editemelrasmi = (e) => {

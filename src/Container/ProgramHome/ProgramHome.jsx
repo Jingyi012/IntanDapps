@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Program,Menuheader, Buttons } from '../../Component'
-import '../Home/home.css'
+import '../ProgramHome/ProgramHome.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
 import addicon from '../../img/add.png'
 import closeicon from '../../img/close.png'
 
-const Home = () => {
+const ProgramHome = () => {
   const [isOpen,setIsOpen]= useState(false);
   const [selectedValue, setSelectedValue] = useState('');
   
@@ -105,4 +105,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default ProgramHome

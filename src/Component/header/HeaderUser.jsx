@@ -46,6 +46,16 @@ function HeaderUser() {
     window.location.reload();
   }
 
+  const roleChoice = () => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if(user.role === "ADMIN")
+    {
+      return true;
+    } else{
+      return false;
+    }
+  }
+
   return (
     <React.Fragment>
       <nav className="navbar">
@@ -85,7 +95,7 @@ function HeaderUser() {
                 >
                   <NavItem
                     cn="navlink subItem"
-                    path="/user/senarai-program-sedia-ada"
+                    path={roleChoice() ? "/admin/home" : "/user/senarai-program-sedia-ada"}
                     icon="bi bi-person-fill"
                     name="Dashboard"
                     close = {closeMobileMenu}
