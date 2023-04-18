@@ -18,7 +18,10 @@ function Header() {
   const handleClick = () => setClick(!click);
   const [subMenuClick, setSubmenuClick] = useState(false);
   const handleSubMenuClick = () => setSubmenuClick(!subMenuClick);
-  const closeMobileMenu = () => setClick(false);
+  const closeMobileMenu = () => {
+    setClick(false);
+    setSubmenuClick(false);
+  }
 
   let menuRef = useRef();
   let subMenuRef = useRef();
@@ -26,6 +29,9 @@ function Header() {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setClick(false);
+      }
+      if(!subMenuRef.current.contains(e.target)){
+        setSubmenuClick(false);
       }
     };
 
@@ -53,7 +59,7 @@ function Header() {
             <div className="menu-icon" onClick={handleClick}>
               <i className={!click ? "bi bi-list" : "bi bi-x-lg"}></i>
             </div>
-            <ul className={click ? "nav-menu active" : "nav-menu"}>
+            <ul className={click ? "nav-menu active" : "nav-menu"} ref={subMenuRef}>
               <NavItem
                 cn="navlink"
                 path="/"
@@ -68,7 +74,7 @@ function Header() {
                 name="Semak Sijil"
                 close = {closeMobileMenu}
               />
-              <li className={subMenuClick ? "menu-has-children active" : "menu-has-children"} onClick={handleSubMenuClick} ref={subMenuRef}>
+              <li className={subMenuClick ? "menu-has-children active" : "menu-has-children"} onClick={handleSubMenuClick} >
                 <span className="akaun">
                   <i className="bi bi-person-fill"></i>Akaun Pengguna
                 </span>

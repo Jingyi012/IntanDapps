@@ -2,8 +2,16 @@ import {React, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import './Register.css';
 
-export default function Register(){
-    
+const Register = () => {
+  
+    const [mykad, setMykad] = useState("");
+    const onChangeMykad = (e) =>{
+      const regex = /^[0-9\b]+$/;
+      if(e.target.value === "" || regex.test(e.target.value)){
+        setMykad(e.target.value);
+      }
+    }
+
     return(
       <>
         <div className='registerPage'>
@@ -15,9 +23,9 @@ export default function Register(){
             
             <form className='RegisterForm' action="/login">
               <label htmlFor='RegisterMyKad'>No. MyKad: 
-                <input id='RegisterMyKad' name='RegisterMyKad' type='text' placeholder='No. MyKad'/>
+                <input id='RegisterMyKad' name='RegisterMyKad' type='text' placeholder='No. MyKad' minlength='12' maxLength='12' onChange={onChangeMykad} value={mykad} />
               </label>
-              <button className='register' type='Submit'>Daftar Masuk</button>
+              <button className='register' type='Submit'>Daftar Akaun</button>
             </form>
             <div className='otherLinks'>
               <NavLink className='otherlink' to='/login'>Telah mempunyai akaun? Sila log masuk</NavLink>
@@ -28,3 +36,5 @@ export default function Register(){
       </>  
     )
 }
+
+export default Register;

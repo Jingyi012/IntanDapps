@@ -11,8 +11,10 @@
 .tableRekod h1 {
 	text-align: left;
 	font-weight: bold;
-	padding-top: 1.2rem;
-	padding-left: 0.3rem;
+	padding-top: 2rem;
+	padding-left: 2rem;
+	font-family: sans-serif, lato;
+	color: #333333;
 }
 
 .header {
@@ -64,7 +66,7 @@ td {
 	z-index: 9999;
 }
 
-.confirmation-message {
+.Rekod-modal .confirmation-message {
 	text-align: center;
 	background-color: white;
 	width: 25rem;
@@ -74,14 +76,14 @@ td {
 	max-width: 600px;
 }
 
-.buttonrekod {
+.Rekod-modal .buttonrekod {
 	display: flex;
 	flex-direction: row;
 	height: 3rem;
 	justify-items: center;
 }
 
-.comfirmya {
+.Rekod-modal .comfirmya {
 	background-color: #bad26e;
 	width: 50%;
 	margin: 0;
@@ -91,7 +93,7 @@ td {
 	display: flex;
 }
 
-.comfirmno {
+.Rekod-modal .comfirmno {
 	background-color: #fe7065;
 	width: 50%;
 	margin: 0;
@@ -101,7 +103,7 @@ td {
 	display: flex;
 }
 
-.confirmation-message .option {
+.Rekod-modal .confirmation-message .option {
 	margin: 0 auto;
 	background-color: transparent;
 	color: #fff;
@@ -111,30 +113,50 @@ td {
 	cursor: pointer;
 }
 
-.confirmation-message .close {
+.Rekod-modal .confirmation-message .close {
 	background-color: transparent;
 	color: black;
 	margin-top: 1rem;
 	padding: 0;
+	border:none;
 }
 
-.confirmation-message p {
-	font-size: 20px;
+.Rekod-modal .confirmation-message p {
+	font-size: 17px;
 	color: black;
 	margin: 30px 10px;
 	font-family: Lato;
 }
 
-.confirmation-message button:hover {
+.Rekod-modal .confirmation-message button:hover {
 	background-color: transparent;
 	color: black;
 }
 
-.close {
+.Rekod-modal .close {
 	position: absolute;
 	top: 0rem;
-	right: 2rem;
-	border: none;
+	right: 0.5rem;
+	cursor: pointer;
+	border:none;
+}
+.Rekod-modal .headpopout{
+	position:absolute;
+	top:1.2rem;
+	left:2.25rem;
+}
+.Rekod-modal .headpopout p{
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	font-size:23px;
+}
+
+
+.Rekod-modal .contentpopout{
+	width:85%;
+	text-align: justify;
+	margin:1.5rem auto;
 }
 
 .Search {
@@ -147,7 +169,7 @@ td {
 
 .searchicon {
 	background-color: #fff;
-	padding: 0.2rem 0.5rem;
+	padding: 0.5rem 0.5rem 0rem;
 	margin-left: 0.2rem;
 	border-radius: 3px;
 	height: 1.6rem;
@@ -158,7 +180,7 @@ td {
 
 .textboxsearch {
 	height: 1rem;
-	width: 9rem;
+	width: 15rem;
 	font-family: Arial, sans-serif;
 	font-size: 14px;
 	color: black;
@@ -192,7 +214,7 @@ td {
 .Printbutton {
 	margin-top: 0;
 	background-color: transparent;
-	margin-left: 0.2rem;
+	margin-left: 1rem;
 	color: black;
 	font-family: inherit;
 	font-weight: normal;
@@ -201,4 +223,5 @@ td {
 	cursor: pointer;
 	letter-spacing: 0px;
 	border: none;
+
 }

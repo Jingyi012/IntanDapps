@@ -77,27 +77,30 @@
     position: absolute;
     top: 4rem;
     right: 0;
-    z-index: 999;
+    z-index: 999; 
+    opacity: 0;
     height: 0;
-    transition: height 0.3s linear;
-    transition-delay: 0.1s;
 }
 
 .nav-menu li:hover ul.sub-menu {
     display: block;
-    transition: height 0.3s linear;
-    height: 6rem;
+    transition: opacity 0.2s;
+    opacity: 1;
+    height: auto;
 }
 
 .nav-menu li ul.sub-menu li{
     overflow: hidden;
-    transition: height 0.3s linear;
-    height: 0;
+    height: 3rem;
+    transition: opacity 0.2s;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .nav-menu li:hover ul.sub-menu li{
     display: block;
-    height: 3rem;
+    opacity: 1;
+    visibility: visible;
 }
 
 .sub-menu li:hover{
@@ -121,7 +124,7 @@
 }
 
 .bi{
-    margin: 0.2rem;
+    margin-right: 0.6rem;
 }
 
 @media screen and (max-width: 960px){
@@ -183,12 +186,14 @@
 
     .sub-menu.active{
         display: block !important;
+        opacity: 1 !important;
     }
 
     .sub-menu.active li{
         display: block !important;
         height: 3rem !important;
-        
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .sub-menu li{
