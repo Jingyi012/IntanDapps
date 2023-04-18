@@ -7,10 +7,10 @@ import '../EditProgram/editprogram.css'
 const EditProgram = () => {
   const navigate = useNavigate();
   return (
-    <div>
-       <div className='daftarheader'>
+    <div className='app_box'>
+       <div className='semakdaftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
-      <h1 className='daftaradmin'>Edit Program</h1>
+      <h1 className='semakdaftaradmin'>Edit Program</h1>
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/ADD PROGRAM</div></div>
       <form className='maklumatbox'>
       <div>

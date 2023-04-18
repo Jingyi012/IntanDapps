@@ -9,10 +9,10 @@ const PesertaSemak = () => {
   const [isOpen,setIsOpen]= useState(false);
   const navigate = useNavigate();
   return (
-    <div>
-      <div className='daftarheader'>
+    <div className='app_box'>
+      <div className='semakdaftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
-      <h1 className='daftaradmin'>Olivia Lim Shi Ting</h1>
+      <h1 className='semakdaftaradmin'>Olivia Lim Shi Ting</h1>
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/PESERTA</div>
       </div>
       <div className='informasibox'>

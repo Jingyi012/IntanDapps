@@ -9,11 +9,10 @@ import { useNavigate } from 'react-router-dom'
 const EditSijil = ({backpage}) => {
   const navigate = useNavigate();
   return (
-    <div>
-      
-      <div className='daftarheader'>
+    <div className='app_box'>
+      <div className='semakdaftarheader'>
       <button className='backbutton' onClick={() => navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
-      <h1 className='daftaradmin'>EDIT SIJIL</h1>
+      <h1 className='semakdaftaradmin'>EDIT SIJIL</h1>
       {backpage==='/pesertasemak' &&
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PESERTA</NavLink>/EDIT SIJIL</div>}
       {backpage==='/semak' &&
