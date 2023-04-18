@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Program,Menuheader } from '../../Component'
+import { Menuheader } from '../../Component'
 import '../Peserta/peserta.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
-import { wait } from '@testing-library/user-event/dist/utils'
 
 const Peserta = () => {
   const [selectedValue, setSelectedValue] = useState('');
@@ -48,7 +47,6 @@ const Peserta = () => {
       setIsSearching(true);
       try{
         if(!isNaN(filteredValue)){
-          console.log(filteredValue);
       const filtered = data.filter(item => item.nomykad.toString().startsWith(filteredValue));
       setSearchValue(filtered);
       }
@@ -66,7 +64,7 @@ const Peserta = () => {
     }
   
   return (
-    <div>
+    <div className='app_box'>
       <Menuheader/>
     <div className='programsec'>
         <h1 className='title'>
@@ -98,7 +96,6 @@ const Peserta = () => {
             </form>
         </div>
     </div>
-      {searchValue===""?(
       <div className='program'>
       <table className='progtable'>
         <thead>
@@ -108,40 +105,33 @@ const Peserta = () => {
               <th className='pesertaaktiviti'>Aktiviti</th>
             </tr>
         </thead>
+      {searchValue===""?(
         <tbody>
         {data.map((item,index)=>(
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
             <td>{item.nomykad}</td>
             <td>{item.name}</td>
             <td>
-              <NavLink to='/PesertaSemak' className='aktiviti'>{item.aktiviti}</NavLink>
+              <NavLink to='/admin/peserta-semak' className='aktiviti'>{item.aktiviti}</NavLink>
             </td>
       </tr>
         ))}
         </tbody>
-      </table>
-    </div>):(<div>
-      <table className='progtable'>
-        <thead>
-            <tr>
-              <th className='nomykad'>No. MyKad</th>
-              <th className='pesertaname'>Nama</th>
-              <th className='pesertaaktiviti'>Aktiviti</th>
-            </tr>
-        </thead>
+      ):(
         <tbody>
         {searchValue.map((item,index)=>(
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
           <td>{item.nomykad}</td>
           <td>{item.name}</td>
           <td>
-            <NavLink to='/admin/PesertaSemak' className='aktiviti'>Semak</NavLink>
+            <NavLink to='/admin/peserta-semak' className='aktiviti'>Semak</NavLink>
           </td>
       </tr>
         ))}
         </tbody>
+      )}
       </table>
-    </div>)}
+      </div>
     
     </div>
   )

@@ -133,7 +133,8 @@ input[type="file"] {
 .img-upload:hover:before {
 	opacity: 1;
 }
-img {
+
+.profile-pic{
 	width: auto;
 	height: 100%;
 }

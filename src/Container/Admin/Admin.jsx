@@ -4,7 +4,7 @@ import '../Admin/admin.css'
 
 const Admin = () => {
   return (
-    <div>
+    <div className='app_box'>
       <Menuheader/>
       <h1 className='admintitle'>DAFTAR ADMIN</h1>
       <div>
