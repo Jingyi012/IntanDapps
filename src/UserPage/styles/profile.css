@@ -5,7 +5,6 @@
 	justify-content: center;
 	background: white;
 	display: flex;
-	padding-top: 20px;
 }
 
 .profileform {
@@ -46,6 +45,7 @@
 	background-color: #3f51b5;
 	height: 4rem;
 	color: white;
+	font-size: 18px;
 }
 
 .headerProfileU p{
@@ -121,6 +121,7 @@
 	padding: 1rem;
 	border-radius: 100%;
 	z-index: 25;
+	cursor: pointer;
 }
 
 input[type="file"] {
@@ -135,7 +136,7 @@ input[type="file"] {
 	opacity: 1;
 }
 
-.profile-pic{
+img.profile-pic{
 	width: auto;
 	height: 100%;
 }

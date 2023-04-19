@@ -94,7 +94,7 @@ function RekodPermohonan() {
 
                                             <div className="contentpopout">
                                                 <p>
-                                                    Tekan ya untuk sahkan permohonan kursus, tekan tidak untuk
+                                                    Tekan ya untuk sahkan permohonan kursus, tekan tidak untuk
                                                     batalkan perdaftaran kursus
                                                 </p>
                                             </div>
@@ -103,7 +103,7 @@ function RekodPermohonan() {
                                                     <button className="option">Ya</button>
                                                 </div>
                                                 <div className="comfirmno">
-                                                    <button className="option">Tidak</button>
+                                                    <button className="option" onClick={handleCloseMohon}>Tidak</button>
                                                 </div>
                                             </div>
                                         </div>

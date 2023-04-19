@@ -1,4 +1,4 @@
-.tableSenerai {
+.tableSenarai {
 	justify-content: center;
 	text-align: left;
 	width: 95%;
@@ -7,7 +7,7 @@
 	font-size: 17px;
 }
 
-.tableSenerai h1 {
+.tableSenarai h1 {
 	text-align: left;
 	font-weight: bold;
 	padding-top: 2rem;
@@ -21,33 +21,32 @@
 	color: white;
 }
 
-.Senerai {
+.Senarai {
 	border-collapse: collapse;
 	width: 100%;
 }
 
-.Senerai sth,
-std {
+.Senarai th, .Senarai td {
 	height: 50px;
 	border: #dfdfdf solid 3px;
 	padding-left: 1rem;
+	padding-right: 1rem;
 }
 
-.Senerai .kod {
+.Senarai .Kod {
 	width: 10%;
 }
 
-.Senerai .NameKursus {
-	width: 60%;
+.Senarai .NameKursus {
+	width: 55%;
 }
 
-.Senerai .Tarikh {
+.Senarai .Tarikh {
 	width: 18%;
 }
 
-.Senerai .Aktiviti {
+.Senarai .Aktiviti {
 	width: 10%;
-	padding-left: 1.5rem;
 }
 
 .Search {
@@ -58,7 +57,7 @@ std {
 	padding-bottom: 0.5rem;
 }
 
-.tableSenerai .searchicon {
+.tableSenarai .searchicon {
 	background-color: #fff;
 	padding: 0.5rem 0.5rem 0rem;
 	margin-left: 0.2rem;
@@ -67,6 +66,10 @@ std {
 	width: 1rem;
 	justify-content: center;
 	align-content: center;
+}
+
+.searchicon{
+	cursor: pointer;
 }
 
 .textboxsearch {

@@ -37,7 +37,7 @@ const Semak = ({title}) => {
         </div>
         </div>
         </div>
-    <div className='subtitle'>SENERAI PESERTA</div>
+    <div className='subtitle'>SENARAI PESERTA</div>
     <div className='program'>
       <table className='progtable'>
         <thead>

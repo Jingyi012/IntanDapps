@@ -23,7 +23,7 @@ const Register = () => {
             
             <form className='RegisterForm' action="/login">
               <label htmlFor='RegisterMyKad'>No. MyKad: 
-                <input id='RegisterMyKad' name='RegisterMyKad' type='text' placeholder='No. MyKad' minlength='12' maxLength='12' onChange={onChangeMykad} value={mykad} />
+                <input id='RegisterMyKad' name='RegisterMyKad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange={onChangeMykad} value={mykad} />
               </label>
               <button className='register' type='Submit'>Daftar Akaun</button>
             </form>
