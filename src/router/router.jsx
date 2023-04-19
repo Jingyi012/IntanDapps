@@ -45,14 +45,14 @@ function Router(){
             <Route path="/admin/peserta" exact element={<Peserta />}/>
             <Route path="/admin/daftar-admin" exact element={<Admin />}/>
             <Route path="/admin/log" exact element={<Log />}/>
-            <Route path="/admin/semak" exact element={<Semak title="DATABASE"/>}/>
+            <Route path="/admin/semak" exact element={<Semak />}/>
             <Route path="/admin/program-edit" exact element={<ProgramEdit />}/>
             <Route path="/admin/peserta-semak" exact element={<PesertaSemak />}/>
-            <Route path="/admin/cipta-sijil" exact element={<CiptaSijil backpage="/admin/semak"/>}/>
-            <Route path="/admin/edit-sijil" exact element={<EditSijil backpage="/admin/semak" />}/>
-            <Route path="/admin/cipta-sijil-peserta" exact element={<CiptaSijil backpage="/admin/peserta-semak"/>}/>
-            <Route path="/admin/edit-sijil-peserta" exact element={<EditSijil backpage="/admin/peserta-semak" />}/>
-            <Route path="/admin/add-course" exact element={<Add backpage="/admin/peserta-semak" />}/>
+            <Route path="/admin/cipta-sijil" exact element={<CiptaSijil />}/>
+            <Route path="/admin/edit-sijil" exact element={<EditSijil />}/>
+            <Route path="/admin/cipta-sijil-peserta" exact element={<CiptaSijil />}/>
+            <Route path="/admin/edit-sijil-peserta" exact element={<EditSijil />}/>
+            <Route path="/admin/add-course" exact element={<Add />}/>
             <Route path="/admin/edit-program" exact element={<EditProgram />}/>
             <Route path="/admin/semak-sijil-peserta" exact element={<InformasiSijil />}/>
           </Route>
