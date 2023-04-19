@@ -1,25 +1,6 @@
-table{
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table, th, td{
-    border: 3px solid #DFDFDF;
-    font-size: 20px;
-}
-
-td{
-    text-align: left;
-    padding: 10px 0 10px 20px;
-    font-size: 15px;
-}
-
-th{
-    color: white;
-    font-size: 15px;
-    padding: 10px 0 10px 20px;
-    text-align: left;
-    background-color: #3F51B5;
+.app_box{
+    margin-left: 3rem;
+    margin-right: 3rem;
 }
 
 .aktivitioption{
@@ -46,12 +27,13 @@ th{
 .aktivititype{
     color: black;
     text-decoration: underline;
+    margin-right: 1rem;
 }
 
 .addbutton{
     display: flex;
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     justify-content: center;
     align-items: center;
     border: none;
@@ -64,8 +46,12 @@ th{
     cursor: pointer;
 }
 
+.addbutton:hover{
+    background-color: #37469d;
+}
+
 .addicon{
-    width: 70%;
+    width: 40%;
 }
 
 .padambutton{
@@ -99,4 +85,8 @@ th{
     justify-content: center;
     margin-top: 40px;
     margin-bottom: 20px;
+}
+
+.centerdata{
+    text-align: center;
 }
