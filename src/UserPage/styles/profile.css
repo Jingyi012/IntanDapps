@@ -51,8 +51,9 @@
 
 .headerProfileU p{
 	text-align: left;
-	padding-left: 4rem;
 	line-height: 4rem;
+	width: 84%;
+	margin: auto;
 }
 
 .formleft, .formright{
@@ -61,7 +62,6 @@
 	flex-direction: column;
 	justify-content: top;
 	align-items: center;
-	margin-top: 2rem;
 }
 
 .textinput, .profileinput {
