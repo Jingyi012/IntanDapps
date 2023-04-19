@@ -66,6 +66,10 @@
     margin-right: 0.5rem;
 }
 
+.closebutton:hover{
+    background-color: #37469d;
+}
+
 .closeicon{
     width:40%;
     margin:0;

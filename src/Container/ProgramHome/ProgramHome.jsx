@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Program,Menuheader, Buttons } from '../../Component'
+import { Menuheader, Buttons } from '../../Component'
 import '../ProgramHome/ProgramHome.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
@@ -8,9 +8,29 @@ import addicon from '../../img/add.png'
 import closeicon from '../../img/close.png'
 
 const ProgramHome = () => {
-  const [isOpen,setIsOpen]= useState(false);
   const [selectedValue, setSelectedValue] = useState('');
-  
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredValue, setFilteredValue] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const [isOpen,setIsOpen]= useState(false);
+
+  const data=[{kod:"SECJ2023",name:"Databse",tarikhMula:"12/05/2023",tarikhTamat:"14/05/2023"},
+  {kod:"SECK2023",name:"OOP",tarikhMula:"11/05/2023",tarikhTamat:"12/05/2023"}
+  ]
+
+
+  const kodfilter = () => {
+      const sorted = data.sort((a, b) => a.kod.localeCompare(b.kod));
+      setSearchValue(sorted)}
+
+  const tmfilter = () => {
+      const sorted = data.sort((a, b) => a.tarikhMula.localeCompare(b.tarikhMula));
+      setSearchValue(sorted)}
+
+    const ttfilter = () => {
+        const sorted = data.sort((a, b) => a.tarikhTamat.localeCompare(b.tarikhTamat));
+        setSearchValue(sorted)}
+
     const handleSelectChange = (event) => {
       const selectedOption = event.target.options[event.target.selectedIndex];
       const displayValue = selectedOption.getAttribute('data-display-value');
@@ -20,10 +40,39 @@ const ProgramHome = () => {
         selectedOption.value = "Susunan";
       }
       setSelectedValue(selectedOption.value);
-      
+      if (selectedOption.value === "KodKursus"){kodfilter();}
+      else if (selectedOption.value === "TarikhMula"){tmfilter();}
+      else if (selectedOption.value === "TarikhTamat"){ttfilter();}
+      else if (selectedOption.value === "Susunan"){setSearchValue(data)}
+
+
     };
+
+    const handleSubmit = async () => {
+      if (isSearching) {
+        return;
+      }
+      setIsSearching(true);
+      try{
+        if(!isNaN(filteredValue)){
+      const filtered = data.filter(item => item.kod.toString().startsWith(filteredValue));
+      setSearchValue(filtered);
+      }
+      else{
+    const filtered = data.filter(item => item.name.toLowerCase().includes(filteredValue.toLowerCase()));
+    setSearchValue(filtered);
+    }
+      await new Promise((resolve) => setTimeout(resolve, 2000));}
+      catch (error) {
+        console.error('Search failed:', error);
+      } finally {
+        // Set the isSearching flag back to false to indicate search is completed
+        setIsSearching(false);
+      }
+    }
+  
   return (
-    <div>
+    <div className='app_box'>
       <Menuheader/>
       <NavLink to='/admin/add-course'><button className='addbutton'><img src={addicon} alt="This is an add icon." className='addicon'/></button></NavLink>
       <div className='programsec'>
@@ -47,10 +96,10 @@ const ProgramHome = () => {
             </form>
             <form className='search'>
                 <div className='searchbox'>
-                    <input type="text" placeholder="Kod / Nama Kursus" className='searchtype'/>
+                    <input value={filteredValue} type="text" placeholder="Kod / Nama Kursus" className='searchtype' onChange={e => setFilteredValue(e.target.value)}/>
                 </div>
                 <div className='filtericon'>
-                    <button type="button" className="searchbutton">
+                    <button className="searchbutton" onClick={handleSubmit} disabled={isSearching}>
                         <img src={searchpic} alt='This is a search button.' type="submit" className="searchpic"/>
                     </button>
                 </div>
@@ -68,19 +117,40 @@ const ProgramHome = () => {
               <th className='programaktiviti'>Aktiviti</th>
             </tr>
         </thead>
+        {searchValue===""?(
         <tbody>
-          <tr className='row1'>
-              <td>SECK0233</td>
-              <td>s</td>
-              <td className='tarikh'>12/04/2023</td>
-              <td className='tarikh'>12/04/2023</td>
-              <td className='aktivitioption'>
+        {data.map((item,index)=>(
+          <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
+            <td>{item.kod}</td>
+            <td>{item.name}</td>
+            <td className='centerdata'>{item.tarikhMula}</td>
+            <td className='centerdata'>{item.tarikhTamat}</td>
+            <td>
                 <NavLink to='/admin/semak' className="aktivititype">Semak</NavLink>
                 <NavLink to='/admin/edit-program' className="aktivititype">Edit</NavLink>
                 <button className="padambutton" onClick={()=>setIsOpen(true)}>Padam</button>
-              </td>
-          </tr>
+         </td>
+      </tr>
+        ))}
         </tbody>
+      ):(
+        <tbody>
+        {searchValue.map((item,index)=>(
+          <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
+          <td>{item.kod}</td>
+          <td>{item.name}</td>
+          <td className='centerdata'>{item.tarikhMula}</td>
+          <td className='centerdata'>{item.tarikhTamat}</td>
+          <td>
+              <NavLink to='/admin/semak' className="aktivititype">Semak</NavLink>
+              <NavLink to='/admin/edit-program' className="aktivititype">Edit</NavLink>
+              <button className="padambutton" onClick={()=>setIsOpen(true)}>Padam</button>
+          </td>
+      </tr>
+        ))}
+        </tbody>
+      )}
+               
       </table>
     </div>
     {isOpen && (

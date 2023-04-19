@@ -7,7 +7,7 @@ import '../ProgramEdit/programedit.css'
 const ProgramEdit = () => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className='app_box'>
       <div className='daftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
       <h1 className='daftaradmin'>EDIT SIJIL</h1>

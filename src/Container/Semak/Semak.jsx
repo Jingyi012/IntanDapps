@@ -53,8 +53,8 @@ const Semak = ({title}) => {
           <tr className='row2'>
               <td>SECK0233</td>
               <td>s</td>
-              <td>80%</td>
-              <td><Sejarah title="Dicipta"/></td>
+              <td className='centerdata'>80%</td>
+              <td className='centerdata'><Sejarah title="Dicipta"/></td>
               <td>
                 <NavLink to='/admin/cipta-sijil' className="aktivititype">Cipta</NavLink>
                 <NavLink to='/admin/edit-sijil' className="aktivititype">Edit</NavLink>
