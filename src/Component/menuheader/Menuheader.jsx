@@ -7,16 +7,16 @@ const menuheader = () => {
     <div className='menuheader'>
           <ul>
             <li>
-              <NavLink to="/admin/home">Senarai Program</NavLink>
+              <NavLink to="/admin/home" className='last'>Senarai Program</NavLink>
               </li>
             <li>
-              <NavLink to="/admin/peserta">Senarai Peserta</NavLink>
+              <NavLink to="/admin/peserta" className='last'>Senarai Peserta</NavLink>
               </li>
             <li>
-              <NavLink to="/admin/daftar-admin">Daftar Admin</NavLink>
+              <NavLink to="/admin/daftar-admin" className='last'>Daftar Admin</NavLink>
               </li>
-            <li className='last'>
-              <NavLink to="/admin/log">Log Aktiviti</NavLink>
+            <li>
+              <NavLink to="/admin/log" className='last'>Log Aktiviti</NavLink>
               </li>
           </ul>
     </div>

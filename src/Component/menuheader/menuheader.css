@@ -20,10 +20,10 @@ a{
     text-decoration: none;
 }
 
-.active{
-    color: orange;
+.last:hover{
+    color: #FFC94E;
 }
 
-.last{
-    border-right: none;
+.last:active{
+    color: #ffb200;
 }
