@@ -28,6 +28,7 @@
     padding: 0 2rem;
     align-items: center;
     height: 100%;
+    color: black;
 }
 
 .uNavMenu:hover{
@@ -37,13 +38,3 @@
 .userNav .active{
     color: rgb(122, 122, 255);
 }
-/*
-
-a{
-    text-decoration: none;
-}
-
-.active{
-    color:orange;
-}
-*/

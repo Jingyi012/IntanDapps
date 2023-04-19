@@ -5,15 +5,15 @@ import '../Semak/semak.css'
 import closeicon from '../../img/close.png'
 import { Buttons, Sejarah } from '../../Component'
 
-const Semak = ({title}) => {
+const Semak = () => {
   const [isOpen,setIsOpen]= useState(false);
   const navigate = useNavigate();
   return (
     <div className='app_box'>
       <div className='semakdaftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} className="backicon" alt='It is a back icon.'/></button>
-      <h1 className='semakdaftaradmin'>{title}</h1>
-      <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/{title}</div>
+      <h1 className='semakdaftaradmin'>DATABASE</h1>
+      <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/DATABASE</div>
       </div>
       <div className='informasibox'>
         <div className='informasiprogramtitle'>
