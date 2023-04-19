@@ -1,5 +1,4 @@
 import React from "react";
-import "@fortawesome/fontawesome-free/css/all.css";
 import "./styles/profile.css";
 
 import NavbarU from "../Component/userNavbar/NavbarU";
