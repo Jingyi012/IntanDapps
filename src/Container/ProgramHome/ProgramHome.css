@@ -1,0 +1,102 @@
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td{
+    border: 3px solid #DFDFDF;
+    font-size: 20px;
+}
+
+td{
+    text-align: left;
+    padding: 10px 0 10px 20px;
+    font-size: 15px;
+}
+
+th{
+    color: white;
+    font-size: 15px;
+    padding: 10px 0 10px 20px;
+    text-align: left;
+    background-color: #3F51B5;
+}
+
+.aktivitioption{
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    border: 0;
+    text-decoration: underline;
+}
+
+.programkod{
+    width: 10%;
+}
+.tarikh{
+    text-align: center;
+    padding: 0;
+    width: 10%;
+}
+
+.programaktiviti{
+    width: 18%;
+}
+
+.aktivititype{
+    color: black;
+    text-decoration: underline;
+}
+
+.addbutton{
+    display: flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: none;
+    background-color: #3F51B5;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 6%;
+    right: 4%;
+    cursor: pointer;
+}
+
+.addicon{
+    width: 70%;
+}
+
+.padambutton{
+    border: none;
+    background: none;
+    font-size: 14px;
+    text-align: bottom;
+    cursor: pointer;
+    padding: 2.93px 0 0 0;
+    text-decoration: underline;
+}
+
+
+.contentdeletesijil{
+    background-color: white;
+    width: 30%;
+    height: max-content;
+    position: relative;
+    border: 1px solid #3F51B5;
+}
+
+.contentdelete{
+    display: block;
+    padding: 0 30px 0 30px;
+    margin-top: 10px;
+}
+
+.padamconfirmbutton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}

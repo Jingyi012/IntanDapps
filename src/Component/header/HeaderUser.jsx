@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import "./header.css";
 
 function NavItem(props) {
@@ -39,7 +39,22 @@ function HeaderUser() {
     };
   });
 
-  
+  const logout = () =>{
+    localStorage.clear();
+    console.log("user");
+    Navigate("");
+    window.location.reload();
+  }
+
+  const roleChoice = () => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if(user.role === "ADMIN")
+    {
+      return true;
+    } else{
+      return false;
+    }
+  }
 
   return (
     <React.Fragment>
@@ -80,10 +95,17 @@ function HeaderUser() {
                 >
                   <NavItem
                     cn="navlink subItem"
+                    path={roleChoice() ? "/admin/home" : "/user/senarai-program-sedia-ada"}
+                    icon="bi bi-person-fill"
+                    name="Dashboard"
+                    close = {closeMobileMenu}
+                  />
+                  <NavItem
+                    cn="navlink subItem"
                     path=""
                     icon="bi bi-box-arrow-in-left"
                     name="Keluar"
-                    close = {closeMobileMenu}
+                    close = {logout}
                   />
                 </ul>
               </li>

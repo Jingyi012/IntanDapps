@@ -25,7 +25,7 @@ export default function Penyemak(){
               </label>
               
               <label htmlFor='myKadPenyemak'>No. MyKad: 
-                <input id='myKadPenyemak' name='myKadPenyemak' type='text' placeholder='No. MyKad' minlength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>
+                <input id='myKadPenyemak' name='myKadPenyemak' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>
               </label>
 
               <label htmlFor='organisasiPenyemak'>Nama Organisasi: 

@@ -5,7 +5,7 @@ import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import './InformasiSijil.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import backicon from '../../img/arrow.png';
-
+import sijilExp from '../../SijilExample.pdf';
 function InformasiSijil(){
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
     const navigate = useNavigate();
@@ -28,9 +28,9 @@ function InformasiSijil(){
                     
                     <div className="viewPdf">
                         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                            <Viewer fileUrl="" plugins={[defaultLayoutPluginInstance]}></Viewer>
+                            <Viewer fileUrl={sijilExp} plugins={[defaultLayoutPluginInstance]}></Viewer>
                         </Worker>
-                    </div>
+                    </div> 
                     
                 </div>
             </div>

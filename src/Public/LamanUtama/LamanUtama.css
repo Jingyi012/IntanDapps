@@ -28,7 +28,7 @@
 }
 
 .lineBreak{
-    border: gray dashed 2px;
+    border: rgb(148, 139, 248) dashed 2px;
     width: 60%;
     margin-bottom: 2rem;
 }
