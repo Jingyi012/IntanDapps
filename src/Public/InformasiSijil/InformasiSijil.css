@@ -18,16 +18,18 @@
     display: flex;
     flex-direction: column;
     align-items: left;
+    border: groove rgb(232, 232, 232) 2px;
+    padding: 2rem;
+    box-shadow: 3px 3px 5px 3px rgb(237, 237, 237);
 }
 
-.info{
+.infoContent .info{
     width: 80%;
     display: flex;
     margin: 0.8rem 0;
-    justify-content: space-between;
 }
 
-.label{
+.info .label{
     display: inline-block;
     width: 40%;
     text-align: left;

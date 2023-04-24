@@ -1,10 +1,9 @@
 import React from "react";
 
 import { Navigate, Outlet } from "react-router-dom";
-import HeaderUser from "../Component/header/HeaderUser";
 
 const useAuth = () => {
-	//get item from localstorage
+	//get user from localstorage, if there exist user means the user had logged in
 	let user;
 	const _user = localStorage.getItem("user");
 
@@ -25,13 +24,12 @@ const useAuth = () => {
 	}
 };
 
-const AdminRoutes = (props) => {
+const AdminRoutes = () => {
 	const { auth, role } = useAuth();
-
+	{/* If user is authenticated and the role is ADMIN, the user can access the admin pages, else direct to login page */}
 	if (auth) {
 		return role === "ADMIN" ? (
 			<>
-				<HeaderUser />
 				<Outlet />
 			</>
 		) : (

@@ -5,12 +5,16 @@ import './UserLogin.css';
 function UserLogin(){
   const navigate = useNavigate();
   const [mykad, setMykad] = useState("");
+
+  //restrict the input only number
   const onChangeMykad = (e) =>{
     const regex = /^[0-9\b]+$/;
     if(e.target.value === "" || regex.test(e.target.value)){
       setMykad(e.target.value);
     }
   }
+
+  //after login, direct user to user home page (program list), set the role as USER
   const userLogin = (e) => {
     e.preventDefault();
     localStorage.setItem("user", JSON.stringify({role: "USER"}));
@@ -25,7 +29,7 @@ function UserLogin(){
               <h1>Daftar Masuk</h1>
               <p>Sebagai User</p>
             </div>
-            
+            {/*User login form */}
             <form className='loginForm' action="senarai-program-sedia-ada" onSubmit={userLogin}>
               <label htmlFor='LoginMyKad'>No. MyKad: 
                 <input id='LoginMyKad' name='LoginMyKad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>
