@@ -5,13 +5,15 @@ import './AdminLogin.css';
 function AdminLogin(){
   const navigate = useNavigate();
   const [mykad, setMykad] = useState("");
+
+  //restrict the input only number
   const onChangeMykad = (e) =>{
     const regex = /^[0-9\b]+$/;
     if(e.target.value === "" || regex.test(e.target.value)){
       setMykad(e.target.value);
     }
   }
-
+  //after login, direct admin to admin home page (program list), set the role as ADMIN
   const adminLogin = (e) => {
     e.preventDefault();
     localStorage.setItem("user", JSON.stringify({role: "ADMIN"}));
@@ -27,6 +29,7 @@ function AdminLogin(){
               <h1>Daftar Masuk</h1>
               <p>Sebagai Admin</p>
             </div>
+            {/*Amin login form */}
             <form className='adminLoginForm' method="post"  action="/admin/home" onSubmit={adminLogin}>
               <label htmlFor='LoginMykad'>No. MyKad: 
                 <input id='LoginMykad' name='LoginMykad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>

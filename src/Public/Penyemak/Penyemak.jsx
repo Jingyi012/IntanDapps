@@ -1,15 +1,23 @@
 import {React, useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import './Penyemak.css';
 
 export default function Penyemak(){
   const [mykad, setMykad] = useState("");
+  const navigate = useNavigate();
+  //restrict input only number
   const onChangeMykad = (e) =>{
     const regex = /^[0-9\b]+$/;
     if(e.target.value === "" || regex.test(e.target.value)){
       setMykad(e.target.value);
     }
   }
+  //navigate to semak sijil page after submit the penyemak details
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    navigate('/semaksijil');
+  }
+
     return(
       <>
         <div className='penyemakPage'>
@@ -17,8 +25,8 @@ export default function Penyemak(){
             <div className='titlePenyemak'>
               <h1>Maklumat Penyemak</h1>
             </div>
-            {/*Need change */}
-            <form className='maklumatPenyemak' method='get' action='/semaksijil'>
+            {/*penyemak information form  method need change later*/}
+            <form className='maklumatPenyemak' method='get' onSubmit={handleSubmit}>
 
               <label htmlFor='namaPenyemak'>Nama: 
                 <input id='namaPenyemak' name='namaPenyemak' type='text' placeholder='Nama'/>

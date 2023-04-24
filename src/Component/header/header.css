@@ -84,7 +84,7 @@
 
 .nav-menu li:hover ul.sub-menu {
     display: block;
-    transition: opacity 0.2s;
+    transition: opacity 0.5s;
     opacity: 1;
     height: auto;
 }
@@ -92,7 +92,7 @@
 .nav-menu li ul.sub-menu li{
     overflow: hidden;
     height: 3rem;
-    transition: opacity 0.2s;
+    transition: opacity 0.5s;
     opacity: 0;
     visibility: hidden;
 }
@@ -181,6 +181,8 @@
         margin: 0;
         top: 3rem !important;
         text-align: left;
+        background-color: #3F51B5 !important;
+        height: auto !important;
     }
 
     .sub-menu.active{
@@ -197,12 +199,10 @@
 
     .sub-menu li{
         display: flex;
-        height: 100%;
         margin: 0;
         padding: 0;
         height: 0 !important;
-        transition: height 0.3s linear !important;
-        background-color: #3F51B5 !important;
+        transition: height 0.3s linear !important;  
     }
     
     .navlink, .akaun {
