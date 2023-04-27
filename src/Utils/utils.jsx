@@ -193,6 +193,51 @@ export const deleteProductAction = async (defaultAccountAddress, adminAddress, a
     console.log('Deleted app-id: ', appId);
   };
   
-  
+  // UPDATE CERTIFICATE: ApplicationUpdateTxn
+export const updateCertificateAction = async (senderAddress, appId, newCertificateInfo) => {
+
+  console.log("Updating certificate...");
+  console.log("App ID: ", appId);
+  console.log("Sender Address: ", senderAddress);
+  console.log("New Certificate Info: ", newCertificateInfo);
+
+  let params = await algodClient.getTransactionParams().do();
+  params.fee = algosdk.ALGORAND_MIN_TX_FEE;
+  params.flatFee = true;
+
+  // Build required app args as Uint8Array
+  let updateArg = new TextEncoder().encode("update");
+  let newCertificateInfoArg = new TextEncoder().encode(newCertificateInfo);
+  let appArgs = [updateArg, newCertificateInfoArg];
+
+  // Create ApplicationUpdateTxn
+  let txn = algosdk.makeApplicationUpdateTxnFromObject({
+    approvalProgram: new Uint8Array(Buffer.from("AiABASI=", "base64")),
+    clearProgram: new Uint8Array(Buffer.from("AiABASI=", "base64")),
+    from: senderAddress,
+    appIndex: Number(appId),
+    suggestedParams: params,
+    appArgs: appArgs,
+    note: new Uint8Array(Buffer.from("Update certificate"))
+  });
+
+  // Get transaction ID
+  let txId = txn.txID().toString();
+
+  // Sign & submit the transaction
+  const myAlgoConnect = new MyAlgo();
+  let signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
+  console.log("Signed transaction with txID: %s", txId);
+  await algodClient.sendRawTransaction(signedTxn.blob).do();
+
+  // Wait for transaction to be confirmed
+  const confirmedTxn = await algosdk.waitForConfirmation(algodClient, txId, 4);
+
+  // Get the completed Transaction
+  console.log("Transaction " + txId + " confirmed in round " + confirmedTxn["confirmed-round"]);
+
+  // Notify about completion
+  console.log("Updated certificate with app-id: ", appId);
+};
 
 
