@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import Certificate from './utils';
+import {Certificate} from './utils';
 import {
   TextField,
   Button,
