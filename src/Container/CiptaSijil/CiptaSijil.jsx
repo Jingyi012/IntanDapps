@@ -3,9 +3,24 @@ import '../CiptaSijil/ciptasijil.css'
 import { Buttons } from '../../Component'
 import { NavLink, useNavigate } from 'react-router-dom'
 import backicon from '../../img/arrow.png'
+import { deployContract, paySmartContract} from '../../Utils/utils'
+import { MNEMONIC_KEY } from '../../constant/ALGOkey';
+import algosdk from 'algosdk';
+
+const recoveredAccount = algosdk.mnemonicToSecretKey(MNEMONIC_KEY);
 
 const CiptaSijil = ({backpage}) => {
   const navigate = useNavigate();
+
+  //@niczrsoh: Change this to match the database
+  const handleDeploy = async () => {
+     
+   await deployContract(recoveredAccount, "Halo", "Course Date" )
+        .then(async (appId)=> {
+          paySmartContract (recoveredAccount, recoveredAccount, appId);
+        });
+      
+  }
   return (
     <div className='app_box'>
       
@@ -63,7 +78,7 @@ const CiptaSijil = ({backpage}) => {
           </div>
           </div>
         </form>
-        <div className='submitBtn'><Buttons title="CIPTA"/></div>
+        <div className='submitBtn'><Buttons title="CIPTA" onClick={handleDeploy}/></div>
       
     </div>
   )
