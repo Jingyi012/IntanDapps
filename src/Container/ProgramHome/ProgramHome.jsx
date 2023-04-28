@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState,useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Menuheader, Buttons } from '../../Component'
 import '../ProgramHome/ProgramHome.css'
@@ -6,17 +6,15 @@ import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
 import addicon from '../../img/add.png'
 import closeicon from '../../img/close.png'
-import AppContext from '../../Context/AppContext'
-
+import AppContext,{ AppContextProvider } from '../../Context/AppContext'
 const ProgramHome = () => {
   const [selectedValue, setSelectedValue] = useState('');
   const [searchValue, setSearchValue] = useState("");
   const [filteredValue, setFilteredValue] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isOpen,setIsOpen]= useState(false);
-  const {account , setAccount} = useContext(AppContext);
-  console.log('accpunt', account);
-
+  const { account, setAccount } = useContext(AppContext);
+  console.log(account);
   const data=[{kod:"SECJ2023",name:"Databse",tarikhMula:"12/05/2023",tarikhTamat:"14/05/2023"},
   {kod:"SECK2023",name:"OOP",tarikhMula:"11/05/2023",tarikhTamat:"12/05/2023"}
   ]
@@ -75,6 +73,7 @@ const ProgramHome = () => {
     }
   
   return (
+    
     <div className='app_box'>
       <Menuheader/>
       <NavLink to='/admin/add-course'><button className='addbutton'><img src={addicon} alt="This is an add icon." className='addicon'/></button></NavLink>
