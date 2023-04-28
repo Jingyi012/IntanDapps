@@ -1,5 +1,5 @@
 import algosdk from 'algosdk';
-import { ALGOkey,ALGOD_TESTNET_URL,ALGOD_PORT } from '../Constant/ALGOkey';
+import { ALGOkey,ALGOD_TESTNET_URL,ALGOD_PORT } from '../constant/ALGOkey';
 
 /**
  * Wait for the transaction to be confirmed on the Algorand network.

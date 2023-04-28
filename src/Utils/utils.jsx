@@ -2,9 +2,8 @@
 import React from 'react';
 import { Page, Text, View, Document, Image } from '@react-pdf/renderer';
 import algosdk from 'algosdk';
-import '../constant/ALGOkey';
 import MyAlgo from '@randlabs/myalgo-connect';
-import { ALGOD_PORT, ALGOD_TESTNET_URL, ALGOkey } from '../constant/ALGOkey';
+import { ALGOD_PORT, ALGOD_TESTNET_URL, ALGOkey } from '../constant/ALGOkey.js'
 import {styles} from './CertStyles';
 const algodClient = new algosdk.Algodv2(ALGOkey , ALGOD_TESTNET_URL, ALGOD_PORT);
 

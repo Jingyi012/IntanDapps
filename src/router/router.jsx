@@ -65,8 +65,6 @@ function Router(){
             <Route path="/user/detail" exact element={<Detail/>}/>
             <Route path="/user/profile" exact element={<Profile/>}/>
           </Route>
-
-          <Route path="/testing" element={<Testing />}/>
         </Routes>
       </> 
     )
