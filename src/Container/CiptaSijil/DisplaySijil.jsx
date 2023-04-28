@@ -2,7 +2,7 @@ import React, { useState,useContext,useEffect} from 'react';
 import algosdk from 'algosdk';
 import {useNavigate, useParams } from "react-router-dom";
 import AppContext ,{ AppContextProvider } from '../../Context/AppContext';
-import { indexerClient } from '../../Constant/ALGOkey';
+import { indexerClient } from '../../constant/ALGOkey';
 const DisplaySijil = () =>{
 
     const transId = useParams();

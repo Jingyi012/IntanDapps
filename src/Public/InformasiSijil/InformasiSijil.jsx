@@ -5,8 +5,7 @@ import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import './InformasiSijil.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import backicon from '../../img/arrow.png';
-import sijilExp from '../../SijilExample.pdf';
-import { Certificate } from '../../Utils/utils';
+import { Certificate } from '../../Utils/utils.jsx';
 import { PDFViewer } from '@react-pdf/renderer';
 import templateSrc from '../../Certificate.png';
 import qrCodeImage from '../../intan.png'
