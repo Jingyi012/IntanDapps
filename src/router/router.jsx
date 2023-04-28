@@ -24,8 +24,8 @@ import Detail from '../UserPage/Detail';
 import Profile from '../UserPage/Profile';
 import AdminRoutes from './adminRoutes';
 import PublicRoutes from "./publicRoutes";
-import UserRoutes from "./userRoutes"
-import Testing from "../Utils/testing";
+import UserRoutes from "./userRoutes";
+import DisplaySijil from "../Container/CiptaSijil/DisplaySijil";
 function Router(){
     return(
       <>
@@ -50,6 +50,7 @@ function Router(){
             <Route path="/admin/program-edit" exact element={<ProgramEdit />}/>
             <Route path="/admin/peserta-semak" exact element={<PesertaSemak />}/>
             <Route path="/admin/cipta-sijil" exact element={<CiptaSijil />}/>
+            <Route path="/admin/display-sijil/:transId" element={<DisplaySijil />}/>
             <Route path="/admin/edit-sijil" exact element={<EditSijil />}/>
             <Route path="/admin/cipta-sijil-peserta" exact element={<CiptaSijil />}/>
             <Route path="/admin/edit-sijil-peserta" exact element={<EditSijil />}/>
