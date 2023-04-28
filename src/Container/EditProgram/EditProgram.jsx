@@ -4,6 +4,7 @@ import backicon from '../../img/arrow.png'
 import { Buttons } from '../../Component'
 import '../EditProgram/editprogram.css'
 
+
 const EditProgram = () => {
   const navigate = useNavigate();
   return (
@@ -58,7 +59,7 @@ const EditProgram = () => {
           </div>
           </div>
         </form>
-        <div className='submitBtn'><Buttons title="SELESAI"/></div>
+        <div className='submitBtn'><Buttons title="SELESAI" /></div>
     </div>
   )
 }

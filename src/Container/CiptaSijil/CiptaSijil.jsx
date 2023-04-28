@@ -1,11 +1,14 @@
 import React,{useState} from 'react'
 import '../CiptaSijil/ciptasijil.css'
 import { Buttons } from '../../Component'
-import AppContext,{ AppContextProvider, } from '../../Context/AppContext'
+
 import { NavLink, useNavigate } from 'react-router-dom'
-import { deployContract,payContract, optInContract } from '../../Utils/utils';
 import backicon from '../../img/arrow.png'
+import { deployContract, payContract} from '../../Utils/utils'
+import { systemAccount } from '../../Constant/ALGOkey';
 import algosdk from 'algosdk';
+
+
 
 const CiptaSijil = ({backpage}) => {
   const navigate = useNavigate();
@@ -14,24 +17,21 @@ const CiptaSijil = ({backpage}) => {
   const [tarikhTamat,setTarikhTamat] = useState('');
   const [nama,setNama] = useState('');
   const [NRIC,setNRIC] = useState('');
-  const mnemonic = 'leg cage army someone purse hurt imitate reform impulse west girl find abuse empty bone employ air post bid custom guilt surge weather abstract bulb';
-  const recoveredAccount = algosdk.mnemonicToSecretKey(mnemonic);
-  const [userMnemonic, setUserMnemonic] = useState('');
+
  
   //ask user to insert his/her mnemonic before deploy the contract 
 const handleClick = async (event) => {
   const enteredInput = await prompt('Please enter wallet mnemonic')
-  setUserMnemonic(enteredInput)
   return enteredInput;
 }
 
-  const handleDeployContract = async () => {
-    return await deployContract(recoveredAccount, {tajukSijil},{tarikhMula},{tarikhTamat},{nama});
+  const handleDeployContract = async (arr) => {
+    return await deployContract(systemAccount, arr);
     //setDeployedAddress(Txn);
   };
-  const payDeployContract = async (userAcc,appId) => {
+  const payDeployContract = async (userAcc,appId,arr) => {
     console.log(userAcc);
-    return await payContract(userAcc, appId,{tajukSijil},{tarikhMula},{tarikhTamat},{nama});
+    return await payContract(userAcc, appId,arr);
     //setDeployedAddress(Txn);
   };
   return (
@@ -57,12 +57,14 @@ const handleClick = async (event) => {
             <p className="kik">:</p>
             <input
           type="text"
+          className='inputtext'
           id="tajukSijil"
           value={tajukSijil}
           onChange={(e) => setTajukSijil(e.target.value)}
         />
           </div>
           </div>
+       
           <div className='maklumat'>
             <label className="kik">TARIKH MULA</label>
             <div className='textarea'>
@@ -70,6 +72,7 @@ const handleClick = async (event) => {
             <input
           type="text"
           id="tarikhMula"
+          className='inputtext'
           value={tarikhMula}
           onChange={(e) => setTarikhMula(e.target.value)}
         />
@@ -82,6 +85,7 @@ const handleClick = async (event) => {
             <input
           type="text"
           id="tarikhTamat"
+          className='inputtext'
           value={tarikhTamat}
           onChange={(e) => setTarikhTamat(e.target.value)}
         />
@@ -100,6 +104,7 @@ const handleClick = async (event) => {
             <input
           type="text"
           id="nama"
+          className='inputtext'
           value={nama}
           onChange={(e) => setNama(e.target.value)}
         /></div>
@@ -111,6 +116,7 @@ const handleClick = async (event) => {
             <input
           type="text"
           id="NRIC"
+          className='inputtext'
           value={NRIC}
           onChange={(e) => setNRIC(e.target.value)}
         /></div>
@@ -118,17 +124,18 @@ const handleClick = async (event) => {
           </div>
           </div>
           </div>
-          <button onClick={async ()=>{
+          <div className='submitBtn' ><Buttons title="Deploy Contract" onClick={async ()=>{
+       const arr = [{tajukSijil},{tarikhMula},{tarikhTamat},{nama}];
        const mnemonic = await handleClick();
      //   let txn; 
-       const appid= await handleDeployContract();
+       const appid= await handleDeployContract(arr);
        console.log(mnemonic);
        const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
-       const txnId = await payDeployContract(userAcc, appid);
+       const txnId = await payDeployContract(userAcc, appid,arr);
        
        navigate(`/admin/display-sijil/${txnId}`);
     }
-        }>Deploy Contract</button>
+        }></Buttons></div>
 
 
     </div>

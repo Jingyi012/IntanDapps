@@ -26,6 +26,7 @@ import AdminRoutes from './adminRoutes';
 import PublicRoutes from "./publicRoutes";
 import UserRoutes from "./userRoutes";
 import DisplaySijil from "../Container/CiptaSijil/DisplaySijil";
+import Testing from "../Utils/testing";
 function Router(){
     return(
       <>
@@ -65,6 +66,8 @@ function Router(){
             <Route path="/user/detail" exact element={<Detail/>}/>
             <Route path="/user/profile" exact element={<Profile/>}/>
           </Route>
+
+          <Route path="/testing" element={<Testing />}/>
         </Routes>
       </> 
     )
