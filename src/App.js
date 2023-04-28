@@ -7,11 +7,13 @@ import Header from './Component/header/Header';
 function App() {
 	return (
 		<div className="App">
+
 			<Header />
 			<div className="body">
 				<Router />
 			</div>
 			<Footer />
+
 		</div>
 	);
 }
