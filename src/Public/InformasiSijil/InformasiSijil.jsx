@@ -17,14 +17,10 @@ function InformasiSijil(){
     
 
     useEffect(() => {
-        
         async function fetchData() {
             const data = await fetchformDataFromDatabase();
             setFormData(data);
         }
-        
-        
-
         fetchData();
     }, []);
 
