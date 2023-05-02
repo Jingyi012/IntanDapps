@@ -39,7 +39,7 @@ function Router(){
             <Route path='register' element={<Register/>}/>
             <Route path='admin-login' element={<AdminLogin/>}/>
             <Route path='maklumat-penyemak' element={<Penyemak/>}/>
-            <Route path='informasi-sijil' element={<InformasiSijil/>}/>
+            <Route path='informasi-sijil/:transId' element={<InformasiSijil/>}/>
           </Route>
           {/*Admin */}
           <Route element={<AdminRoutes />}>
