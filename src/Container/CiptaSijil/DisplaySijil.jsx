@@ -1,7 +1,7 @@
 import React, { useState,useContext,useEffect} from 'react';
 import {useNavigate, useParams } from "react-router-dom";
 import AppContext ,{ AppContextProvider } from '../../Context/AppContext';
-import { indexerClient } from '../../constant/ALGOkey';
+import { indexerClient } from '../../Constant/ALGOkey';
 const DisplaySijil = () =>{
 
     const transId = useParams();
