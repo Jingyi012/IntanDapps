@@ -1,0 +1,14 @@
+import algosdk from 'algosdk';
+
+export const ALGOkey = 'QZ584lQ7DF7U2somENFzV7GwLGNbiNdB82oPh7j3';
+export const ALGOD_TESTNET_URL = 'https://node.testnet.algoexplorerapi.io';
+export const ALGOD_PORT = '';
+
+const indexerServer = "https://algoindexer.testnet.algoexplorerapi.io";
+/**
+ * Just for Testing!!!
+ * @Please Change this
+ *  **/
+export const MNEMONIC_KEY = 'leg cage army someone purse hurt imitate reform impulse west girl find abuse empty bone employ air post bid custom guilt surge weather abstract bulb';
+export const systemAccount = algosdk.mnemonicToSecretKey(MNEMONIC_KEY);
+export const indexerClient = new algosdk.Indexer('', indexerServer, '');
