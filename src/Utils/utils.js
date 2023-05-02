@@ -2,10 +2,10 @@ import React from 'react';
 import { Page, Text, View, Document, Image } from '@react-pdf/renderer';
 import algosdk from 'algosdk';
 import '../Constant/ALGOkey';
-import MyAlgo from '@randlabs/myalgo-connect';
 import { ALGOD_PORT, ALGOD_TESTNET_URL, ALGOkey,systemAccount } from '../Constant/ALGOkey';
 import {styles} from './CertStyles';
 
+//use to design the certificate
 export const Certificate = ({ participantName, participantMykad, courseName, courseDate, algorandExplorer, templateSrc, qrCodeImage }) => (
     <>
       <Document>
@@ -27,13 +27,8 @@ export const Certificate = ({ participantName, participantMykad, courseName, cou
       </Document>
     </>
   );
-/**
- * Wait for the transaction to be confirmed on the Algorand network.
- * @param {Object} algodClient - An instance of the Algorand client to communicate with the network.
- * @param {string} txId - The transaction ID to wait for confirmation.
- * @return {Promise<Object>} The transaction information object after the transaction is confirmed.
- */
 
+  //wait for confirmation for the particular transaction
 export const waitForConfirmation = async (algodClient, txId) => {
     let response;
     while (true) {
@@ -47,20 +42,23 @@ export const waitForConfirmation = async (algodClient, txId) => {
     return response;
     };
 
-    /**
- * Deploy the contract on Algorand network.
- * @param {Object} sender - Sender's account containing the address and secret key.
- * @param {Object} note - Note object to be added to the transaction.
- * @return {Promise<number>} The application of the deployed contract.
- */
+//the system deploy the contract
 export const deployContract = async (sender,arr)=>{
 
+  //making a new instance for the Algosdk Algodv2 class, which is used to interact with the Algorand node API
     const algodClient = new algosdk.Algodv2(ALGOkey , ALGOD_TESTNET_URL, ALGOD_PORT);
+
+    //setting the appArgs in the transaction later
     let appArgs =[];
+    //param from the transaction is created here to ensure that transaction can be processed quickly by determining the first and last round
+    //the first and last round must be determined appropriately without too narrow or too wide to prevent rejection or slow processing
     const params = await algodClient.getTransactionParams().do();
+    console.log(params);
+    //to encode it into Uint8Array
     for(let a of arr)appArgs.push(new TextEncoder().encode(JSON.stringify(a)));
-    
     let note = new TextEncoder().encode(JSON.stringify("Intan Cert Creation By System"));
+
+    //makeApplicationCreateTxnFromObject is a function from ALgorand to develop a new smart contract
     const txn = algosdk.makeApplicationCreateTxnFromObject({
         suggestedParams: {
             ...params,
@@ -75,13 +73,18 @@ export const deployContract = async (sender,arr)=>{
         note: note, // Add the note with course information
     });
     console.log(txn);
-    // Sign the transaction
+    // Sign the transaction using secret key from sender
     const signedTxn = txn.signTxn(sender.sk);
 
+    //send the signed transaction to the blockchain network for processing and inclusion in a block
     const tx = await algodClient.sendRawTransaction(signedTxn).do();
     console.log('Transaction ID:', tx.txId);
+
+    //the block will still in pending due to no confirm it yet.
     console.log(algodClient.pendingTransactionInformation(tx.txId).do());
+
     const roundsTowait = 2;
+    //wait the transaction be confirmed by the network.
     const confirmedTxn = await algosdk.waitForConfirmation(algodClient, tx.txId, roundsTowait);
 
     console.log(algodClient.getTransactionProof(tx.txId))
@@ -100,10 +103,11 @@ export const payContract = async (sender,appId,arr)=>{
     //give note a default value called create
     let note = new TextEncoder().encode(JSON.stringify("Admin "+sender.addr+" Create this dapps"));
     console.log(appId);
+    //makeApplicationCreateTxnFromObject is a function from ALgorand to call a previous contract and develop a new contract
     let appCallTxn = algosdk.makeApplicationCallTxnFromObject({
         from: sender.addr,
         appIndex: Number(appId),
-        onComplete: algosdk.OnApplicationComplete.NoOpOC,
+        onComplete: algosdk.OnApplicationComplete.NoOpOC,//NoOpOc means will just simply call 
         suggestedParams: params,
         appArgs: appArgs,
         note: note
@@ -127,7 +131,7 @@ export const deleteProductAction = async (appIndex) => {
     params.fee = algosdk.ALGORAND_MIN_TX_FEE;
     params.flatFee = true;
   
-    // Create ApplicationDeleteTxn
+    // Create ApplicationDeleteTxn by deleting the smart contract
     let deleteTxn = algosdk.makeApplicationDeleteTxnFromObject({
       //from: defaultAccountAddress,
       from: systemAccount.addr,
@@ -135,20 +139,10 @@ export const deleteProductAction = async (appIndex) => {
       appIndex: Number(appIndex),
       accounts: ['LBYHFLX4CPWPQOSQNNGHMJAIVOOB33UQAKN6DRB4I5DJGBIDBVYQYRGSK4']
     });
-  
-    // Sign the transaction
-    // const myAlgoConnect = new MyAlgo();
-    // const signedDeleteTxn = await myAlgoConnect.signTransaction(deleteTxn.toByte());
+
     const signedDeleteTxn = await deleteTxn.signTxn(systemAccount.sk);
-    // Send the transaction
- //   const signedTxns = [signedDeleteTxn.blob];
     const tx = await algodClient.sendRawTransaction(signedDeleteTxn).do();
 
-  
-    // Get the transaction ID
-    //let txId = deleteTxn.txID().toString();
-  
-    // Wait for transaction to be confirmed
     const confirmedTxn = await algosdk.waitForConfirmation(algodClient, tx.txId, 4);
   
     // Get the completed Transaction
@@ -186,12 +180,7 @@ export const updateCertificateAction = async (senderAcc, appId, arr) => {
     note: new Uint8Array(Buffer.from("Update certificate"))
   });
 
-  // Get transaction ID
-//  let txId = txn.txID().toString();
 
-  // Sign & submit the transaction
- // const myAlgoConnect = new MyAlgo();
- // let signedTxn = await myAlgoConnect.signTransaction(txn.toByte());
  const signedTxn = await txn.signTxn(senderAcc.sk);
     const tx = await algodClient.sendRawTransaction(signedTxn).do();
 
