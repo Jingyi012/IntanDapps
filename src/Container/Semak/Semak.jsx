@@ -82,7 +82,7 @@ const Semak = () => {
                 </p></div>
                 <div className='padamconfirmbutton'><Buttons title="Padam" onClick={()=>
                   { console.log(account);
-                    const deleteId = deleteProductAction('206694868');
+                    const deleteId = deleteProductAction('209557234');
                     const transId=payContract(deleteId);
                     console.log(transId);
                     }}/></div>
