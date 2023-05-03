@@ -76,8 +76,9 @@ function AdminLogin(){
               <button type="button" onClick={connectPeraAlgoWallet}>Connect to Pera Algo Wallet</button>
               <button type="button" onClick={connectMyAlgoWallet}>Connect to MyAlgo Wallet</button>   
               <div>Your Login Account: </div>
-              <div className="displayAcc">{account}</div>
-
+              <div className='displayAcc'>
+              <div>{account}</div>
+              </div>
               <button type='Submit'>Daftar Masuk</button>
               
             </form>
