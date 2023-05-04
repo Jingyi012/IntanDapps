@@ -2,7 +2,6 @@ import React from 'react';
 import { Page, Text, View, Document, Image } from '@react-pdf/renderer';
 import algosdk from 'algosdk';
 import '../Constant/ALGOkey';
-import MyAlgo from '@randlabs/myalgo-connect';
 import { ALGOD_PORT, ALGOD_TESTNET_URL, ALGOkey,systemAccount } from '../Constant/ALGOkey';
 import {styles} from './CertStyles';
 import QrCode from "qrcode";
@@ -55,6 +54,7 @@ export const Certificate = ({ participantName, participantMykad, courseName, cou
  * @return {Promise<Object>} The transaction information object after the transaction is confirmed.
  */
 
+  //wait for confirmation for the particular transaction
 export const waitForConfirmation = async (algodClient, txId) => {
     let response;
     while (true) {

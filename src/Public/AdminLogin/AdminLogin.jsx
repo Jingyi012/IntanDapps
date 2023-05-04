@@ -73,9 +73,12 @@ function AdminLogin(){
                 <input id='LoginMykad' name='LoginMykad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>
               </label>
 
-              <button type="button" onClick={connectMyAlgoWallet}>Connect to MyAlgo Wallet</button>
+              <div>Sila log masuk dengan salah satu algorand wallet untuk dapatkan algorand akaun</div>
+              <br></br>
               <button type="button" onClick={connectPeraAlgoWallet}>Connect to Pera Algo Wallet</button>
-              {<text>{account}</text>}
+              <button type="button" onClick={connectMyAlgoWallet}>Connect to MyAlgo Wallet</button>   
+              <div>Your Login Account: </div>
+              <div className="displayAcc">{account}</div>
 
               <button type='Submit'>Daftar Masuk</button>
               
