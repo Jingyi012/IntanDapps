@@ -4,6 +4,12 @@ import algosdk from 'algosdk';
 import '../Constant/ALGOkey';
 import { ALGOD_PORT, ALGOD_TESTNET_URL, ALGOkey,indexerClient,systemAccount } from '../Constant/ALGOkey';
 import {styles} from './CertStyles';
+import QrCode from "qrcode";
+
+const QRCODE_OPTIONS = {
+    errorCorrectionLevel: 'H',
+    type: 'image/jpeg',
+}
 
 /**
 
@@ -300,5 +306,8 @@ export const updateCertificateAction = async (senderAcc, appId, arr) => {
   return tx.txId;
   };
 
-
+// Get a QR code in the form of Data URL, which can be set as <img>'s src attribute
+export async function getQrCodeDataUrl(data) {
+  return await QrCode.toDataURL(data, QRCODE_OPTIONS);
+}
 
