@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import backicon from '../../img/arrow.png'
 import '../Semak/semak.css'
 import closeicon from '../../img/close.png'
 import { Buttons, Sejarah } from '../../Component'
-
+import { systemAccount } from '../../Constant/ALGOkey';
+import AppContext,{ AppContextProvider, } from '../../Context/AppContext'
+import { deleteProductAction, payContract} from '../../Utils/utils'
 const Semak = () => {
   const [isOpen,setIsOpen]= useState(false);
   const navigate = useNavigate();
+  const { account, setAccount } = useContext(AppContext);
   return (
     <div className='app_box'>
       <div className='semakdaftarheader'>
@@ -77,7 +80,12 @@ const Semak = () => {
               <div><p>
                   Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                 </p></div>
-                <div className='padamconfirmbutton'><Buttons title="Padam"/></div>
+                <div className='padamconfirmbutton'><Buttons title="Padam" onClick={()=>
+                  { console.log(account);
+                    const deleteId = deleteProductAction('206694868');
+                    const transId=payContract(deleteId);
+                    console.log(transId);
+                    }}/></div>
               </div>
             </div>
             </div>
