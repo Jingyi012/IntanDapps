@@ -24,8 +24,7 @@ function InformasiSijil(){
         async function fetchData() {
             const data = await fetchformDataFromBlockchain();
             setFormData(data);
-            })
-        }
+            }
         fetchData();
     }, []);
 
@@ -85,11 +84,11 @@ function InformasiSijil(){
                     </div>
                     {/* Sijil detail section */}
                     <div className="infoContent">
-                        <div className='info'><span className='label'>NAMA</span><span>:</span><div className='data'>{nama}</div></div>
+                        <div className='info'><span className='label'>NAMA</span><span>:</span><div className='data'>{formData.participantName}</div></div>
                         <div className='info'><span className='label'>NO. MYKAD</span><span>:</span><div className='data'>{'----'}</div></div>
-                        <div className='info'><span className='label'>NAMA KURSUS</span><span>:</span><div className='data'>{tajuk}</div></div>
-                        <div className='info'><span className='label'>TARIKH</span><span>:</span><div className='data'>{mula}-{tamat}</div></div>
-                        <div className='info'><span className='label'>ALGORAND EXPLORER</span><span>:</span><a href={`https://testnet.algoexplorer.io/tx/${transId.transId}`}  className='data'>{`https://testnet.algoexplorer.io/tx/${transId.transId}`}</a></div>
+                        <div className='info'><span className='label'>NAMA KURSUS</span><span>:</span><div className='data'>{formData.courseName}</div></div>
+                        <div className='info'><span className='label'>TARIKH</span><span>:</span><div className='data'>{formData.courseDate}</div></div>
+                        <div className='info'><span className='label'>ALGORAND EXPLORER</span><span>:</span><a href={formData.algorandExplorer}  className='data'>{formData.algorandExplorer}</a></div>
                     </div>
 
                     Display sijil pdf
