@@ -1,9 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import "./styles/SenaraiProgram.css"
 import Intan from "../intan.png"
 import { NavLink } from "react-router-dom";
 import NavbarU from "../Component/userNavbar/NavbarU";
-
+import { db } from '../Backend/firebase/firebase-config'
+import { collection, getDocs, deleteDoc, doc,} from 'firebase/firestore'
 
 const data=[
   {kod:"SECD2523",nama:"Database",Tarikh:"14.3.2023-14.6.2023"},
@@ -16,11 +17,23 @@ const data=[
 function SenaraiProgramSediaAda() {
 
   const [searchValue, setSearchValue] = useState("");
+  const [programs,setPrograms] = useState([]);
 
   const filteredData = data.filter(item =>
     item.nama.toLowerCase().includes(searchValue.toLowerCase())||
     item.kod.toLowerCase().includes(searchValue.toLowerCase())
   );
+  
+  const userCollectionRef = collection(db, "Program")//crud 1,collection(reference, collectionName)
+
+  useEffect(() => {
+    const getProgram = async () => {
+      const data = await getDocs(userCollectionRef);//read 2
+      console.log(data);
+      setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+    }
+    getProgram().then(console.log(programs));
+  }, [])
 
   return (
     <>
@@ -53,13 +66,13 @@ function SenaraiProgramSediaAda() {
         </tr>
       </thead>
       <tbody>
-        {data.map((item,index)=>(
+        {programs.map((item,index)=>(
           <tr key={index} className={index % 2 === 0 ? "even" : "odd"}>
             <td className="Kod">{item.kod}</td>
             <td className="NameKursus">{item.nama}</td>
-            <td className="Tarikh">{item.Tarikh}</td>
+            <td className="Tarikh">{item.mula}-{item.tamat}</td>
             <td className="Aktiviti">
-              <NavLink to="/user/Detail" className="Semaklink">Semak</NavLink>
+              <NavLink to={`/user/Detail/${item.id}`} className="Semaklink">Semak</NavLink>
             </td>
           </tr>
         )

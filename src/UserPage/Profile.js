@@ -185,7 +185,7 @@ export default class profile extends React.Component {
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
       nama: "teoh",
       myKad: "ic",
-      Emelrasmi: "",
+      emelrasmi: "",
       emelperibadi: "",
       gelaran: "",
       telefon: "",
@@ -193,29 +193,29 @@ export default class profile extends React.Component {
       active: "profile",
     };
 
-    const databaseID = localStorage.getItem("databaseID");
-    console.log(databaseID);
-    // const getProfile = async (databaseID) => {
-    //   const docRef = doc(db, "User", databaseID);
-    //   const docSnap = await getDoc(docRef);
-    //   if (docSnap.exists()) {
-    //     console.log("Document data:", docSnap.data().emelPeribadi);
-    //     await this.setState({
-    //       nama: docSnap.data().nama,
-    //       myKad: docSnap.data().ic,
-    //       Emelrasmi: docSnap.data().emelRasmi,
-    //       emelperibadi: docSnap.data().emelPeribadi,
-    //       gelaran: docSnap.data().gelaran,
-    //       telefon: docSnap.data().telefonPejabat,
-    //       alamat: docSnap.data().alamat,
-    //     });
-    //   } else {
-    //     // docSnap.data() will be undefined in this case
-    //     alert("!!Something Wrong Occur!! Please try later");
-    //   }
-    // }
-
-    // getProfile();
+    const getProfile = async () => {
+      const databaseID = localStorage.getItem("databaseID");
+      const docRef = doc(db, "User", databaseID);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data().emelPeribadi);
+        await this.setState({
+          nama: docSnap.data().nama,
+          myKad: docSnap.data().ic,
+          emelrasmi: docSnap.data().emelRasmi,
+          emelperibadi: docSnap.data().emelPeribadi,
+          gelaran: docSnap.data().gelaran,
+          telefon: docSnap.data().telefonPejabat,
+          alamat: docSnap.data().alamat,
+        });
+        console.log(docSnap.data().emelRasmi)
+        console.log(this.state.emelrasmi)
+      } else {
+        // docSnap.data() will be undefined in this case
+        alert("!!Something Wrong Occur!! Please try later");
+      }
+    }
+    getProfile();
   }
 
 
@@ -251,35 +251,35 @@ export default class profile extends React.Component {
   editemelrasmi = (e) => {
     const emelrasmi = e.target.value;
     this.setState({
-      emelrasmi,
+      emelrasmi:emelrasmi,
     });
   };
 
   editemelperibadi = (e) => {
     const emelperibadi = e.target.value;
     this.setState({
-      emelperibadi,
+      emelperibadi:emelperibadi,
     });
   };
 
   editgelaran = (e) => {
     const gelaran = e.target.value;
     this.setState({
-      gelaran,
+      gelaran:gelaran,
     });
   };
 
   edittelefon = (e) => {
     const telefon = e.target.value;
     this.setState({
-      telefon,
+      telefon:telefon,
     });
   };
 
   editalamat = (e) => {
     const alamat = e.target.value;
     this.setState({
-      alamat,
+      alamat:alamat,
     });
   };
 
@@ -289,23 +289,29 @@ export default class profile extends React.Component {
     this.setState({
       active: activeP,
     });
-    //this.updateProfile(this.state);
+    this.updateProfile();
   };
 
-  // async updateProfile(databaseID,state) {
-  //   const docRef = doc(db, "cities", databaseID);
-
-  //   // Set the "capital" field of the city 'DC'
-  //   await updateDoc(docRef, {
-  //     nama: state.nama,
-  //       myKad: state.ic,
-  //       Emelrasmi: state.emelRasmi,
-  //       emelperibadi: state.emelPeribadi,
-  //       gelaran: state.gelaran,
-  //       telefon: state.telefonPejabat,
-  //       alamat: state.alamat,
-  //   });
-  // }
+  async updateProfile() {
+    if (this.state.active== "edit"){
+      console.log(this.state.nama);
+      const databaseID = localStorage.getItem("databaseID");
+      const docRef = doc(db, "User", databaseID);
+  
+      // Set the "capital" field of the city 'DC'
+      await updateDoc(docRef, {
+        nama: this.state.nama,
+        ic: this.state.myKad,
+        emelRasmi: this.state.emelrasmi,
+        emelPeribadi: this.state.emelperibadi,
+        gelaran: this.state.gelaran,
+        telefonPejabat: this.state.telefon,
+        alamat: this.state.alamat,
+      }).then(() => {
+        alert("update successful!");
+      });
+    }
+  }
 
   render() {
     const {

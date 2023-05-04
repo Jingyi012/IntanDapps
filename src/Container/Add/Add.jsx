@@ -4,7 +4,7 @@ import backicon from '../../img/arrow.png'
 import { Buttons } from '../../Component'
 import '../Add/add.css'
 import { db } from '../../Backend/firebase/firebase-config'
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, connectFirestoreEmulator } from 'firebase/firestore'
+import { collection, addDoc} from 'firebase/firestore'
 
 
 const Add = () => {
@@ -14,7 +14,7 @@ const Add = () => {
   const [mula,setMula] = useState("");
   const [nama,setNama] = useState("");
   const [penganjur,setPenganjur] = useState("");
-  const [peserta,setPeserta] = useState("");
+  const [jumPeserta,setJumPeserta] = useState("");
   const [tamat,setTamat] = useState("");
 
   const onChangeIsiProgram = (e) =>{
@@ -32,8 +32,8 @@ const Add = () => {
   const onChangePenganjur = (e) =>{
     setPenganjur(e.target.value);
   }
-  const onChangePeserta= (e) =>{
-    setPeserta(e.target.value);
+  const onChangeJumPeserta= (e) =>{
+    setJumPeserta(e.target.value);
   }
   const onChangeTamat = (e) =>{
     setTamat(e.target.value);
@@ -48,7 +48,8 @@ const Add = () => {
       mula: mula,
       nama: nama,
       penganjur: penganjur,
-      peserta: peserta,
+      jumPeserta: jumPeserta,
+      peserta: {},
       tamat: tamat,
     }).then(()=>{
       setIsiProgram("");
@@ -56,7 +57,7 @@ const Add = () => {
       setMula("");
       setNama("");
       setPenganjur("");
-      setPeserta("");
+      setJumPeserta("");
       setTamat("");
       alert("Program Registerd!!");
       navigate(-1);
@@ -109,7 +110,7 @@ const Add = () => {
             <label className="kik">JUMLAH PESERTA</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext' onChange={onChangePeserta} value={peserta}/></div>
+            <input type="text" className='inputtext' onChange={onChangeJumPeserta} value={jumPeserta}/></div>
           </div>
           <div className='maklumat'>
             <label className="kik">ISI PROGRAM</label>
