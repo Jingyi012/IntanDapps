@@ -8,6 +8,8 @@ import { systemAccount } from '../../Constant/ALGOkey';
 import AppContext,{ AppContextProvider, } from '../../Context/AppContext'
 import { deleteProductAction, payContract} from '../../Utils/utils'
 import { SignalWifiStatusbarNullSharp } from '@mui/icons-material'
+import { db } from '../../Backend/firebase/firebase-config';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 const Semak = () => {
   const [isOpen,setIsOpen]= useState(false);
   const [isDeleted,setIsDeleted]= useState(false);
@@ -15,6 +17,19 @@ const Semak = () => {
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
   const txnId='OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
+  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  
+  const deleteSijil = async (sender,transId) => {//creat 2
+    const date = new Date();
+    console.log(date.toLocaleString());
+    
+    await addDoc(userCollectionRef, {
+      admin: `${sender}`,
+      date: `${date.toString()}`,
+      transactionId: `${transId}`,
+      type: 'Delete',
+    });
+  };
   return (
     <div className='app_box'>
       <div className='semakdaftarheader'>
@@ -90,12 +105,14 @@ const Semak = () => {
                 <div className='padamconfirmbutton'><Buttons title="Padam" onClick={()=>
                   { 
                     console.log(account);
-                    const deleteId = deleteProductAction('206723937');
+                    const deleteId = deleteProductAction('210164268');
                     
                    // const transId=payContract(deleteId);
                     console.log(deleteId);
                     if(deleteId!=null)setIsDeleted(true);
                     setDeleteAlert(true);
+                    deleteSijil(account,deleteId);
+                    console.log(deleteSijil);
                     }}/></div>
                     </div>
                 ):
