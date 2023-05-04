@@ -26,7 +26,6 @@ function UserLogin() {
     }
     localStorage.setItem("user", JSON.stringify({ role: "USER" }));
     navigate("/user/senarai-program-sedia-ada");
-    window.location.reload();
   }
 
   return (
@@ -40,7 +39,7 @@ function UserLogin() {
           {/*User login form */}
           <form className='loginForm' action="senarai-program-sedia-ada" onSubmit={userLogin}>
             <label htmlFor='LoginMyKad'>No. MyKad:
-              <input id='LoginMyKad' name='LoginMyKad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange= {(event) => {
+              <input id='LoginMyKad' name='LoginMyKad' type='text' placeholder='No. MyKad' minLength='14' maxLength='14' onChange= {(event) => {
                 setMykad(event.target.value)
               }} />
             </label>
