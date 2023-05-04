@@ -38,7 +38,7 @@ function Router(){
             <Route path='register' element={<Register/>}/>
             <Route path='admin-login' element={<AdminLogin/>}/>
             <Route path='maklumat-penyemak' element={<Penyemak/>}/>
-            <Route path='informasi-sijil' element={<InformasiSijil/>}/>
+            <Route path='informasi-sijil/:transId' element={<InformasiSijil/>}/>
           </Route>
           {/*Admin */}
           <Route element={<AdminRoutes />}>
@@ -56,7 +56,7 @@ function Router(){
             <Route path="/admin/edit-sijil-peserta" exact element={<EditSijil />}/>
             <Route path="/admin/add-course" exact element={<Add />}/>
             <Route path="/admin/edit-program" exact element={<EditProgram />}/>
-            <Route path="/admin/semak-sijil-peserta" exact element={<InformasiSijil />}/>
+            <Route path="/admin/semak-sijil-peserta/:transId" exact element={<InformasiSijil />}/>
           </Route>
           {/*User */}
           <Route element={<UserRoutes />}>
