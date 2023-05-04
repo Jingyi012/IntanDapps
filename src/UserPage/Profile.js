@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles/profile.css";
-
+import { db } from '../Backend/firebase/firebase-config'
+import { getDoc, doc, updateDoc } from 'firebase/firestore'
 import NavbarU from "../Component/userNavbar/NavbarU";
 
 const ImgUpload = ({ onChange, src }) => (
   <div className="upload-file">
     <label htmlFor="photo-upload" >
       <span className="upload-icon">
-      <i class="fa-solid fa-upload fa-xl" style={{color: "#ffffff"}}></i>
-      
+        <i class="fa-solid fa-upload fa-xl" style={{ color: "#ffffff" }}></i>
+
       </span>
     </label>
     <div className="img-wrap img-upload">
-        <img for="photo-upload" src={src} alt="profile" className="profile-pic"/>
-      </div>
-      <input id="photo-upload" type="file" onChange={onChange} />
+      <img for="photo-upload" src={src} alt="profile" className="profile-pic" />
+    </div>
+    <input id="photo-upload" type="file" onChange={onChange} />
   </div>
 );
 
@@ -171,20 +172,52 @@ const Profile = ({
   </div>
 );
 
+
+
 export default class profile extends React.Component {
-  state = {
-    file: "",
-    imagePreviewUrl:
-    "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
-    nama: "",
-    myKad: "",
-    Emelrasmi: "",
-    emelperibadi: "",
-    gelaran: "",
-    telefon: "",
-    alamat: "",
-    active: "edit",
-  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      file: "",
+      imagePreviewUrl:
+        "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
+      nama: "teoh",
+      myKad: "ic",
+      Emelrasmi: "",
+      emelperibadi: "",
+      gelaran: "",
+      telefon: "",
+      alamat: "",
+      active: "profile",
+    };
+
+    const databaseID = localStorage.getItem("databaseID");
+    console.log(databaseID);
+    // const getProfile = async (databaseID) => {
+    //   const docRef = doc(db, "User", databaseID);
+    //   const docSnap = await getDoc(docRef);
+    //   if (docSnap.exists()) {
+    //     console.log("Document data:", docSnap.data().emelPeribadi);
+    //     await this.setState({
+    //       nama: docSnap.data().nama,
+    //       myKad: docSnap.data().ic,
+    //       Emelrasmi: docSnap.data().emelRasmi,
+    //       emelperibadi: docSnap.data().emelPeribadi,
+    //       gelaran: docSnap.data().gelaran,
+    //       telefon: docSnap.data().telefonPejabat,
+    //       alamat: docSnap.data().alamat,
+    //     });
+    //   } else {
+    //     // docSnap.data() will be undefined in this case
+    //     alert("!!Something Wrong Occur!! Please try later");
+    //   }
+    // }
+
+    // getProfile();
+  }
+
 
   photoUpload = (e) => {
     e.preventDefault();
@@ -208,10 +241,10 @@ export default class profile extends React.Component {
 
   editmyKad = (e) => {
     const regex = /^[0-9\b]+$/;
-    if(e.target.value === "" || regex.test(e.target.value)){
+    if (e.target.value === "" || regex.test(e.target.value)) {
       this.setState({
-      myKad: e.target.value,
-    });
+        myKad: e.target.value,
+      });
     }
   };
 
@@ -256,7 +289,23 @@ export default class profile extends React.Component {
     this.setState({
       active: activeP,
     });
+    //this.updateProfile(this.state);
   };
+
+  // async updateProfile(databaseID,state) {
+  //   const docRef = doc(db, "cities", databaseID);
+
+  //   // Set the "capital" field of the city 'DC'
+  //   await updateDoc(docRef, {
+  //     nama: state.nama,
+  //       myKad: state.ic,
+  //       Emelrasmi: state.emelRasmi,
+  //       emelperibadi: state.emelPeribadi,
+  //       gelaran: state.gelaran,
+  //       telefon: state.telefonPejabat,
+  //       alamat: state.alamat,
+  //   });
+  // }
 
   render() {
     const {
@@ -278,9 +327,9 @@ export default class profile extends React.Component {
             <form onSubmit={this.handleSubmit} className="profileform">
               <div className="leftSide">
                 <ImgUpload onChange={this.photoUpload} src={imagePreviewUrl} />
-                  <button type="submit" className="savebutton">
-                    Save{" "}
-                  </button>
+                <button type="submit" className="savebutton">
+                  Save{" "}
+                </button>
               </div>
               <div className="frame">
                 <div className="headerProfileU">

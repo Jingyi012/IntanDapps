@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { db } from '../../Backend/firebase/firebase-config'
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore'
+import { getDoc, doc } from 'firebase/firestore'
 import './UserLogin.css';
 
 function UserLogin() {
@@ -17,16 +17,28 @@ function UserLogin() {
   // }
 
   //after login, direct user to user home page (program list), set the role as USER
-  const userLogin = (e) => {
+  const userLogin = async (e) => {
     e.preventDefault();
     const regex = /[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]/;
     if (!regex.test(mykad)) {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
-    localStorage.setItem("user", JSON.stringify({ role: "USER" }));
-    navigate("/user/senarai-program-sedia-ada");
-    window.location.reload();
+
+    const docRef = doc(db, "User", mykad);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      localStorage.setItem("user", JSON.stringify({ role: "USER" }));
+      localStorage.setItem("databaseID",mykad);
+      navigate("/user/senarai-program-sedia-ada");
+      window.location.reload();
+    } else {
+      // docSnap.data() will be undefined in this case
+      alert("Salah IC !, Sila Masukan Semula !");
+    }
+
+
   }
 
   return (
@@ -40,7 +52,7 @@ function UserLogin() {
           {/*User login form */}
           <form className='loginForm' action="senarai-program-sedia-ada" onSubmit={userLogin}>
             <label htmlFor='LoginMyKad'>No. MyKad:
-              <input id='LoginMyKad' name='LoginMyKad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange= {(event) => {
+              <input id='LoginMyKad' name='LoginMyKad' type='text' placeholder='No. MyKad' minLength='14' maxLength='14' onChange={(event) => {
                 setMykad(event.target.value)
               }} />
             </label>
