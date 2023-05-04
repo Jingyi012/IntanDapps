@@ -77,7 +77,6 @@ function Header() {
   const logout = () =>{
     localStorage.clear();
     navigate("");
-    window.location.reload();
   }
 
   return (
