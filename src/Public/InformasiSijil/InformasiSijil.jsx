@@ -31,7 +31,7 @@ function InformasiSijil(){
             }
         fetchData();
     }, []);
-
+    
 
     async function fetchformDataFromBlockchain() {
         const info = await indexerClient.lookupTransactionByID(transId.transId);
