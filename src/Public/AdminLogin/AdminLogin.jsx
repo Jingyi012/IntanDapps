@@ -72,6 +72,8 @@ function AdminLogin() {
       // docSnap.data() will be undefined in this case
       alert("Salah IC !, Sila Masukan Semula !");
     }
+    localStorage.setItem("user", JSON.stringify({role: "ADMIN"}));
+    navigate("/admin/home");
   }
 
   return (
