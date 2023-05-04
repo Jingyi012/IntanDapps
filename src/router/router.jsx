@@ -34,10 +34,10 @@ function Router(){
           <Route element={<PublicRoutes />}>
             <Route path='/' element={<LamanUtama/>}/>
             <Route path='login' element={<UserLogin/>}/>
-            <Route path='semaksijil' element={<SemakSijil/>}/>
+            <Route path='semaksijil/:transId?' element={<SemakSijil/>}/>
             <Route path='register' element={<Register/>}/>
             <Route path='admin-login' element={<AdminLogin/>}/>
-            <Route path='maklumat-penyemak' element={<Penyemak/>}/>
+            <Route path='maklumat-penyemak/:transId?' element={<Penyemak/>}/>
             <Route path='informasi-sijil/:transId' element={<InformasiSijil/>}/>
           </Route>
           {/*Admin */}
