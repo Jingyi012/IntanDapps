@@ -12,14 +12,16 @@ function AdminLogin(){
     account,
     setAccount,
   } = useContext(AppContext);
-  const [accountAddress, setAccountAddress] = useState("");
+
   const connectMyAlgoWallet = async () => {
     let account = "";
     try {
-      const accounts = await myAlgoWallet.connect();
-      const currentAddress = accounts[0];
-      account = value;
-      setAccount(currentAddress);
+      await myAlgoWallet.connect().then(((value) => {
+        console.log('account', value[0]);
+        account = value[0].address;
+      setAccount(value[0].address);
+      }));
+      
     } catch (err) {
       console.error('Error connecting to wallet:', err);
     }

@@ -131,9 +131,10 @@ const handleClick = async (event) => {
        const appid= await handleDeployContract(arr);
        console.log(mnemonic);
        const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
+       //getting the transaction id after the admin paying the contract
        const txnId = await payDeployContract(userAcc, appid,arr);
        
-       navigate(`/admin/display-sijil/${txnId}`);
+       navigate(`/informasi-sijil/${txnId}`);
     }
         }></Buttons></div>
 
