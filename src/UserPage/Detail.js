@@ -1,16 +1,42 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import "./styles/Detail.css";
 import Modal from "./Modal";
-import { NavLink } from "react-router-dom";
+import { NavLink,useParams } from "react-router-dom";
+import { db } from '../Backend/firebase/firebase-config'
+import { collection, getDoc, deleteDoc, doc,} from 'firebase/firestore'
 
 function SenaraiProgramSediaAda() {
   const [showDaftar, setShowDaftar] = useState(false);
+  const [mula,setMula] = useState("");
+  const [nama,setNama] = useState("");
+  const [penganjur,setPenganjur] = useState("");
+  const [jumPeserta,setJumPeserta] = useState("");
+  const [tamat,setTamat] = useState("");
+
   const handleShowDaftar = () => {
     setShowDaftar(true);
   };
   const handleCloseDaftar = () => {
     setShowDaftar(false);
   };
+  let {programID} = useParams();
+
+  useEffect(() => {
+    const getProgram = async() =>{
+      const docRef = doc(db,"Program",programID.toString());
+      const data1 = await getDoc(docRef);
+      setMula(data1.data().mula);
+      setNama(data1.data().nama);
+      setPenganjur(data1.data().penganjur);
+      setJumPeserta(data1.data().jumPeserta);
+      setTamat(data1.data().tamat);
+    }
+
+    getProgram();
+    
+  },[]);
+
+
   return (
     <div class="Detail">
       <div class="Detailheader">
@@ -29,7 +55,7 @@ function SenaraiProgramSediaAda() {
             />
           </svg>
         </NavLink>
-        <h1 class="titleDetail">Database</h1>
+        <h1 class="titleDetail">{nama}</h1>
       </div>
       <div class="blue">
         <p>Informasi Program</p>
@@ -48,9 +74,9 @@ function SenaraiProgramSediaAda() {
           <p>:</p>
         </div>
         <div class="info3">
-          <p>XXX XXX XXXXXX</p>
-          <p>12/2/2023 - 12/4/2023</p>
-          <p>30</p>
+          <p>{penganjur}</p>
+          <p>{mula} - {tamat}</p>
+          <p>{jumPeserta}</p>
           <p>Percuma</p>
         </div>
       </div>

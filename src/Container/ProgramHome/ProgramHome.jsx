@@ -8,7 +8,7 @@ import addicon from '../../img/add.png'
 import closeicon from '../../img/close.png'
 import AppContext,{ AppContextProvider } from '../../Context/AppContext'
 import { db } from '../../Backend/firebase/firebase-config'
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore'
+import { collection, getDocs, deleteDoc, doc,} from 'firebase/firestore'
 
 const ProgramHome = () => {
   const [selectedValue, setSelectedValue] = useState('');
@@ -26,7 +26,6 @@ const ProgramHome = () => {
   const [reload,setReload] = useState(0);
 
   const userCollectionRef = collection(db, "Program")//crud 1,collection(reference, collectionName)
-  const navigate = useNavigate();
   useEffect(() => {
     const getProgram = async () => {
       const data = await getDocs(userCollectionRef);//read 2
@@ -159,8 +158,8 @@ const ProgramHome = () => {
             <td className='centerdata'>{item.mula}</td>
             <td className='centerdata'>{item.tamat}</td>
             <td>
-                <NavLink to='/admin/semak' className="aktivititype">Semak</NavLink>
-                <NavLink to='/admin/edit-program' className="aktivititype">Edit</NavLink>
+                <NavLink to={`/admin/semak/${item.id}`} className="aktivititype">Semak</NavLink>
+                <NavLink to={`/admin/edit-program/${item.id}`} className="aktivititype">Edit</NavLink>
                 <button className="padambutton" onClick={(event)=>popOut(event,item.id)}>Padam</button>
             </td>
       </tr>

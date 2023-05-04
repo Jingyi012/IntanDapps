@@ -125,7 +125,7 @@ const Log = () => {
                       <td>{log.date}</td>
                       <td>{log.admin}</td>
                       <td>{log.type}</td>
-                      <td>{log.transactionId}</td>
+                      <td><a href={`https://testnet.algoexplorer.io/tx/${log.transactionId}`}>{log.transactionId}</a></td>
                     </tr>
                 )
               })}

@@ -46,7 +46,7 @@ function Router(){
             <Route path="/admin/peserta" exact element={<Peserta />}/>
             <Route path="/admin/daftar-admin" exact element={<Admin />}/>
             <Route path="/admin/log" exact element={<Log />}/>
-            <Route path="/admin/semak" exact element={<Semak />}/>
+            <Route path="/admin/semak/:programID" exact element={<Semak />}/>
             <Route path="/admin/program-edit" exact element={<ProgramEdit />}/>
             <Route path="/admin/peserta-semak" exact element={<PesertaSemak />}/>
             <Route path="/admin/cipta-sijil" exact element={<CiptaSijil />}/>
@@ -55,14 +55,14 @@ function Router(){
             <Route path="/admin/cipta-sijil-peserta" exact element={<CiptaSijil />}/>
             <Route path="/admin/edit-sijil-peserta" exact element={<EditSijil />}/>
             <Route path="/admin/add-course" exact element={<Add />}/>
-            <Route path="/admin/edit-program" exact element={<EditProgram />}/>
+            <Route path="/admin/edit-program/:programID" exact element={<EditProgram />}/>
             <Route path="/admin/semak-sijil-peserta/:transId" exact element={<InformasiSijil />}/>
           </Route>
           {/*User */}
           <Route element={<UserRoutes />}>
             <Route path="/user/senarai-program-sedia-ada" exact element={<SenaraiProgramSediaAda/> }/>
             <Route path="/user/rekod-permohonan" exact element={<RekodPermohonan/>}/>
-            <Route path="/user/detail" exact element={<Detail/>}/>
+            <Route path="/user/detail/:programID" exact element={<Detail/>}/>
             <Route path="/user/profile" exact element={<Profile/>}/>
           </Route>
         </Routes>
