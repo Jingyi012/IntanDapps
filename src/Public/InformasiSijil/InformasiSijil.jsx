@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Worker, Viewer} from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
@@ -6,11 +6,27 @@ import './InformasiSijil.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import backicon from '../../img/arrow.png';
 import sijilExp from '../../SijilExample.pdf';
+import { db } from '../../Backend/firebase/firebase-config'
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, connectFirestoreEmulator } from 'firebase/firestore'
+
 
 function InformasiSijil(){
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
     const navigate = useNavigate();
- 
+
+    const [sijil,setSijil] = useState([])
+    const userCollectionRef = collection(db, "Sijil")//crud 1,collection(reference, collectionName)
+
+    useEffect(() => {
+        const getSijil = async () => {
+          const data = await getDocs(userCollectionRef);//read 2
+          console.log(data);
+          setSijil(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+        }
+    
+        getSijil();
+      }, [])
+
     return(
         <>
             <div className='infoSijil-container'>
@@ -21,11 +37,11 @@ function InformasiSijil(){
                     </div>
                     {/* Sijil detail section */}
                     <div className="infoContent">
-                        <div className='info'><span className='label'>NAMA</span><span>:</span><div className='data'>PESERTA NAMA</div></div>
-                        <div className='info'><span className='label'>NO. MYKAD</span><span>:</span><div className='data'>PESERTA NO. MYKAD</div></div>
-                        <div className='info'><span className='label'>NAMA KURSUS</span><span>:</span><div className='data'>NAMA KURSUS</div></div>
-                        <div className='info'><span className='label'>TARIKH</span><span>:</span><div className='data'>TARIKH KURSUS</div></div>
-                        <div className='info'><span className='label'>ALGORAND EXPLORER</span><span>:</span><div className='data'>ALGORAND EXPLORER</div></div>
+                        <div className='info'><span className='label'>NAMA</span><span>:</span><div className='data'>{sijil[0].nama}</div></div>
+                        <div className='info'><span className='label'>NO. MYKAD</span><span>:</span><div className='data'>{sijil[0].mykad}</div></div>
+                        <div className='info'><span className='label'>NAMA KURSUS</span><span>:</span><div className='data'>{sijil[0].kursus}</div></div>
+                        <div className='info'><span className='label'>TARIKH</span><span>:</span><div className='data'>{sijil[0].date}</div></div>
+                        <div className='info'><span className='label'>ALGORAND EXPLORER</span><span>:</span><div className='data'>{sijil[0].algoLink}</div></div>
                     </div>
 
                     {/* Display sijil pdf */}
