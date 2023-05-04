@@ -11,6 +11,7 @@
     "@randlabs/myalgo-connect": "^1.4.2",
     "@perawallet/connect": "^1.2.3",
     "@randlabs/myalgo-connect": "^1.4.2",
+    "@perawallet/connect": "^1.2.3",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
     "@react-pdf/renderer": "^3.1.9",
