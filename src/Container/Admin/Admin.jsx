@@ -16,13 +16,17 @@ const Admin = () => {
             <label className="kik">NO.MYKAD</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext'/></div>
+            <input type="text" className='inputtext'/>
+            {/* Input for NO.MYKAD */}
+            </div>
           </div>
           <div className='maklumat'>
             <label className="kik">ALAMAT DOMPET</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext'/></div>
+            <input type="text" className='inputtext'/>
+            {/* Input for ALAMAT DOMPET */}
+            </div>
           </div>
         </form>
         </div>

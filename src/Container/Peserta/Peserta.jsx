@@ -29,6 +29,8 @@ const Peserta = () => {
       const displayValue = selectedOption.getAttribute('data-display-value');
       selectedOption.textContent = displayValue;
       
+      // By default the display value should be Susunan to indicate this is for the susunan filter function
+      // There don't have any "Susunan" in the list instead of "None" to indicate that they are filtering nothing
       if (selectedOption.value === "None"){
         selectedOption.value = "Susunan";
       }
@@ -46,6 +48,7 @@ const Peserta = () => {
       }
       setIsSearching(true);
       try{
+        // Check the value whether it is number, if so, filter using nomykad, or else using name
         if(!isNaN(filteredValue)){
       const filtered = data.filter(item => item.nomykad.toString().startsWith(filteredValue));
       setSearchValue(filtered);
