@@ -1,10 +1,46 @@
-import {React, useState} from 'react';
+import {React, useState, useContext} from 'react';
 import {NavLink, useNavigate} from 'react-router-dom';
 import './AdminLogin.css';
-
+import MyAlgo from '@randlabs/myalgo-connect';
+import {PeraWalletConnect} from "@perawallet/connect";
+import AppContext, { AppContextProvider } from "../../Context/AppContext";
 function AdminLogin(){
   const navigate = useNavigate();
   const [mykad, setMykad] = useState("");
+  const myAlgoWallet = new MyAlgo();
+  const {
+    account,
+    setAccount,
+  } = useContext(AppContext);
+  const [accountAddress, setAccountAddress] = useState("");
+  const connectMyAlgoWallet = async () => {
+    let account = "";
+    try {
+      const accounts = await myAlgoWallet.connect();
+      const currentAddress = accounts[0];
+      //account = value;
+      setAccount(currentAddress);
+    } catch (err) {
+      console.error('Error connecting to wallet:', err);
+    }
+    return account;
+  }
+  const connectPeraAlgoWallet = async () =>{
+    let account="";
+    const peraConnect = new PeraWalletConnect({
+      shouldShowSignTxnToast: false
+  });
+    await peraConnect.connect()
+    .then((value) => {
+      setAccount(value);
+      account = value;
+      console.log('Connected with Pera Wallet. Account address:', value);
+    })
+    .catch((err) => {
+      console.error('Error connecting with Pera Wallet:', err);
+    });
+    return account;
+  }
 
   //restrict the input only number
   const onChangeMykad = (e) =>{
@@ -35,9 +71,12 @@ function AdminLogin(){
                 <input id='LoginMykad' name='LoginMykad' type='text' placeholder='No. MyKad' minLength='12' maxLength='12' onChange={onChangeMykad} value={mykad}/>
               </label>
 
-              <label htmlFor='walletAddress'>Alamat Dompet: 
-                <input id='walletAddress' name='walletAddress' type='text' placeholder='Alamat Dompet'/>
-              </label>
+              <div>Sila log masuk dengan salah satu algorand wallet untuk dapatkan algorand akaun</div>
+              <br></br>
+              <button type="button" onClick={connectPeraAlgoWallet}>Connect to Pera Algo Wallet</button>
+              <button type="button" onClick={connectMyAlgoWallet}>Connect to MyAlgo Wallet</button>   
+              <div>Your Login Account: </div>
+              <div className="displayAcc">{account}</div>
 
               <button type='Submit'>Daftar Masuk</button>
               

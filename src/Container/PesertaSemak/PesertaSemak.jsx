@@ -8,6 +8,7 @@ import { Buttons, Sejarah } from '../../Component'
 const PesertaSemak = () => {
   const [isOpen,setIsOpen]= useState(false);
   const navigate = useNavigate();
+
   return (
     <div className='app_box'>
       <div className='semakdaftarheader'>
@@ -73,7 +74,8 @@ const PesertaSemak = () => {
             <div className='semaksijilbox'>
               <div className='sejarahheader'>
               <h2 className='sejarahtitle'>Padam</h2>
-              <button className='closebutton' onClick={() => setIsOpen(false)}><img src={closeicon} alt="This is a close icon." className='closeicon'/></button>
+              <button className='closebutton' onClick={() => setIsOpen(false)}>
+                <img src={closeicon} alt="This is a close icon." className='closeicon'/></button>
               </div>
               <div className='contentdelete'>
               <div><p>

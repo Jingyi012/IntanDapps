@@ -113,23 +113,22 @@ const Log = () => {
             <tr>
               <th className='tarikhmasa'>Tarikh & Masa</th>
               <th className='namaadmin'>Nama Admin</th>
+              <th className='jenisTindakan'>Jenis</th>
               <th className='colaktiviti'>Aktiviti</th>
-              <th className='colaktiviti'>Link</th>
+              <th className='tranid'>TransactionID</th>
             </tr>
           </thead>
           {searchValue === "" ? (
             <tbody>
               {logs.map((log, index) => {
                 return (
-                  <div className='logdata'>
                     <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
                       <td>{log.date}</td>
                       <td>{log.admin}</td>
+                      <td>{log.type}</td>
                       <td>aktiviti</td>
                       <td>{log.transactionId}</td>
                     </tr>
-                  </div>
-
                 )
               })}
             </tbody>) : (
@@ -138,7 +137,9 @@ const Log = () => {
                 <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
                   <td>{item.tarikh}</td>
                   <td>{item.name}</td>
+                  <td>{item.type}</td>
                   <td>{item.aktiviti}</td>
+                  <td>{item.transactionId}</td>
                 </tr>
               ))}
             </tbody>

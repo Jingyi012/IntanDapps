@@ -44,6 +44,14 @@ input[name = "RegisterMyKad"]{
     margin-top: 0.8rem;
 }
 
+#RegisterMyKad{
+    padding-left: 10px;
+    width: 100%;
+    height: 2rem;
+    font-size: 1.2rem;
+    margin-top: 0.8rem;
+}
+
 .otherLinks{
     display: flex;
     flex-direction: column;
