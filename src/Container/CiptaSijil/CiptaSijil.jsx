@@ -18,13 +18,20 @@ const CiptaSijil=({backpage})=>{
   const [nama,setNama] = useState('');
   const [NRIC,setNRIC] = useState('');
 
-  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
-  
+  const actionCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  const sijilCollectionRef = collection(db, "Sijil")
   const createSijil = async (sender,transId) => {//creat 2
     const date = new Date();
+
     console.log(date.toLocaleString());
-    
-    await addDoc(userCollectionRef, {
+    await addDoc(sijilCollectionRef, {
+      algoLink: `https://testnet.algoexplorer.io/tx/${transId}`,
+      period: `${tarikhMula}-${tarikhTamat}`,
+      kursus: `${tajukSijil}`,
+      mykad: `${NRIC}`,
+      nama: `${nama}`,
+    });
+    await addDoc(actionCollectionRef, {
       admin: `${sender}`,
       date: `${date.toString()}`,
       transactionId: `${transId}`,

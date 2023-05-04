@@ -191,8 +191,6 @@ export const payContract = async (sender, appId, arr) => {
   // Notify about completion
   console.log("Group transaction " + sendTx.txId);
 
-   
-
   // Return the transaction ID
   return sendTx.txId;
   }
