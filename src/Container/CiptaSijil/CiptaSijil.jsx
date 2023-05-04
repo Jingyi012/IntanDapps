@@ -7,10 +7,10 @@ import backicon from '../../img/arrow.png'
 import { deployContract, payContract} from '../../Utils/utils'
 import { systemAccount } from '../../Constant/ALGOkey';
 import algosdk from 'algosdk';
+import { db } from '../../Backend/firebase/firebase-config';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
-
-
-const CiptaSijil = ({backpage}) => {
+const CiptaSijil=({backpage})=>{
   const navigate = useNavigate();
   const [tajukSijil,setTajukSijil] = useState('');
   const [tarikhMula,setTarikhMula] = useState('');
@@ -18,6 +18,19 @@ const CiptaSijil = ({backpage}) => {
   const [nama,setNama] = useState('');
   const [NRIC,setNRIC] = useState('');
 
+  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  
+  const createSijil = async (sender,transId) => {//creat 2
+    const date = new Date();
+    console.log(date.toLocaleString());
+    
+    await addDoc(userCollectionRef, {
+      admin: `${sender}`,
+      date: `${date.toString()}`,
+      transactionId: `${transId}`,
+      type: 'Create',
+    });
+  };
  
   //ask user to insert his/her mnemonic before deploy the contract 
 const handleClick = async (event) => {
@@ -132,8 +145,11 @@ const handleClick = async (event) => {
        console.log(mnemonic);
        const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
        //getting the transaction id after the admin paying the contract
-       const txnId = await payDeployContract(userAcc, appid,arr);
+       const txnId = await payDeployContract(userAcc, appid,arr)
+
        
+       createSijil(userAcc.addr,txnId);
+       console.log(createSijil);
        navigate(`/informasi-sijil/${txnId}`);
     }
         }></Buttons></div>

@@ -5,7 +5,9 @@ import { Buttons } from '../../Component'
 import backicon from '../../img/arrow.png'
 import { useNavigate } from 'react-router-dom'
 import AppContext,{ AppContextProvider, } from '../../Context/AppContext'
-import { updateCertificateAction} from '../../Utils/utils'
+import { updateCertificateAction} from '../../Utils/utils';
+import { db } from '../../Backend/firebase/firebase-config';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import algosdk from 'algosdk';
 const EditSijil = ({backpage}) => {
   const navigate = useNavigate();
@@ -15,6 +17,19 @@ const EditSijil = ({backpage}) => {
   const [nama,setNama] = useState('');
   const [NRIC,setNRIC] = useState('');
   const { account, setAccount } = useContext(AppContext);
+  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  
+  const updateSijil = async (sender,transId) => {//creat 2
+    const date = new Date();
+    console.log(date.toLocaleString());
+    
+    await addDoc(userCollectionRef, {
+      admin: `${sender}`,
+      date: `${date.toString()}`,
+      transactionId: `${transId}`,
+      type: 'Update',
+    });
+  };
     //ask user to insert his/her mnemonic before deploy the contract 
 const handleClick = async (event) => {
   const enteredInput = await prompt('Please enter wallet mnemonic')
@@ -116,8 +131,9 @@ const handleClick = async (event) => {
      //   let txn; 
      const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
        const txnId= await updateCertificateAction(userAcc,'210164268',arr);
-       
-       navigate(`/admin/display-sijil/${txnId}`);
+       updateSijil(userAcc.addr,txnId);
+       console.log(updateSijil);
+       navigate(`/informasi-sijil/${txnId}`);
     }
         }></Buttons></div>
       
