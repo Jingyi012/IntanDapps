@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './Penyemak.css';
 import { collection, addDoc} from 'firebase/firestore'
 import { db } from '../../Backend/firebase/firebase-config'
@@ -9,6 +9,7 @@ export default function Penyemak() {
   const [nama, setNama] = useState("");
   const [organisasi, setOrganisasi] = useState("");
   const navigate = useNavigate();
+  const { transId } = useParams();
   //restrict input only number
 
   //navigate to semak sijil page after submit the penyemak details
@@ -26,7 +27,12 @@ export default function Penyemak() {
       organisasi: organisasi,
     });//create 2 end
 
-    navigate('/semaksijil');
+    if (transId === undefined) {
+      navigate(`/semaksijil`);
+      return;
+    }
+    
+    navigate(`/semaksijil/${transId}`);
   }
 
   return (

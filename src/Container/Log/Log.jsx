@@ -114,7 +114,6 @@ const Log = () => {
               <th className='tarikhmasa'>Tarikh & Masa</th>
               <th className='namaadmin'>Nama Admin</th>
               <th className='jenisTindakan'>Jenis</th>
-              <th className='colaktiviti'>Aktiviti</th>
               <th className='tranid'>TransactionID</th>
             </tr>
           </thead>
@@ -126,7 +125,6 @@ const Log = () => {
                       <td>{log.date}</td>
                       <td>{log.admin}</td>
                       <td>{log.type}</td>
-                      <td>aktiviti</td>
                       <td>{log.transactionId}</td>
                     </tr>
                 )

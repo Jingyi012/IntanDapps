@@ -63,7 +63,7 @@ function AdminLogin() {
         localStorage.setItem("user", JSON.stringify({ role: "ADMIN" }));
         localStorage.setItem("databaseID", mykad);
         navigate("/admin/home");
-        window.location.reload();
+        //window.location.reload();
       } else {
         alert("Salah Wallet Account !, Sila Masukan Semula !");
       }
@@ -72,7 +72,6 @@ function AdminLogin() {
       // docSnap.data() will be undefined in this case
       alert("Salah IC !, Sila Masukan Semula !");
     }
-
   }
 
   return (

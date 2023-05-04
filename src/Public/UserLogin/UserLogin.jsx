@@ -24,7 +24,8 @@ function UserLogin() {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
-
+    // localStorage.setItem("user", JSON.stringify({ role: "USER" }));
+    // navigate("/user/senarai-program-sedia-ada");
     const docRef = doc(db, "User", mykad);
     const docSnap = await getDoc(docRef);
 
@@ -32,8 +33,7 @@ function UserLogin() {
       localStorage.setItem("user", JSON.stringify({ role: "USER" }));
       localStorage.setItem("databaseID",mykad);
       navigate("/user/senarai-program-sedia-ada");
-      window.location.reload();
-    } else {
+      } else {
       // docSnap.data() will be undefined in this case
       alert("Salah IC !, Sila Masukan Semula !");
     }
