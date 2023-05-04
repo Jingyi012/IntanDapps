@@ -1,5 +1,5 @@
-import React, { useState,useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState,useContext,useEffect } from 'react'
+import { NavLink, redirect,useNavigate } from 'react-router-dom'
 import { Menuheader, Buttons } from '../../Component'
 import '../ProgramHome/ProgramHome.css'
 import filterpic from '../../img/filter.png'
@@ -7,6 +7,9 @@ import searchpic from '../../img/search.png'
 import addicon from '../../img/add.png'
 import closeicon from '../../img/close.png'
 import AppContext,{ AppContextProvider } from '../../Context/AppContext'
+import { db } from '../../Backend/firebase/firebase-config'
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore'
+
 const ProgramHome = () => {
   const [selectedValue, setSelectedValue] = useState('');
   const [searchValue, setSearchValue] = useState("");
@@ -18,6 +21,20 @@ const ProgramHome = () => {
   const data=[{kod:"SECJ2023",name:"Databse",tarikhMula:"12/05/2023",tarikhTamat:"14/05/2023"},
   {kod:"SECK2023",name:"OOP",tarikhMula:"11/05/2023",tarikhTamat:"12/05/2023"}
   ]
+  const [programs,setPrograms] = useState([]);
+  const [programID,setProgramID] = useState("");
+  const [reload,setReload] = useState(0);
+
+  const userCollectionRef = collection(db, "Program")//crud 1,collection(reference, collectionName)
+  const navigate = useNavigate();
+  useEffect(() => {
+    const getProgram = async () => {
+      const data = await getDocs(userCollectionRef);//read 2
+      console.log(data);
+      setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+    }
+    getProgram().then(console.log(programs));
+  }, [reload])
 
 
   const kodfilter = () => {
@@ -71,6 +88,20 @@ const ProgramHome = () => {
         setIsSearching(false);
       }
     }
+
+    const popOut = (e,id) =>{
+      setProgramID(id);
+      setIsOpen(true);
+    }
+
+    const deleteProg = async () => {
+      const docRef = doc(db,"Program",programID)
+      await deleteDoc(docRef).then(()=>{
+        setIsOpen(false);
+        alert("Program Deleted");
+        setReload(reload+1);
+      });
+    };
   
   return (
     
@@ -121,17 +152,17 @@ const ProgramHome = () => {
         </thead>
         {searchValue===""?(
         <tbody>
-        {data.map((item,index)=>(
+        {programs.map((item,index)=>(
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
             <td>{item.kod}</td>
-            <td>{item.name}</td>
-            <td className='centerdata'>{item.tarikhMula}</td>
-            <td className='centerdata'>{item.tarikhTamat}</td>
+            <td>{item.nama}</td>
+            <td className='centerdata'>{item.mula}</td>
+            <td className='centerdata'>{item.tamat}</td>
             <td>
                 <NavLink to='/admin/semak' className="aktivititype">Semak</NavLink>
                 <NavLink to='/admin/edit-program' className="aktivititype">Edit</NavLink>
-                <button className="padambutton" onClick={()=>setIsOpen(true)}>Padam</button>
-         </td>
+                <button className="padambutton" onClick={(event)=>popOut(event,item.id)}>Padam</button>
+            </td>
       </tr>
         ))}
         </tbody>
@@ -167,7 +198,7 @@ const ProgramHome = () => {
               <div><p>
                   Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                 </p></div>
-                <div className='padamconfirmbutton'><Buttons title="Padam"/></div>
+                <div className='padamconfirmbutton'><Buttons title="Padam" onClick={() => deleteProg()}/></div>
               </div>
             </div>
             </div>

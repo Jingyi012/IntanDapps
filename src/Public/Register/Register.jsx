@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { collection, addDoc} from 'firebase/firestore'
+import { doc, setDoc} from 'firebase/firestore'
 import { db } from '../../Backend/firebase/firebase-config'
 import './Register.css';
 
@@ -22,8 +22,8 @@ const Register = () => {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
-    const userCollectionRef = collection(db, "User")//crud 1,collection(reference, collectionName)
-    await addDoc(userCollectionRef, {// create 2
+    const userCollectionRef = doc(db, "User",mykad)//crud 1,collection(reference, collectionName)
+    await setDoc(userCollectionRef, {// create 2
       alamat: alamat,
       emelPeribadi: emelPeribadi,
       emelRasmi: emelRasmi,

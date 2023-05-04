@@ -48,3 +48,15 @@
     display: flex;
     justify-content: center;
 }
+
+.maklumatadmin button[type = "Submit"]{
+    display: block;
+    margin: 5rem auto 4rem;
+    padding: 0.5rem;
+    background-color: rgb(136, 142, 254);
+    border-radius: 20px;
+    border: none;
+    font-size: 1.2rem;
+    color: white;
+    width: 9rem;
+}
