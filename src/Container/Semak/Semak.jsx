@@ -7,10 +7,14 @@ import { Buttons, Sejarah } from '../../Component'
 import { systemAccount } from '../../Constant/ALGOkey';
 import AppContext,{ AppContextProvider, } from '../../Context/AppContext'
 import { deleteProductAction, payContract} from '../../Utils/utils'
+import { SignalWifiStatusbarNullSharp } from '@mui/icons-material'
 const Semak = () => {
   const [isOpen,setIsOpen]= useState(false);
+  const [isDeleted,setIsDeleted]= useState(false);
+  const [alertDelete,setDeleteAlert]= useState(false);
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
+  const txnId='OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
   return (
     <div className='app_box'>
       <div className='semakdaftarheader'>
@@ -59,9 +63,10 @@ const Semak = () => {
               <td className='centerdata'>80%</td>
               <td className='centerdata'><Sejarah title="Dicipta"/></td>
               <td>
+               
                 <NavLink to='/admin/cipta-sijil' className="aktivititype">Cipta</NavLink>
                 <NavLink to='/admin/edit-sijil' className="aktivititype">Edit</NavLink>
-                <NavLink to='/admin/semak-program' className="aktivititype">Semak</NavLink>
+                <NavLink to={`/informasi-sijil/${txnId}`} className="aktivititype">Semak</NavLink>
                 <button className="padambutton" onClick={()=>setIsOpen(true)}>Padam</button>
               </td>
           </tr>
@@ -74,22 +79,41 @@ const Semak = () => {
             <div className='semaksijilbox'>
               <div className='sejarahheader'>
               <h2 className='sejarahtitle'>Padam</h2>
-              <button className='closebutton' onClick={() => setIsOpen(false)}><img src={closeicon} alt="This is a close icon." className='closeicon'/></button>
+              <button className='closebutton' onClick={() => {setIsOpen(false);setIsDeleted(false);setDeleteAlert(false)}}><img src={closeicon} alt="This is a close icon." className='closeicon'/></button>
               </div>
-              <div className='contentdelete'>
+              
+                {!alertDelete ?(
+                <div className='contentdelete'>
               <div><p>
                   Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                 </p></div>
                 <div className='padamconfirmbutton'><Buttons title="Padam" onClick={()=>
-                  { console.log(account);
-                    const deleteId = deleteProductAction('206694868');
-                    const transId=payContract(deleteId);
-                    console.log(transId);
+                  { 
+                    console.log(account);
+                    const deleteId = deleteProductAction('206723937');
+                    
+                   // const transId=payContract(deleteId);
+                    console.log(deleteId);
+                    if(deleteId!=null)setIsDeleted(true);
+                    setDeleteAlert(true);
                     }}/></div>
+                    </div>
+                ):
+                 (<div className='contentdelete'>
+                   {isDeleted?(
+                  <div><p>
+                   This cert was successfully deleted in the algorand blockchain!! 
+                    </p></div>): (<div><p>
+                   This cert was already deleted in the algorand blockchain!! It cannot be deleted anymore
+                    </p></div>)
+                   
+                    }
+                  
+                  </div>)}
+                    
               </div>
             </div>
             </div>
-        </div>
         )}
       </div>
   )

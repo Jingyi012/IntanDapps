@@ -31,15 +31,21 @@ function InformasiSijil(){
     useEffect(() => {
         async function fetchData() {
             console.log("hello");
+              //Using indexerClient here to query and search the transaction data in the blockchain using transaction id
             const info = await indexerClient.lookupTransactionByID(transId.transId);
+             //get additional header from the transaction by using do function here
             await info.do().then((transInfo)=>{
               console.log(transInfo.transaction["application-transaction"]["application-args"][0]);
+            //from the transInfo variable, we can easily know the application args applied in the transaction
+            //using window.atob here to decode the base 64 string fetching from the application arg
               const decoder = new TextDecoder();
               const dTajuk = window.atob(transInfo.transaction["application-transaction"]["application-args"][0]);
               const dMula = window.atob(transInfo.transaction["application-transaction"]["application-args"][1]);
               const dTamat = window.atob(transInfo.transaction["application-transaction"]["application-args"][2]);
               const dNama = window.atob(transInfo.transaction["application-transaction"]["application-args"][3]);
+                //to know whether the current transaction is created/updated/deleted, use onComplete data in the transaction
               const onComplete = transInfo.transaction["application-transaction"]["on-completion"];
+               //after decode the string, change it to a string format from JSON object 
               const tajuk = Object.values(JSON.parse(dTajuk))[0];
               const mula = Object.values(JSON.parse(dMula))[0];
               const tamat = Object.values(JSON.parse(dTamat))[0];
