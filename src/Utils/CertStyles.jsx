@@ -25,12 +25,16 @@ export const styles = StyleSheet.create({
       boxSizing: 'border-box',
     },
     title: {
+      position: 'absolute',
+      top: 300,
       fontSize: 24,
       textDecoration: 'underline',
-  
+      
       textTransform: 'uppercase',
     },
     subTitle: {
+      position: 'absolute',
+      top: 350,
       fontSize: 16,
       fontWeight: '500',
       textTransform: 'uppercase',
