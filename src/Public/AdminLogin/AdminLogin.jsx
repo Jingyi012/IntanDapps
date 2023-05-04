@@ -56,7 +56,6 @@ function AdminLogin(){
     e.preventDefault();
     localStorage.setItem("user", JSON.stringify({role: "ADMIN"}));
     navigate("/admin/home");
-    window.location.reload();
   }
 
     return(
