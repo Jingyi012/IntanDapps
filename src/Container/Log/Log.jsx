@@ -68,6 +68,7 @@ const Log = () => {
         LOG AKTIVITI
         </h1>
         <div className='features'>
+            {/* Sorting */}
             <form className='filter'>
                 <div className='filtericon'>
                     <img src={filterpic} alt='This is a filter icon.' className="filterpic"/>

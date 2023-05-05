@@ -1,22 +1,24 @@
 import React from 'react'
 import '../CiptaSijil/ciptasijil.css'
 import { Buttons } from '../../Component'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 import backicon from '../../img/arrow.png'
 
-const CiptaSijil = ({backpage}) => {
+const CiptaSijil = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <div className='app_box'>
-      
       <div className='semakdaftarheader'>
+      {/* back to previous page */}
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
       <h1 className='semakdaftaradmin'>CIPTA SIJIL</h1>
-      {backpage==='/peserta-semak' &&
-      <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PESERTA</NavLink>/EDIT SIJIL</div>}
-      {backpage==='/semak' &&
-      <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PROGRAM</NavLink>/EDIT SIJIL</div>}
+      {location.pathname==='/admin/cipta-sijil-peserta' &&
+      <div className='smallback'><NavLink to="/admin/peserta">SENARAI PESERTA</NavLink>/<NavLink onClick={()=>navigate(-1)}>PESERTA</NavLink>/EDIT SIJIL</div>}
+      {location.pathname==='/admin/cipta-sijil' &&
+      <div className='smallback'><NavLink to="/admin/home">SENARAI PROGRAM</NavLink>/<NavLink onClick={()=>navigate(-1)}>PROGRAM</NavLink>/EDIT SIJIL</div>}
       </div>
+      {/* Information input section for Cipta Sijil */}
         <form className='maklumatbox'>
       <div>
         <div className='maklumatadminbahru'>

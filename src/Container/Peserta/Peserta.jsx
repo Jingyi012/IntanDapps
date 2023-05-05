@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Menuheader } from '../../Component'
-import '../Peserta/peserta.css'
+import './peserta.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
 
@@ -108,6 +108,7 @@ const Peserta = () => {
               <th className='pesertaaktiviti'>Aktiviti</th>
             </tr>
         </thead>
+        {/* if no search value, it will display all data, else it will display search value */}
       {searchValue===""?(
         <tbody>
         {data.map((item,index)=>(

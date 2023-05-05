@@ -13,8 +13,9 @@ const PesertaSemak = () => {
       <div className='semakdaftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
       <h1 className='semakdaftaradmin'>Olivia Lim Shi Ting</h1>
-      <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/PESERTA</div>
+      <div className='smallback'><NavLink to="/admin/peserta">SENARAI PESERTA</NavLink>/PESERTA</div>
       </div>
+      {/* Peserta Information */}
       <div className='informasibox'>
         <div className='informasiprogramtitle'>
           INFORMASI PESERTA
@@ -37,6 +38,7 @@ const PesertaSemak = () => {
         </div>
         </div>
         </div>
+        {/* Senarai program peserta menyertai */}
     <div className='subtitle'>SENARAI PROGRAM</div>
     <div className='program'>
       <table className='progtable'>
@@ -67,6 +69,7 @@ const PesertaSemak = () => {
         </tbody>
       </table>
       </div>
+      {/* padam sijil peserta */}
       {isOpen && (
         <div className='semaksijil'>
            <div className='contentdeletesijil'>
