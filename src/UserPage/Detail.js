@@ -3,7 +3,9 @@ import "./styles/Detail.css";
 import Modal from "./Modal";
 import { NavLink } from "react-router-dom";
 
+
 function SenaraiProgramSediaAda() {
+  //state for showing the pop out page
   const [showDaftar, setShowDaftar] = useState(false);
   const handleShowDaftar = () => {
     setShowDaftar(true);
