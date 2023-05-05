@@ -56,10 +56,8 @@ select {
 
 .programsec{
     position: relative;
-    margin: 5px 0 0px 0;
+    margin: 20px 0 0px 0;
 }
-
-
 
 .programsec::before{
     content:'';
@@ -88,10 +86,6 @@ select {
     height: 1.8rem;
 }
 
-.searchtype{
-    padding: 1rem;
-}
-
 .searchbutton{
     padding: 0;
     width: 100%;
@@ -110,7 +104,9 @@ select {
 .searchtype{
     border:none ; 
     background-color:transparent;
-    padding: 0 10px 0 0;
+    height: 95%;
+    width: 100%;
+    padding-left: 1rem;
 }
 
 .searchpic{

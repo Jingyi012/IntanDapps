@@ -13,8 +13,9 @@ const Semak = () => {
       <div className='semakdaftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} className="backicon" alt='It is a back icon.'/></button>
       <h1 className='semakdaftaradmin'>DATABASE</h1>
-      <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/DATABASE</div>
+      <div className='smallback'><NavLink to="/admin/home">SENARAI PROGRAM</NavLink>/PROGRAM</div>
       </div>
+      {/* Program Information */}
       <div className='informasibox'>
         <div className='informasiprogramtitle'>
           INFORMASI PROGRAM
@@ -58,13 +59,14 @@ const Semak = () => {
               <td>
                 <NavLink to='/admin/cipta-sijil' className="aktivititype">Cipta</NavLink>
                 <NavLink to='/admin/edit-sijil' className="aktivititype">Edit</NavLink>
-                <NavLink to='/admin/semak-program' className="aktivititype">Semak</NavLink>
+                <NavLink to='/admin/semak-sijil-peserta' className="aktivititype">Semak</NavLink>
                 <button className="padambutton" onClick={()=>setIsOpen(true)}>Padam</button>
               </td>
           </tr>
         </tbody>
       </table>
       </div>
+      {/* padam sijil peserta */}
       {isOpen && (
         <div className='semaksijil'>
            <div className='contentdeletesijil'>

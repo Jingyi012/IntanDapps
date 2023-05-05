@@ -91,3 +91,11 @@
 .centerdata{
     text-align: center;
 }
+
+.searchtype{
+    border:none ; 
+    background-color:transparent;
+    height: 95%;
+    width: 100%;
+    padding-left: 1rem;
+}

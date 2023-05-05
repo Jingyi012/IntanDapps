@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Menuheader, Buttons } from '../../Component'
-import '../ProgramHome/ProgramHome.css'
+import './ProgramHome.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
 import addicon from '../../img/add.png'
@@ -120,6 +120,7 @@ const ProgramHome = () => {
               <th className='programaktiviti'>Aktiviti</th>
             </tr>
         </thead>
+        {/* if no search value, it will display all data, else it will display search value */}
         {searchValue===""?(
         <tbody>
         {data.map((item,index)=>(
@@ -156,6 +157,7 @@ const ProgramHome = () => {
                
       </table>
     </div>
+    {/* Padam program */}
     {isOpen && (
         <div className='semaksijil'>
            <div className='contentdeletesijil'>
