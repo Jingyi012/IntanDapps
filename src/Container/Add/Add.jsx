@@ -22,36 +22,47 @@ const Add = () => {
             <label className="kik">KOD KURSUS</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext'/></div>
+            <input type="text" className='inputtext'/>
+            {/* Input for Kod Kursus */}
+            </div>
           </div>
           <div className='maklumat'>
             <label className="kik">NAMA KURSUS</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext'/></div>
+            <input type="text" className='inputtext'/>
+            {/* Input for Nama Kursus */}
+            </div>
           </div>
           <div className='maklumat'>
             <label className="kik">TARIKH MULA</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext'/></div>
+            <input type="text" className='inputtext'/>
+            {/* Input for Tarikh Mula */}
+            </div>
           </div>
           <div className='maklumat'>
             <label className="kik">TARIKH TAMAT</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext'/></div>
+            <input type="text" className='inputtext'/>
+            {/* Input for Tarikh Tamat */}
+            </div>
           </div>
           <div className='maklumat'>
             <label className="kik">JUMLAH PESERTA</label>
             <div className='textarea'>
             <p className="kik">:</p>
-            <input type="text" className='inputtext'/></div>
+            <input type="text" className='inputtext'/>
+            {/* Input for JUMLAH PESERTA */}
+            </div>
           </div>
           <div className='maklumat'>
             <label className="kik">ISI PROGRAM</label>
             <div className='textarea'>
             <p className="kik">:</p>
+            {/* Input for Isi Program */}
             <textarea className='inputarea' rows={9}/>
           </div>
           </div>
