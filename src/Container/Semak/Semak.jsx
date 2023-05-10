@@ -10,38 +10,37 @@ import { deleteProductAction, payContract } from '../../Utils/utils'
 import { SignalWifiStatusbarNullSharp } from '@mui/icons-material'
 import { db } from '../../Backend/firebase/firebase-config';
 import { collection, getDoc, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { indexerClient } from '../../Constant/ALGOkey';
 const Semak = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
   const [isDeleted, setIsDeleted] = useState(false);
   const [alertDelete, setDeleteAlert] = useState(false);
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
   const txnId = 'OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
   const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
-
+  const [appId, setAppId] = useState("");
   const [mula, setMula] = useState("");
   const [nama, setNama] = useState("");
   const [penganjur, setPenganjur] = useState("");
   const [jumPeserta, setJumPeserta] = useState("");
   const [tamat, setTamat] = useState("");
   const [pesertaNama, setPesertaNama] = useState([]);
-
-  const deleteSijil = async (sender, transId) => {//creat 2
-    const date = new Date();
-    console.log(date.toLocaleString());
-
-    await addDoc(userCollectionRef, {
-      admin: `${sender}`,
-      date: `${date.toString()}`,
-      transactionId: `${transId}`,
-      type: 'Delete',
-    });
+  //console.log(account[0]);
+  const semakUser = async (user) => {
+    //obtain the app id for the particular user cert in the program 
+    const programDocRef = doc(db, "Program", programID);
+    const data = await getDoc(programDocRef);//read 2
+    const userTxnId = data.data().transactionId[user];
+    console.log(userTxnId);
+    navigate(`/informasi-sijil/${userTxnId}`);
   };
 
   let { programID } = useParams();
 
   useEffect(() => {
-    const getPesertaNama = async () => {
+    const getPeserta = async () => {
       const docRef = doc(db, "Program", programID.toString());
       const detail = await getDoc(docRef);
       setMula(detail.data().mula);
@@ -49,10 +48,10 @@ const Semak = () => {
       setPenganjur(detail.data().penganjur);
       setJumPeserta(detail.data().jumPeserta);
       setTamat(detail.data().tamat);
-      setPesertaNama(detail.data().pesertaNama);
-     
+      setPeserta(detail.data().pesertaStatus);
+
     }
-    getPesertaNama();
+    getPeserta();
   }, []);
   return (
     <div className='app_box'>
@@ -96,25 +95,32 @@ const Semak = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(pesertaNama).map(([key,value]) =>{ 
+            {Object.entries(pesertaNama).map(([key, value]) => {
 
               return (
                 <tr className='row2'>
                   <td>{key}</td>
                   <td>{value}</td>
                   <td className='centerdata'>80%</td>
-                  <td className='centerdata'><Sejarah title={`${value}`} /></td>
+                  <td className='centerdata'>{`${value}`}</td>
+                  {/* <td className='centerdata'><Sejarah title={`${value}`} /></td> */}
                   <td>
-
-                    <NavLink to='/admin/cipta-sijil' className="aktivititype">Cipta</NavLink>
-                    <NavLink to='/admin/edit-sijil' className="aktivititype">Edit</NavLink>
-                    <NavLink to={`/informasi-sijil/${txnId}`} className="aktivititype">Semak</NavLink>
-                    <button className="padambutton" onClick={() => setIsOpen(true)}>Padam</button>
+                    {(`${value}` === 'dicipta') ? <button className="semakbutton" disabled={true}>Cipta</button> :
+                      <NavLink to={`/admin/cipta-sijil/${programID}/${key}`} className="aktivititype">Cipta</NavLink>}
+                    <NavLink to={`/admin/edit-sijil/${programID}/${key}`} className="aktivititype">Edit</NavLink>
+                    {(`${value}` === 'dipadam') ? <button className="semakbutton" disabled={true}>Semak</button> :
+                      <button className="semakbutton" onClick={() => {
+                        semakUser(key);
+                      }}>Semak</button>}
+                    <button className="padambutton" onClick={() => {
+                      setCurrentUser(key);
+                      setIsOpen(true)
+                    }}>Padam</button>
                   </td>
                 </tr>
-                
-               );
-            })} 
+
+              );
+            })}
 
           </tbody>
         </table>
@@ -133,16 +139,55 @@ const Semak = () => {
                   <div><p>
                     Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                   </p></div>
-                  <div className='padamconfirmbutton'><Buttons title="Padam" onClick={() => {
-                    console.log(account);
-                    const deleteId = deleteProductAction('210164268');
+                  <div className='padamconfirmbutton'><Buttons title="Padam" onClick={async () => {
+                    console.log(account[0]);
+
+                    //obtain the app id for the particular user cert in the program 
+                    const programDocRef = doc(db, "Program", programID);
+                    const data = await getDoc(programDocRef);//read 2
+                    const userTxnId = data.data().transactionId[currentUser];
+                    console.log(userTxnId);
+                    const info = await indexerClient.lookupTransactionByID(userTxnId).do();
+                    const appId = await info.transaction["application-transaction"]["application-id"];
+                    console.log(appId);
+
+                    //delete the cert at algorand blockchain
+                    const deleteId = await deleteProductAction(appId);
+                    console.log(deleteId);
+
+
+                    //delete the sijil at sijil section in firebase
+                    const sijilDoc = doc(db, "Sijil", appId.toString());
+                    await deleteDoc(sijilDoc);
+
+                    //set the txnid at program section to delete transaction id
+                    //set the peserta of the person to dipadam
+                    const pesertaStatusList = data.data().pesertaStatus;
+                    const txnIdList = data.data().transactionId;
+                    pesertaStatusList[currentUser] = "dipadam";
+                    txnIdList[currentUser] = deleteId;
+                    await updateDoc(programDocRef, {
+                      transactionId: txnIdList,
+                      pesertaStatus: pesertaStatusList,
+                    }).then(response => {
+                      alert("the cert was deleted")
+                    }).catch(error => {
+                      console.log(error.message)
+                    })
+                    //add this action to the action log
+                    const actionRef = collection(db, "ActionLog")
+                    const date = new Date();
+                    await addDoc(actionRef, {
+                      admin: `${account[0]}`,
+                      date: `${date.toString()}`,
+                      transactionId: `any`,
+                      type: 'Delete',
+                    });
+
 
                     // const transId=payContract(deleteId);
-                    console.log(deleteId);
                     if (deleteId != null) setIsDeleted(true);
                     setDeleteAlert(true);
-                    deleteSijil(account, deleteId);
-                    console.log(deleteSijil);
                   }} /></div>
                 </div>
               ) :
