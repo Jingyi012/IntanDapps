@@ -27,6 +27,7 @@ const Semak = () => {
   const [jumPeserta, setJumPeserta] = useState("");
   const [tamat, setTamat] = useState("");
   const [pesertaNama, setPesertaNama] = useState([]);
+  const [pesertaStatus, setPesertaStatus] = useState([]);
   //console.log(account[0]);
   const semakUser = async (user) => {
     //obtain the app id for the particular user cert in the program 
@@ -48,8 +49,8 @@ const Semak = () => {
       setPenganjur(detail.data().penganjur);
       setJumPeserta(detail.data().jumPeserta);
       setTamat(detail.data().tamat);
-      setPeserta(detail.data().pesertaStatus);
-
+      setPesertaStatus(detail.data().pesertaStatus);
+      setPesertaNama(detail.data().pesertaNama);
     }
     getPeserta();
   }, []);
@@ -95,12 +96,12 @@ const Semak = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(pesertaNama).map(([key, value]) => {
+            {Object.entries(pesertaStatus).map(([key, value]) => {
 
               return (
                 <tr className='row2'>
                   <td>{key}</td>
-                  <td>{value}</td>
+                  <td>{pesertaNama[key]}</td>
                   <td className='centerdata'>80%</td>
                   <td className='centerdata'>{`${value}`}</td>
                   {/* <td className='centerdata'><Sejarah title={`${value}`} /></td> */}
