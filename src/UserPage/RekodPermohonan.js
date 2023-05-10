@@ -4,7 +4,7 @@ import Intan from "../intan.png"
 import Modal from './Modal'
 import NavbarU from "../Component/userNavbar/NavbarU";
 import { db } from '../Backend/firebase/firebase-config'
-import { collection, getDoc, deleteDoc, doc, getDocs, query, where,} from 'firebase/firestore'
+import { collection, getDoc, deleteDoc, doc, getDocs, query, where, updateDoc,} from 'firebase/firestore'
 
 const data = [
     { kod: "SECD2523", nama: "Database", Tarikh: "14.3.2023-14.6.2023", Status: "Sedang diproses" },
@@ -22,9 +22,10 @@ function RekodPermohonan() {
     const [showMohon, setShowMohon] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [programs, setPrograms] = useState([]);
-    const [userPrograms, setUserPrograms] = useState([]);
+    const [progrmaID, setProgramID] = useState("");
     const userID = localStorage.getItem("userID");
     const userRef = doc(db, "User", userID)//crud 1,collection(reference, collectionName)
+    const [reload, setReload] = useState(0);
 
     const filteredData = data.filter(item =>
         item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -33,35 +34,18 @@ function RekodPermohonan() {
 
     useEffect(() => {
         const getUserProgram = async () => {
-            // const data = await getDoc(userRef);//read 2
-            // const tempList =[...data.data().program];
-            // tempList.forEach(async progID => {
-            //    // const progID =tempList[1];
-            //     const progRef = doc(db,"Program",progID);
-            //     const progDetail = await getDoc(progRef).then((data) => { console.log(data.data()); return data;});
-            //     const tempObject = { ...progDetail.data(),id:progID};
-            //     console.log(progDetail.data());
-            //     var tempArray = programs;
-            //     tempArray.push(progDetail.data());
-            //     console.log(tempArray);
-            //     setPrograms(tempArray);//read 3
-            // });
-            // console.log(data.data().program);
-
-            const docRef = query(collection(db,"Program"), where("pesertaList", "array-contains", "123456-12-1234"));
+            const docRef = query(collection(db,"Program"), where("pesertaList", "array-contains", userID));
             const data = await getDocs(docRef);
             setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
         }
         getUserProgram();
         console.log(programs);
-        
-        
+    },[reload])
 
-    },[])
-
-    const handleShowMohon = () => {
+    const handleShowMohon = (progID) => {
         setShowMohon(true);
-        //console.log(progID);
+        console.log(progID);
+        setProgramID(progID);   
     }
     const handleCloseMohon = () => {
         setShowMohon(false);
@@ -69,6 +53,38 @@ function RekodPermohonan() {
 
     const printSijil = () =>{
         console.log(programs);
+    }
+
+    const padamPermohonan = async () => {
+        console.log(progrmaID);
+        const progRef = doc(db,"Program",progrmaID);
+        await getDoc(progRef).then(async (data) =>{
+            const tempList = data.data().pesertaList;
+            const tempNama = data.data().pesertaNama;
+            const tempStatus = data.data().pesertaStatus;
+            const tempTran = data.data().transactionId;
+            
+            var oldList = tempList;
+            var newNama = tempNama;
+            var newStatus = tempStatus;
+            var newTran = tempTran;
+
+            var newList = oldList.filter(item => item !== userID);
+            delete newNama[userID];
+            delete newStatus[userID];
+            delete newTran[userID];
+
+            await updateDoc((progRef),{
+                pesertaList: newList,
+                pesertaNama: newNama,
+                pesertaStatus: newStatus,
+                transactionId: newTran
+            }).then(()=>{
+                setShowMohon(false);
+                alert("Anda telah berjaya padam program permohonan");
+                setReload(reload + 1);
+            })
+        })
     }
 
     return (
@@ -111,7 +127,7 @@ function RekodPermohonan() {
                                             <td className="Status">Sedang Diprocess</td>
                                             <td className="Aktiviti">
                                                 <div className="AktivitiContainer">
-                                                    <button onClick={handleShowMohon} className="Mohonbutton">BatalPermohonan</button>
+                                                    <button onClick={() => {handleShowMohon(item.id)}} className="Mohonbutton">BatalPermohonan</button>
                                                     <button onClick={printSijil} className="Printbutton">PrintSijil</button>
                                                 </div>
                                             </td>
@@ -140,7 +156,7 @@ function RekodPermohonan() {
                                             </div>
                                             <div className="buttonrekod">
                                                 <div className="comfirmya">
-                                                    <button className="option">Ya</button>
+                                                    <button className="option" onClick={padamPermohonan}>Ya</button>
                                                 </div>
                                                 <div className="comfirmno">
                                                     <button className="option" onClick={handleCloseMohon}>Tidak</button>
