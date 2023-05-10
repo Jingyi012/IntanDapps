@@ -61,7 +61,7 @@ function AdminLogin() {
     if (docSnap.exists()) {
       if (docSnap.data().acc == account) {
         localStorage.setItem("user", JSON.stringify({ role: "ADMIN" }));
-        localStorage.setItem("databaseID", mykad);
+        localStorage.setItem("userID", mykad);
         navigate("/admin/home");
         //window.location.reload();
       } else {
