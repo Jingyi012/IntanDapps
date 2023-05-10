@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./styles/rekodpermohonan.css"
 import Intan from "../intan.png"
 import Modal from './Modal'
 import NavbarU from "../Component/userNavbar/NavbarU";
+import { db } from '../Backend/firebase/firebase-config'
+import { collection, getDoc, deleteDoc, doc, getDocs, query, where,} from 'firebase/firestore'
 
 const data = [
     { kod: "SECD2523", nama: "Database", Tarikh: "14.3.2023-14.6.2023", Status: "Sedang diproses" },
@@ -19,18 +21,54 @@ const data = [
 function RekodPermohonan() {
     const [showMohon, setShowMohon] = useState(false);
     const [searchValue, setSearchValue] = useState("");
+    const [programs, setPrograms] = useState([]);
+    const [userPrograms, setUserPrograms] = useState([]);
+    const userID = localStorage.getItem("userID");
+    const userRef = doc(db, "User", userID)//crud 1,collection(reference, collectionName)
 
     const filteredData = data.filter(item =>
         item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
         item.kod.toLowerCase().includes(searchValue.toLowerCase())
     );
 
+    useEffect(() => {
+        const getUserProgram = async () => {
+            // const data = await getDoc(userRef);//read 2
+            // const tempList =[...data.data().program];
+            // tempList.forEach(async progID => {
+            //    // const progID =tempList[1];
+            //     const progRef = doc(db,"Program",progID);
+            //     const progDetail = await getDoc(progRef).then((data) => { console.log(data.data()); return data;});
+            //     const tempObject = { ...progDetail.data(),id:progID};
+            //     console.log(progDetail.data());
+            //     var tempArray = programs;
+            //     tempArray.push(progDetail.data());
+            //     console.log(tempArray);
+            //     setPrograms(tempArray);//read 3
+            // });
+            // console.log(data.data().program);
+
+            const docRef = query(collection(db,"Program"), where("pesertaList", "array-contains", "123456-12-1234"));
+            const data = await getDocs(docRef);
+            setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+        }
+        getUserProgram();
+        console.log(programs);
+        
+        
+
+    },[])
 
     const handleShowMohon = () => {
         setShowMohon(true);
+        //console.log(progID);
     }
     const handleCloseMohon = () => {
         setShowMohon(false);
+    }
+
+    const printSijil = () =>{
+        console.log(programs);
     }
 
     return (
@@ -65,15 +103,17 @@ function RekodPermohonan() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((item, index) => (
+                                    {programs.map((item, index) => (
                                         <tr key={index} className={index % 2 === 0 ? "even" : "odd"}>
                                             <td className="kod">{item.kod}</td>
                                             <td className="NameKursus">{item.nama}</td>
-                                            <td className="Tarikh">{item.Tarikh}</td>
-                                            <td className="Status">{item.Status}</td>
+                                            <td className="Tarikh">{item.mula} - {item.tamat}</td>
+                                            <td className="Status">Sedang Diprocess</td>
                                             <td className="Aktiviti">
-                                                <button onClick={handleShowMohon} className="Mohonbutton">Mohon</button>
-                                                <button className="Printbutton">Print</button>
+                                                <div className="AktivitiContainer">
+                                                    <button onClick={handleShowMohon} className="Mohonbutton">BatalPermohonan</button>
+                                                    <button onClick={printSijil} className="Printbutton">PrintSijil</button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
@@ -81,7 +121,7 @@ function RekodPermohonan() {
                             </table>
                             {showMohon && (
                                 <div className="Rekod-modal">
-                                   <Modal isOpen={showMohon} onClose={handleCloseMohon}>
+                                    <Modal isOpen={showMohon} onClose={handleCloseMohon}>
                                         <div className="confirmation-message ">
                                             <div className="headpopout">
                                                 <p>Alert</p>

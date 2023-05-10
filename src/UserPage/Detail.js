@@ -1,30 +1,35 @@
 import React, { useState , useEffect} from "react";
 import "./styles/Detail.css";
 import Modal from "./Modal";
-import { NavLink,useParams } from "react-router-dom";
+import { NavLink,useParams,useNavigate } from "react-router-dom";
 import { db } from '../Backend/firebase/firebase-config'
-import { collection, getDoc, deleteDoc, doc,} from 'firebase/firestore'
+import { collection, getDoc, deleteDoc, doc, updateDoc,} from 'firebase/firestore'
+import { LocalActivity } from "@mui/icons-material";
 
 function SenaraiProgramSediaAda() {
   const [showDaftar, setShowDaftar] = useState(false);
+  const [isiProgram,setIsiProgram] = useState("");
   const [mula,setMula] = useState("");
   const [nama,setNama] = useState("");
   const [penganjur,setPenganjur] = useState("");
   const [jumPeserta,setJumPeserta] = useState("");
   const [tamat,setTamat] = useState("");
-
+  const navigate = useNavigate();
+  
   const handleShowDaftar = () => {
     setShowDaftar(true);
   };
   const handleCloseDaftar = () => {
     setShowDaftar(false);
   };
+
   let {programID} = useParams();
 
   useEffect(() => {
     const getProgram = async() =>{
       const docRef = doc(db,"Program",programID.toString());
       const data1 = await getDoc(docRef);
+      setIsiProgram(data1.data().isiProgram);
       setMula(data1.data().mula);
       setNama(data1.data().nama);
       setPenganjur(data1.data().penganjur);
@@ -35,6 +40,44 @@ function SenaraiProgramSediaAda() {
     getProgram();
     
   },[]);
+
+  const programDaftar = async () =>{
+    const docRef = doc(db,"Program",programID);
+    const data = await getDoc(docRef);
+    const tempList = data.data().pesertaList;
+    const tempNama = data.data().pesertaNama;
+    const tempStatus = data.data().pesertaStatus;
+    const tempTran = data.data().transactionId;
+    var newList = tempList;
+    var newNama = tempNama;
+    var newStatus = tempStatus;
+    var newTran = tempTran;
+    const userID = localStorage.getItem("userID");
+    const userNama = localStorage.getItem("userNama");
+    const check = true;
+    
+    tempList.forEach((id) => {
+      if (id == userID) {
+        alert("Anda tidak dibenarkan untuk daftar semula program yang and telah mendaftar")
+        check = false;
+      }
+    })
+    if(check){
+      newList.push(userID);
+      newNama[userID] = userNama;
+      newStatus[userID] = "-";
+      newTran[userID] = "-";
+      await updateDoc(docRef, {
+        pesertaList: newList,
+        pesertaNama: newNama,
+        pesertaStatus: newStatus,
+        transactionId: newTran,
+      }).then(() => {
+        alert("And telah berjaya mendaftar program ini!!");
+        navigate(-1);
+      })
+    }
+  }
 
 
   return (
@@ -85,13 +128,7 @@ function SenaraiProgramSediaAda() {
       </div>
       <div class="sinopsis">
         <p>
-          Menerangkan mengenai isu-isu yang dilaporkan dalam Laporan Ketua Audit
-          Negara dan meningkatkan kesedaran para penjawat awam terhadap
-          kepentingan mempunyai tahap integriti dan akauntabiliti yang tinggi
-          dalam Perkhidmatan Awam. Di samping itu, kursus ini bakal berkongsi
-          mengenai punca-punca berlakunya rasuah, salah guna kuasa dan
-          ketidakpatuhan kepada peraturan kewangan awam yang berkuatkuasa serta
-          kesan-kesan buruk kepada diri sendiri, keluarga dan masyarakat.
+          {isiProgram}
         </p>
       </div>
       <div className="daftarcenter">
@@ -128,7 +165,7 @@ function SenaraiProgramSediaAda() {
 
               <div className="buttonrekod">
                 <div className="comfirmya">
-                  <button className="option">Ya</button>
+                  <button className="option" onClick={programDaftar}>Ya</button>
                 </div>
                 <div className="comfirmno">
                   <button className="option">Tidak</button>

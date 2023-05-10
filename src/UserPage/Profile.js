@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import "./styles/profile.css";
-import { db } from '../Backend/firebase/firebase-config'
+import { db,storage } from '../Backend/firebase/firebase-config'
 import { getDoc, doc, updateDoc } from 'firebase/firestore'
+import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
+import { v4 } from 'uuid';
 import NavbarU from "../Component/userNavbar/NavbarU";
 
 const ImgUpload = ({ onChange, src }) => (
@@ -181,7 +183,7 @@ export default class profile extends React.Component {
 
     this.state = {
       file: "",
-      imagePreviewUrl:
+      imageUrl:
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
       nama: "teoh",
       myKad: "ic",
@@ -194,8 +196,8 @@ export default class profile extends React.Component {
     };
 
     const getProfile = async () => {
-      const databaseID = localStorage.getItem("databaseID");
-      const docRef = doc(db, "User", databaseID);
+      const userID = localStorage.getItem("userID");
+      const docRef = doc(db, "User", userID);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         console.log("Document data:", docSnap.data().emelPeribadi);
@@ -207,6 +209,7 @@ export default class profile extends React.Component {
           gelaran: docSnap.data().gelaran,
           telefon: docSnap.data().telefonPejabat,
           alamat: docSnap.data().alamat,
+          imageUrl: docSnap.data().imageUrl,
         });
         console.log(docSnap.data().emelRasmi)
         console.log(this.state.emelrasmi)
@@ -226,7 +229,7 @@ export default class profile extends React.Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
-        imagePreviewUrl: reader.result,
+        imageUrl: reader.result,
       });
     };
     reader.readAsDataURL(file);
@@ -295,27 +298,46 @@ export default class profile extends React.Component {
   async updateProfile() {
     if (this.state.active== "edit"){
       console.log(this.state.nama);
-      const databaseID = localStorage.getItem("databaseID");
-      const docRef = doc(db, "User", databaseID);
-  
-      // Set the "capital" field of the city 'DC'
-      await updateDoc(docRef, {
-        nama: this.state.nama,
-        ic: this.state.myKad,
-        emelRasmi: this.state.emelrasmi,
-        emelPeribadi: this.state.emelperibadi,
-        gelaran: this.state.gelaran,
-        telefonPejabat: this.state.telefon,
-        alamat: this.state.alamat,
-      }).then(() => {
-        alert("update successful!");
-      });
+      const userID = localStorage.getItem("userID");
+      const docRef = doc(db, "User", userID);
+      
+      if(this.state.file == ""){
+        await updateDoc(docRef, {
+          nama: this.state.nama,
+          ic: this.state.myKad,
+          emelRasmi: this.state.emelrasmi,
+          emelPeribadi: this.state.emelperibadi,
+          gelaran: this.state.gelaran,
+          telefonPejabat: this.state.telefon,
+          alamat: this.state.alamat,
+        }).then(() => {
+          alert("update successful!");
+        });
+      } else{
+        const imageRef = ref(storage, `images/${this.state.file.name + v4()}`);
+        uploadBytes(imageRef, this.state.file).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then(async (url) => {
+            await updateDoc(docRef, {
+              nama: this.state.nama,
+              ic: this.state.myKad,
+              emelRasmi: this.state.emelrasmi,
+              emelPeribadi: this.state.emelperibadi,
+              gelaran: this.state.gelaran,
+              telefonPejabat: this.state.telefon,
+              alamat: this.state.alamat,
+              imageUrl: url,
+            }).then(() => {
+              alert("update successful!");
+            });
+          });
+        });
+      }
     }
   }
 
   render() {
     const {
-      imagePreviewUrl,
+      imageUrl,
       nama,
       myKad,
       emelrasmi,
@@ -332,7 +354,7 @@ export default class profile extends React.Component {
           <div className="card">
             <form onSubmit={this.handleSubmit} className="profileform">
               <div className="leftSide">
-                <ImgUpload onChange={this.photoUpload} src={imagePreviewUrl} />
+                <ImgUpload onChange={this.photoUpload} src={imageUrl} />
                 <button type="submit" className="savebutton">
                   Save{" "}
                 </button>
@@ -366,7 +388,7 @@ export default class profile extends React.Component {
         ) : (
           <Profile
             onSubmit={this.handleSubmit}
-            src={imagePreviewUrl}
+            src={imageUrl}
             nama={nama}
             myKad={myKad}
             emelrasmi={emelrasmi}

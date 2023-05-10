@@ -31,7 +31,7 @@ const Register = () => {
       ic: mykad,
       nama: nama,
       pass: "password",
-      program: [],
+      picture: "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
       telefonPejabat: telefonPejabat,
     });//create 2 end
     navigate('/login');

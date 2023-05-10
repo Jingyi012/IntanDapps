@@ -31,7 +31,8 @@ function UserLogin() {
 
     if (docSnap.exists()) {
       localStorage.setItem("user", JSON.stringify({ role: "USER" }));
-      localStorage.setItem("databaseID",mykad);
+      localStorage.setItem("userID",mykad);
+      localStorage.setItem("userNama",docSnap.data().nama);
       navigate("/user/senarai-program-sedia-ada");
       } else {
       // docSnap.data() will be undefined in this case

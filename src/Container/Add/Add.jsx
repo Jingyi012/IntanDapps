@@ -49,7 +49,10 @@ const Add = () => {
       nama: nama,
       penganjur: penganjur,
       jumPeserta: jumPeserta,
-      peserta: {},
+      pesertaStatus: {},
+      pesertaList:[],
+      transactionId:{},
+      pesertaNama:{},
       tamat: tamat,
     }).then(()=>{
       setIsiProgram("");

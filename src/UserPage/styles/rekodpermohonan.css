@@ -44,15 +44,20 @@ td {
 }
 
 .Rekod .Tarikh {
-	width: 18%;
+	width: 10%;
 }
 
 .Rekod .Status {
-	width: 18%;
+	width: 10%;
 }
 
 .Rekod .Aktiviti {
 	width: 30%;
+}
+
+.Aktiviti .AktivitiContainer {
+	display:flex;
+	justify-content: space-around;
 }
 
 .Rekod-modal {

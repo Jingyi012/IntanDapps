@@ -24,7 +24,7 @@ const Semak = () => {
   const [penganjur, setPenganjur] = useState("");
   const [jumPeserta, setJumPeserta] = useState("");
   const [tamat, setTamat] = useState("");
-  const [peserta, setPeserta] = useState([]);
+  const [pesertaNama, setPesertaNama] = useState([]);
 
   const deleteSijil = async (sender, transId) => {//creat 2
     const date = new Date();
@@ -41,7 +41,7 @@ const Semak = () => {
   let { programID } = useParams();
 
   useEffect(() => {
-    const getPeserta = async () => {
+    const getPesertaNama = async () => {
       const docRef = doc(db, "Program", programID.toString());
       const detail = await getDoc(docRef);
       setMula(detail.data().mula);
@@ -49,10 +49,10 @@ const Semak = () => {
       setPenganjur(detail.data().penganjur);
       setJumPeserta(detail.data().jumPeserta);
       setTamat(detail.data().tamat);
-      setPeserta(detail.data().peserta);
+      setPesertaNama(detail.data().pesertaNama);
      
     }
-    getPeserta();
+    getPesertaNama();
   }, []);
   return (
     <div className='app_box'>
@@ -96,12 +96,12 @@ const Semak = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(peserta).map(([key,value]) =>{ 
+            {Object.entries(pesertaNama).map(([key,value]) =>{ 
 
               return (
                 <tr className='row2'>
-                  <td>SECK0233</td>
                   <td>{key}</td>
+                  <td>{value}</td>
                   <td className='centerdata'>80%</td>
                   <td className='centerdata'><Sejarah title={`${value}`} /></td>
                   <td>
