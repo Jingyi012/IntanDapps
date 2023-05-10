@@ -22,13 +22,10 @@
 .displayAccContainer{
 }
 .displayAcc{
-
     margin: auto ;
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    column-count: 2;
     overflow:auto
 }
 
