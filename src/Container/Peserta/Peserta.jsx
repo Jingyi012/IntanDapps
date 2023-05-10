@@ -1,15 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Menuheader } from '../../Component'
 import '../Peserta/peserta.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
+import { db } from '../../Backend/firebase/firebase-config'
+import { collection, getDocs, deleteDoc, doc, } from 'firebase/firestore'
 
 const Peserta = () => {
   const [selectedValue, setSelectedValue] = useState('');
   const [searchValue, setSearchValue] = useState("");
   const [filteredValue, setFilteredValue] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  const userCollectionRef = collection(db, "User")//crud 1,collection(reference, collectionName)
+
+  useEffect(() => {
+    const getUser = async () => {
+      const data = await getDocs(userCollectionRef);//read 2
+      console.log(data);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+    }
+    getUser().then(console.log(users));
+  },[])
 
   const data=[{nomykad:"020923105888",name:"Tan Zeng Chai",aktiviti:"Semak"},
   {nomykad:"010230505450",name:"Tee Zeng Chai",aktiviti:"Semak"}
@@ -107,12 +121,12 @@ const Peserta = () => {
         </thead>
       {searchValue===""?(
         <tbody>
-        {data.map((item,index)=>(
+        {users.map((item,index)=>(
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
-            <td>{item.nomykad}</td>
-            <td>{item.name}</td>
+            <td>{item.ic}</td>
+            <td>{item.nama}</td>
             <td>
-              <NavLink to='/admin/peserta-semak' className='aktiviti'>{item.aktiviti}</NavLink>
+              <NavLink to={`/admin/peserta-semak/${item.ic}`} className='aktiviti'>Semak</NavLink>
             </td>
       </tr>
         ))}

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./styles/profile.css";
 import { db,storage } from '../Backend/firebase/firebase-config'
 import { getDoc, doc, updateDoc } from 'firebase/firestore'
-import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
 import NavbarU from "../Component/userNavbar/NavbarU";
 
@@ -183,6 +183,9 @@ export default class profile extends React.Component {
 
     this.state = {
       file: "",
+      imagePreviewUrl:
+        "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
+      imageOriginalUrl:"",
       imageUrl:
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
       nama: "teoh",
@@ -209,6 +212,7 @@ export default class profile extends React.Component {
           gelaran: docSnap.data().gelaran,
           telefon: docSnap.data().telefonPejabat,
           alamat: docSnap.data().alamat,
+          imageOriginalUrl: docSnap.data().imageUrl,
           imageUrl: docSnap.data().imageUrl,
         });
         console.log(docSnap.data().emelRasmi)
@@ -314,22 +318,33 @@ export default class profile extends React.Component {
           alert("update successful!");
         });
       } else{
-        const imageRef = ref(storage, `images/${this.state.file.name + v4()}`);
-        uploadBytes(imageRef, this.state.file).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then(async (url) => {
-            await updateDoc(docRef, {
-              nama: this.state.nama,
-              ic: this.state.myKad,
-              emelRasmi: this.state.emelrasmi,
-              emelPeribadi: this.state.emelperibadi,
-              gelaran: this.state.gelaran,
-              telefonPejabat: this.state.telefon,
-              alamat: this.state.alamat,
-              imageUrl: url,
-            }).then(() => {
-              alert("update successful!");
+        let text = this.state.imageOriginalUrl;
+        const myArray = text.split("images%2F");
+        const text2 = myArray[1];
+        const myArray2 = text2.split("?alt");
+        const imageName = myArray2[0];
+        const desertRef = ref(storage, `images/${imageName}`);
+        deleteObject(desertRef).then(() => {
+          const imageRef = ref(storage, `images/${this.state.file.name + v4()}`);
+          uploadBytes(imageRef, this.state.file).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then(async (url) => {
+              await updateDoc(docRef, {
+                nama: this.state.nama,
+                ic: this.state.myKad,
+                emelRasmi: this.state.emelrasmi,
+                emelPeribadi: this.state.emelperibadi,
+                gelaran: this.state.gelaran,
+                telefonPejabat: this.state.telefon,
+                alamat: this.state.alamat,
+                imageUrl: url,
+              }).then(() => {
+                alert("update successful!");
+              });
             });
           });
+        }).catch((error) => {
+          alert("Something error happend, please contact adminstrator!!");
+          console.log(error);
         });
       }
     }
