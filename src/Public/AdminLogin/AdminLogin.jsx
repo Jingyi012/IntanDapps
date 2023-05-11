@@ -6,7 +6,7 @@ import { PeraWalletConnect } from "@perawallet/connect";
 import AppContext, { AppContextProvider } from "../../Context/AppContext";
 import { db } from '../../Backend/firebase/firebase-config'
 import { getDoc, doc } from 'firebase/firestore'
-
+import SimpleButton from '../../Component/button/SimpleButton';
 function AdminLogin() {
   const navigate = useNavigate();
   const [mykad, setMykad] = useState("");
@@ -94,8 +94,9 @@ function AdminLogin() {
 
             <div>Sila log masuk dengan salah satu algorand wallet untuk dapatkan algorand akaun</div>
             <br></br>
-            <button type="button" onClick={connectPeraAlgoWallet}>Connect to Pera Algo Wallet</button>
-            <button type="button" onClick={connectMyAlgoWallet}>Connect to MyAlgo Wallet</button>
+            <div>
+            <SimpleButton title="Connect to Pera Algo Wallet" onClick={connectPeraAlgoWallet}></SimpleButton>
+            <SimpleButton title="Connect to MyAlgo Wallet" onClick={connectMyAlgoWallet}></SimpleButton></div>
             <div>Your Login Account: </div>
             <div className='displayAcc'>
               <div>{account}</div>
