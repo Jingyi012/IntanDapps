@@ -14,7 +14,6 @@ import { indexerClient } from '../../Constant/ALGOkey';
 const Semak = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
-  const [isDeleted, setIsDeleted] = useState(false);
   const [alertDelete, setDeleteAlert] = useState(false);
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
@@ -23,6 +22,7 @@ const Semak = () => {
   const [appId, setAppId] = useState("");
   const [mula, setMula] = useState("");
   const [nama, setNama] = useState("");
+  const [loading, setLoading] = useState(false);
   const [penganjur, setPenganjur] = useState("");
   const [jumPeserta, setJumPeserta] = useState("");
   const [tamat, setTamat] = useState("");
@@ -141,7 +141,7 @@ const Semak = () => {
                   <td className='centerdata'>{`${value}`}</td>
                   {/* <td className='centerdata'><Sejarah title={`${value}`} /></td> */}
                   <td>
-                    {(`${value}` === 'dicipta') ? <button className="semakbutton" disabled={true}>Cipta</button> :
+                    {(`${value}` === 'dicipta' || `${value}` === 'dikemasKini') ? <button className="semakbutton" disabled={true}>Cipta</button> :
                       <NavLink to={`/admin/cipta-sijil/${programID}/${key}`} className="aktivititype">Cipta</NavLink>}
 
                     {(`${value}` === 'dipadam' || `${value}` === '-') ? <><button className="semakbutton" disabled={true}>Kemaskini</button><button className="semakbutton" disabled={true}>Semak</button><button className="semakbutton" disabled={true}>Padam</button></> :
@@ -168,7 +168,7 @@ const Semak = () => {
             <div className='semaksijilbox'>
               <div className='sejarahheader'>
                 <h2 className='sejarahtitle'>Padam</h2>
-                <button className='closebutton' onClick={() => { setIsOpen(false); setIsDeleted(false); setDeleteAlert(false) }}><img src={closeicon} alt="This is a close icon." className='closeicon' /></button>
+                <button className='closebutton' onClick={() => { setIsOpen(false); setDeleteAlert(false); setLoading(false) }}><img src={closeicon} alt="This is a close icon." className='closeicon' /></button>
               </div>
 
               {!alertDelete ? (
@@ -176,7 +176,9 @@ const Semak = () => {
                   <div><p>
                     Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                   </p></div>
-                  <div className='padamconfirmbutton'><Buttons title="Padam" onClick={async () => {
+                  <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
+                  :<Buttons title="Padam" onClick={async () => {
+                    setLoading(true);
                     console.log(account[0]);
 
                     //obtain the app id for the particular user cert in the program 
@@ -194,20 +196,15 @@ const Semak = () => {
                     deleteCert(deleteId,appId)
 
                     // const transId=payContract(deleteId);
-                    if (deleteId != null) setIsDeleted(true);
                     setDeleteAlert(true);
-                  }} /></div>
+                  }} />}</div>
                 </div>
               ) :
-                (<div className='contentdelete'>
-                  {isDeleted ? (
+                <div className='contentdelete'>
                     <div><p>
                       This cert was successfully deleted in the algorand blockchain!!
-                    </p></div>) : (<div><p>
-                      This cert was already deleted in the algorand blockchain!! It cannot be deleted anymore
-                    </p></div>)
-                  }
-                </div>)}
+                    </p></div>
+                </div>}
             </div>
           </div>
         </div>

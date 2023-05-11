@@ -19,8 +19,6 @@
     flex-direction: column;
     align-items: center;
 }
-.displayAccContainer{
-}
 .displayAcc{
     margin: auto ;
     text-align: center;
@@ -80,9 +78,15 @@ button[type = "button"]{
 .adminLoginForm 
 button[type = "Submit"]{
     margin: 5rem auto 4rem;
+
 }
 
 .adminLoginForm button[type = "Submit"] :hover{
     background-color: rgb(136, 142, 254);
     cursor: pointer;
 }
+.adminLoginForm button[type = "button"]:hover{
+    background-color: rgba(38, 52, 130, 0.8);
+    cursor: pointer;
+}
+

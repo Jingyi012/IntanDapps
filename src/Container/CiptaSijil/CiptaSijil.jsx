@@ -164,7 +164,7 @@ const CiptaSijil = ({ backpage }) => {
           </div>
         </div>
       </div>
-      <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is adding into bloakchain and database ...</div></center></div>:<Buttons title="Deploy Contract" onClick={async () => {
+      <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is adding into blockchain and database ...</div></center></div>:<Buttons title="Deploy Contract" onClick={async () => {
         setLoading(true);
         const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }];
         const mnemonic = await handleClick();

@@ -178,7 +178,7 @@ const EditSijil = ({ backpage }) => {
           </div>
         </div>
       </div>
-      <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is updating into bloakchain and database ...</div></center></div>:<Buttons title="Selesai" onClick={async () => {
+      <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is updating into blockchain and database ...</div></center></div>:<Buttons title="Selesai" onClick={async () => {
        setLoading(true);
        const mnemonic = await handleClick();
        if(mnemonic!=null){
