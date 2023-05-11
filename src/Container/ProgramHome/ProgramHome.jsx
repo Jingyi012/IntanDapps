@@ -37,15 +37,15 @@ const ProgramHome = () => {
 
 
   const kodfilter = () => {
-      const sorted = data.sort((a, b) => a.kod.localeCompare(b.kod));
+      const sorted = programs.sort((a, b) => a.kod.localeCompare(b.kod));
       setSearchValue(sorted)}
 
   const tmfilter = () => {
-      const sorted = data.sort((a, b) => a.tarikhMula.localeCompare(b.tarikhMula));
+      const sorted = programs.sort((a, b) => a.mula.localeCompare(b.mula));
       setSearchValue(sorted)}
 
     const ttfilter = () => {
-        const sorted = data.sort((a, b) => a.tarikhTamat.localeCompare(b.tarikhTamat));
+        const sorted = programs.sort((a, b) => a.tamat.localeCompare(b.tamat));
         setSearchValue(sorted)}
 
     const handleSelectChange = (event) => {
@@ -71,14 +71,14 @@ const ProgramHome = () => {
       }
       setIsSearching(true);
       try{
-        if(!isNaN(filteredValue)){
-      const filtered = data.filter(item => item.kod.toString().startsWith(filteredValue));
-      setSearchValue(filtered);
-      }
-      else{
-    const filtered = data.filter(item => item.name.toLowerCase().includes(filteredValue.toLowerCase()));
-    setSearchValue(filtered);
-    }
+        const lowerCaseFilteredValue = filteredValue.toLowerCase();
+
+        const filtered = programs.filter(item =>
+          Object.values(item).some(val =>
+            val.toString().toLowerCase().includes(lowerCaseFilteredValue)
+          )
+        );
+        setSearchValue(filtered);
       await new Promise((resolve) => setTimeout(resolve, 2000));}
       catch (error) {
         console.error('Search failed:', error);
@@ -152,6 +152,7 @@ const ProgramHome = () => {
         {searchValue===""?(
         <tbody>
         {programs.map((item,index)=>(
+          console.log("Before Search", item),
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
             <td>{item.kod}</td>
             <td>{item.nama}</td>
@@ -168,15 +169,16 @@ const ProgramHome = () => {
       ):(
         <tbody>
         {searchValue.map((item,index)=>(
+          console.log("After Search", item),
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
           <td>{item.kod}</td>
-          <td>{item.name}</td>
-          <td className='centerdata'>{item.tarikhMula}</td>
-          <td className='centerdata'>{item.tarikhTamat}</td>
+          <td>{item.nama}</td>
+          <td className='centerdata'>{item.mula}</td>
+          <td className='centerdata'>{item.tamat}</td>
           <td>
-              <NavLink to='/admin/semak' className="aktivititype">Semak</NavLink>
-              <NavLink to='/admin/edit-program' className="aktivititype">Edit</NavLink>
-              <button className="padambutton" onClick={()=>setIsOpen(true)}>Padam</button>
+              <NavLink to={`/admin/semak/${item.id}`} className="aktivititype">Semak</NavLink>
+              <NavLink to={`/admin/edit-program/${item.id}`} className="aktivititype">Edit</NavLink>
+              <button className="padambutton" onClick={(event)=>popOut(event,item.id)}>Padam</button>
           </td>
       </tr>
         ))}
