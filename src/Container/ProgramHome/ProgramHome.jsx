@@ -71,14 +71,14 @@ const ProgramHome = () => {
       }
       setIsSearching(true);
       try{
-        if(!isNaN(filteredValue)){
-      const filtered = data.filter(item => item.kod.toString().startsWith(filteredValue));
-      setSearchValue(filtered);
-      }
-      else{
-    const filtered = data.filter(item => item.name.toLowerCase().includes(filteredValue.toLowerCase()));
-    setSearchValue(filtered);
-    }
+        const lowerCaseFilteredValue = filteredValue.toLowerCase();
+
+        const filtered = programs.filter(item =>
+          Object.values(item).some(val =>
+            val.toString().toLowerCase().includes(lowerCaseFilteredValue)
+          )
+        );
+        setSearchValue(filtered);
       await new Promise((resolve) => setTimeout(resolve, 2000));}
       catch (error) {
         console.error('Search failed:', error);
