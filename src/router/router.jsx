@@ -48,7 +48,7 @@ function Router() {
           <Route path="/admin/log" exact element={<Log />} />
           <Route path="/admin/semak/:programID" exact element={<Semak />} />
           <Route path="/admin/program-edit" exact element={<ProgramEdit />} />
-          <Route path="/admin/peserta-semak" exact element={<PesertaSemak />} />
+          <Route path="/admin/peserta-semak/:pesertaID" exact element={<PesertaSemak />} />
           <Route path="/admin/cipta-sijil/:programId/:key" exact element={<CiptaSijil />} />
           <Route path="/admin/display-sijil/:transId" element={<DisplaySijil />} />
           <Route path="/admin/edit-sijil/:programId/:key" exact element={<EditSijil />} />
