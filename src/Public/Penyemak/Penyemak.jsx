@@ -46,20 +46,20 @@ export default function Penyemak() {
           <form className='maklumatPenyemak' method='get' onSubmit={handleSubmit}>
 
             <label htmlFor='namaPenyemak'>Nama:
-              <input id='namaPenyemak' name='namaPenyemak' type='text' placeholder='Nama' onChange={(event) => {
+              <input id='namaPenyemak' name='namaPenyemak' type='text' placeholder='Ali bin Ahmad' onChange={(event) => {
                 setNama(event.target.value)
               }}
               />
             </label>
 
             <label htmlFor='myKadPenyemak'>No. MyKad:
-              <input id='myKadPenyemak' name='myKadPenyemak' type='text' placeholder='No. MyKad' minLength='14' maxLength='14' onChange={(event) => {
+              <input id='myKadPenyemak' name='myKadPenyemak' type='text' placeholder='000000-00-0001' minLength='14' maxLength='14' onChange={(event) => {
                 setMykad(event.target.value)
               }} />
             </label>
 
             <label htmlFor='organisasiPenyemak'>Nama Organisasi:
-              <input id='organisasiPenyemak' name='organisasiPenyemak' type='text' placeholder='Organisasi' onChange={(event) => {
+              <input id='organisasiPenyemak' name='organisasiPenyemak' type='text' placeholder='INTAN Malaysia' onChange={(event) => {
                 setNama(event.target.value)
               }} />
             </label>
