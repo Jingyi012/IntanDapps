@@ -14,7 +14,6 @@ import { indexerClient } from '../../Constant/ALGOkey';
 const Semak = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
-  const [isDeleted, setIsDeleted] = useState(false);
   const [alertDelete, setDeleteAlert] = useState(false);
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
@@ -23,18 +22,54 @@ const Semak = () => {
   const [appId, setAppId] = useState("");
   const [mula, setMula] = useState("");
   const [nama, setNama] = useState("");
+  const [loading, setLoading] = useState(false);
   const [penganjur, setPenganjur] = useState("");
   const [jumPeserta, setJumPeserta] = useState("");
   const [tamat, setTamat] = useState("");
   const [pesertaNama, setPesertaNama] = useState([]);
   const [pesertaStatus, setPesertaStatus] = useState([]);
   //console.log(account[0]);
-  const semakUser = async (user) => {
+  //get the transaction id of the user
+  const deleteCert = async (deleteId, appId) => {
+    //delete the sijil at sijil section in firebase
+    const sijilDoc = doc(db, "Sijil", appId.toString());
+    await deleteDoc(sijilDoc);
+    //set the txnid at program section to delete transaction id
+    //set the peserta of the person to dipadam
+    const programDocRef = doc(db, "Program", programID);
+    const data = await getDoc(programDocRef);
+    const pesertaStatusList = data.data().pesertaStatus;
+    const txnIdList = data.data().transactionId;
+    pesertaStatusList[currentUser] = "dipadam";
+    txnIdList[currentUser] = deleteId;
+    await updateDoc(programDocRef, {
+      transactionId: txnIdList,
+      pesertaStatus: pesertaStatusList,
+    }).then(response => {
+      alert("the cert was deleted")
+    }).catch(error => {
+      console.log(error.message)
+    })
+    //add this action to the action log
+    const actionRef = collection(db, "ActionLog")
+    const date = new Date();
+    await addDoc(actionRef, {
+      admin: `${account[0]}`,
+      date: `${date.toString()}`,
+      transactionId: `any`,
+      type: 'Delete',
+    });
+  }
+  const getUserTxn = async (user) => {
     //obtain the app id for the particular user cert in the program 
     const programDocRef = doc(db, "Program", programID);
     const data = await getDoc(programDocRef);//read 2
     const userTxnId = data.data().transactionId[user];
     console.log(userTxnId);
+    return userTxnId;
+  }
+  const semakUser = async (user) => {
+    const userTxnId = await getUserTxn(user);
     navigate(`/informasi-sijil/${userTxnId}`);
   };
 
@@ -106,20 +141,21 @@ const Semak = () => {
                   <td className='centerdata'>{`${value}`}</td>
                   {/* <td className='centerdata'><Sejarah title={`${value}`} /></td> */}
                   <td>
-                    {(`${value}` === 'dicipta') ? <button className="semakbutton" disabled={true}>Cipta</button> :
+                    {(`${value}` === 'dicipta' || `${value}` === 'dikemasKini') ? <button className="semakbutton" disabled={true}>Cipta</button> :
                       <NavLink to={`/admin/cipta-sijil/${programID}/${key}`} className="aktivititype">Cipta</NavLink>}
-                    <NavLink to={`/admin/edit-sijil/${programID}/${key}`} className="aktivititype">Edit</NavLink>
-                    {(`${value}` === 'dipadam') ? <button className="semakbutton" disabled={true}>Semak</button> :
-                      <button className="semakbutton" onClick={() => {
-                        semakUser(key);
-                      }}>Semak</button>}
-                    <button className="padambutton" onClick={() => {
-                      setCurrentUser(key);
-                      setIsOpen(true)
-                    }}>Padam</button>
+
+                    {(`${value}` === 'dipadam' || `${value}` === '-') ? <><button className="semakbutton" disabled={true}>Kemaskini</button><button className="semakbutton" disabled={true}>Semak</button><button className="semakbutton" disabled={true}>Padam</button></> :
+                      <>
+                        <NavLink to={`/admin/edit-sijil/${programID}/${key}`} className="aktivititype">Kemaskini</NavLink>
+                        <button className="semakbutton" onClick={() => {
+                          semakUser(key);
+                        }}>Semak</button>
+                        <button className="padambutton" onClick={() => {
+                          setCurrentUser(key);
+                          setIsOpen(true)
+                        }}>Padam</button></>}
                   </td>
                 </tr>
-
               );
             })}
 
@@ -132,7 +168,7 @@ const Semak = () => {
             <div className='semaksijilbox'>
               <div className='sejarahheader'>
                 <h2 className='sejarahtitle'>Padam</h2>
-                <button className='closebutton' onClick={() => { setIsOpen(false); setIsDeleted(false); setDeleteAlert(false) }}><img src={closeicon} alt="This is a close icon." className='closeicon' /></button>
+                <button className='closebutton' onClick={() => { setIsOpen(false); setDeleteAlert(false); setLoading(false) }}><img src={closeicon} alt="This is a close icon." className='closeicon' /></button>
               </div>
 
               {!alertDelete ? (
@@ -140,13 +176,13 @@ const Semak = () => {
                   <div><p>
                     Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                   </p></div>
-                  <div className='padamconfirmbutton'><Buttons title="Padam" onClick={async () => {
+                  <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
+                  :<Buttons title="Padam" onClick={async () => {
+                    setLoading(true);
                     console.log(account[0]);
 
                     //obtain the app id for the particular user cert in the program 
-                    const programDocRef = doc(db, "Program", programID);
-                    const data = await getDoc(programDocRef);//read 2
-                    const userTxnId = data.data().transactionId[currentUser];
+                    const userTxnId = await getUserTxn(currentUser);
                     console.log(userTxnId);
                     const info = await indexerClient.lookupTransactionByID(userTxnId).do();
                     const appId = await info.transaction["application-transaction"]["application-id"];
@@ -156,54 +192,19 @@ const Semak = () => {
                     const deleteId = await deleteProductAction(appId);
                     console.log(deleteId);
 
-
-                    //delete the sijil at sijil section in firebase
-                    const sijilDoc = doc(db, "Sijil", appId.toString());
-                    await deleteDoc(sijilDoc);
-
-                    //set the txnid at program section to delete transaction id
-                    //set the peserta of the person to dipadam
-                    const pesertaStatusList = data.data().pesertaStatus;
-                    const txnIdList = data.data().transactionId;
-                    pesertaStatusList[currentUser] = "dipadam";
-                    txnIdList[currentUser] = deleteId;
-                    await updateDoc(programDocRef, {
-                      transactionId: txnIdList,
-                      pesertaStatus: pesertaStatusList,
-                    }).then(response => {
-                      alert("the cert was deleted")
-                    }).catch(error => {
-                      console.log(error.message)
-                    })
-                    //add this action to the action log
-                    const actionRef = collection(db, "ActionLog")
-                    const date = new Date();
-                    await addDoc(actionRef, {
-                      admin: `${account[0]}`,
-                      date: `${date.toString()}`,
-                      transactionId: `any`,
-                      type: 'Delete',
-                    });
-
+                    //delete the cert in firebase
+                    deleteCert(deleteId,appId)
 
                     // const transId=payContract(deleteId);
-                    if (deleteId != null) setIsDeleted(true);
                     setDeleteAlert(true);
-                  }} /></div>
+                  }} />}</div>
                 </div>
               ) :
-                (<div className='contentdelete'>
-                  {isDeleted ? (
+                <div className='contentdelete'>
                     <div><p>
                       This cert was successfully deleted in the algorand blockchain!!
-                    </p></div>) : (<div><p>
-                      This cert was already deleted in the algorand blockchain!! It cannot be deleted anymore
-                    </p></div>)
-
-                  }
-
-                </div>)}
-
+                    </p></div>
+                </div>}
             </div>
           </div>
         </div>

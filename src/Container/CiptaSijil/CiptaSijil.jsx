@@ -19,6 +19,7 @@ const CiptaSijil = ({ backpage }) => {
   const [tarikhMula, setTarikhMula] = useState('');
   const [tarikhTamat, setTarikhTamat] = useState('');
   const [nama, setNama] = useState('');
+  const [loading, setLoading] = useState(false);
   const [NRIC, setNRIC] = useState('');
   const actionCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
 
@@ -51,7 +52,7 @@ const CiptaSijil = ({ backpage }) => {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,
     }).then(response => {
-      alert("updated")
+      alert("sijil was successfully added")
     }).catch(error => {
       console.log(error.message)
     })
@@ -60,6 +61,7 @@ const CiptaSijil = ({ backpage }) => {
   //ask user to insert his/her mnemonic before deploy the contract 
   const handleClick = async (event) => {
     const enteredInput = await prompt('Please enter wallet mnemonic')
+    if(enteredInput==null) setLoading(false);
     return enteredInput;
   }
 
@@ -162,9 +164,11 @@ const CiptaSijil = ({ backpage }) => {
           </div>
         </div>
       </div>
-      <div className='submitBtn' ><Buttons title="Deploy Contract" onClick={async () => {
+      <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is adding into blockchain and database ...</div></center></div>:<Buttons title="Deploy Contract" onClick={async () => {
+        setLoading(true);
         const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }];
         const mnemonic = await handleClick();
+        if(mnemonic!=null){
         //   let txn; 
         const appid = await handleDeployContract(arr);
         console.log(mnemonic);
@@ -174,9 +178,9 @@ const CiptaSijil = ({ backpage }) => {
 
         createSijil(userAcc.addr, txnId, appid);
         console.log(createSijil);
-        navigate(`/informasi-sijil/${txnId}`);
+        navigate(`/informasi-sijil/${txnId}`);}
       }
-      }></Buttons></div>
+      }></Buttons>}</div>
 
 
     </div>
