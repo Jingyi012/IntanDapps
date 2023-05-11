@@ -15,6 +15,7 @@ const EditSijil = ({ backpage }) => {
   let { programId, key } = useParams();
   console.log(programId);
   console.log(key);
+  const [loading, setLoading] = useState(false);
   const [tajukSijil, setTajukSijil] = useState('');
   const [tarikhMula, setTarikhMula] = useState('');
   const [tarikhTamat, setTarikhTamat] = useState('');
@@ -83,7 +84,8 @@ const EditSijil = ({ backpage }) => {
   };
   //ask user to insert his/her mnemonic before deploy the contract 
   const handleClick = async (event) => {
-    const enteredInput = await prompt('Please enter wallet mnemonic')
+    const enteredInput = await prompt('Please enter wallet mnemonic');
+    if(enteredInput==null) setLoading(false);
     return enteredInput;
   }
   return (
@@ -176,17 +178,19 @@ const EditSijil = ({ backpage }) => {
           </div>
         </div>
       </div>
-      <div className='submitBtn' ><Buttons title="Selesai" onClick={async () => {
-        const mnemonic = await handleClick();
+      <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is updating into bloakchain and database ...</div></center></div>:<Buttons title="Selesai" onClick={async () => {
+       setLoading(true);
+       const mnemonic = await handleClick();
+       if(mnemonic!=null){
         const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }];
         //   let txn; 
         const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
         const txnId = await updateCertificateAction(userAcc, appId, arr);
         updateSijil(userAcc.addr, txnId);
         console.log(updateSijil);
-        navigate(`/informasi-sijil/${txnId}`);
+        navigate(`/informasi-sijil/${txnId}`);}
       }
-      }></Buttons></div>
+      }></Buttons>}</div>
 
     </div>
   )
