@@ -60,7 +60,7 @@ export default function Penyemak() {
 
             <label htmlFor='organisasiPenyemak'>Nama Organisasi:
               <input id='organisasiPenyemak' name='organisasiPenyemak' type='text' placeholder='INTAN Malaysia' onChange={(event) => {
-                setNama(event.target.value)
+                setOrganisasi(event.target.value)
               }} />
             </label>
 
