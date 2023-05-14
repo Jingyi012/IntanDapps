@@ -170,7 +170,7 @@ function SenaraiProgramSediaAda() {
                   <button className="option" onClick={programDaftar}>Ya</button>
                 </div>
                 <div className="comfirmno">
-                  <button className="option">Tidak</button>
+                  <button className="option" onClick={handleCloseDaftar}>Tidak</button>
                 </div>
               </div>
             </div>

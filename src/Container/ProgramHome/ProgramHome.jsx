@@ -163,7 +163,7 @@ const ProgramHome = () => {
             <td className='centerdata'>{item.tamat}</td>
             <td>
                 <NavLink to={`/admin/semak/${item.id}`} className="aktivititype">Semak</NavLink>
-                <NavLink to={`/admin/edit-program/${item.id}`} className="aktivititype">Edit</NavLink>
+                <NavLink to={`/admin/edit-program/${item.id}`} className="aktivititype">Kemaskini</NavLink>
                 <button className="padambutton" onClick={(event)=>popOut(event,item.id)}>Padam</button>
             </td>
       </tr>
@@ -180,7 +180,7 @@ const ProgramHome = () => {
           <td className='centerdata'>{item.tamat}</td>
           <td>
               <NavLink to={`/admin/semak/${item.id}`} className="aktivititype">Semak</NavLink>
-              <NavLink to={`/admin/edit-program/${item.id}`} className="aktivititype">Edit</NavLink>
+              <NavLink to={`/admin/edit-program/${item.id}`} className="aktivititype">Kemaskini</NavLink>
               <button className="padambutton" onClick={(event)=>popOut(event,item.id)}>Padam</button>
           </td>
       </tr>
