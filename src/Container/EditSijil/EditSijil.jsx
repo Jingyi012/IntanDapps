@@ -79,6 +79,8 @@ const EditSijil = ({ backpage }) => {
       console.log(error.message)
     })
 
+  //sijil collection
+  const programDocRef = doc(db, "Program", programId); //program collection
 
 
   };
@@ -92,6 +94,7 @@ const EditSijil = ({ backpage }) => {
     <div className='app_box'>
 
       <div className='semakdaftarheader'>
+        {/* back to previous page */}
         <button className='backbutton' onClick={() => navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon" /></button>
         <h1 className='semakdaftaradmin'>EDIT SIJIL</h1>
         {backpage === '/peserta-semak' &&
@@ -100,6 +103,7 @@ const EditSijil = ({ backpage }) => {
           <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PROGRAM</NavLink>/EDIT SIJIL</div>}
       </div>
 
+      {/* Information input section for Edit Sijil */}
       <div>
         <div className='maklumatadminbahru'>
           MAKLUMAT SIJIL

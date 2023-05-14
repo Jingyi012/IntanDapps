@@ -91,6 +91,7 @@ const PesertaSemak = () => {
       <h1 className='semakdaftaradmin'>{pesertaInfo.nama}</h1>
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/PESERTA</div>
       </div>
+      {/* Peserta Information */}
       <div className='informasibox'>
         <div className='informasiprogramtitle'>
           INFORMASI PESERTA
@@ -113,6 +114,7 @@ const PesertaSemak = () => {
         </div>
         </div>
         </div>
+        {/* Senarai program peserta menyertai */}
     <div className='subtitle'>SENARAI PROGRAM</div>
     <div className='program'>
       <table className='progtable'>
@@ -158,6 +160,7 @@ const PesertaSemak = () => {
         </tbody>
       </table>
       </div>
+      {/* padam sijil peserta */}
       {isOpen && (
         <div className='semaksijil'>
            <div className='contentdeletesijil'>

@@ -96,6 +96,7 @@ const Semak = () => {
         <h1 className='semakdaftaradmin'>{nama}</h1>
         <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/DATABASE</div>
       </div>
+      {/* Program Information */}
       <div className='informasibox'>
         <div className='informasiprogramtitle'>
           INFORMASI PROGRAM
@@ -162,6 +163,7 @@ const Semak = () => {
           </tbody>
         </table>
       </div>
+      {/* padam sijil peserta */}
       {isOpen && (
         <div className='semaksijil'>
           <div className='contentdeletesijil'>

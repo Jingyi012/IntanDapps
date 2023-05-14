@@ -1,7 +1,7 @@
 import React, { useState,useContext,useEffect } from 'react'
 import { NavLink, redirect,useNavigate } from 'react-router-dom'
 import { Menuheader, Buttons } from '../../Component'
-import '../ProgramHome/ProgramHome.css'
+import './ProgramHome.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
 import addicon from '../../img/add.png'
@@ -53,6 +53,8 @@ const ProgramHome = () => {
       const displayValue = selectedOption.getAttribute('data-display-value');
       selectedOption.textContent = displayValue;
       
+      // By default the display value should be Susunan to indicate this is for the susunan filter function
+      // There don't have any "Susunan" in the list instead of "None" to indicate that they are filtering nothing
       if (selectedOption.value === "None"){
         selectedOption.value = "Susunan";
       }
@@ -149,6 +151,7 @@ const ProgramHome = () => {
               <th className='programaktiviti'>Aktiviti</th>
             </tr>
         </thead>
+        {/* if no search value, it will display all data, else it will display search value */}
         {searchValue===""?(
         <tbody>
         {programs.map((item,index)=>(
@@ -187,6 +190,7 @@ const ProgramHome = () => {
                
       </table>
     </div>
+    {/* Padam program */}
     {isOpen && (
         <div className='semaksijil'>
            <div className='contentdeletesijil'>
