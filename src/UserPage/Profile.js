@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./styles/profile.css";
-import { db,storage } from '../Backend/firebase/firebase-config'
+import { db, storage } from '../Backend/firebase/firebase-config'
 import { getDoc, doc, updateDoc } from 'firebase/firestore'
 import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
@@ -51,19 +51,6 @@ const MyKad = ({ onChange, value }) => (
   </div>
 );
 
-const Emelrasmi = ({ onChange, value }) => (
-  <div className="text">
-    <label htmlFor="emelrasmi">ALAMAT EMEL RASMI:</label>
-    <input
-      id="emelrasmi"
-      type="email"
-      onChange={onChange}
-      value={value}
-      className="profileinput"
-    />
-  </div>
-);
-
 const Emelperibadi = ({ onChange, value }) => (
   <div className="text">
     <label htmlFor="emelperibadi">ALAMAT EMEL PERIBADI:</label>
@@ -77,11 +64,11 @@ const Emelperibadi = ({ onChange, value }) => (
   </div>
 );
 
-const Gelaran = ({ onChange, value }) => (
+const Jawatan = ({ onChange, value }) => (
   <div className="text">
-    <label htmlFor="gelaran">GELARAN:</label>
+    <label htmlFor="jawatan">JAWATAN:</label>
     <input
-      id="gelaran"
+      id="jawatan"
       type="text"
       onChange={onChange}
       value={value}
@@ -90,9 +77,9 @@ const Gelaran = ({ onChange, value }) => (
   </div>
 );
 
-const Telefon = ({ onChange, value }) => (
+const TelefonPeribadi = ({ onChange, value }) => (
   <div className="text">
-    <label htmlFor="telefon">TELEFON PEJABAT:</label>
+    <label htmlFor="telefon">TELEFON PERIBADI:</label>
     <input
       id="telefon"
       type="text"
@@ -105,7 +92,7 @@ const Telefon = ({ onChange, value }) => (
 
 const Alamat = ({ onChange, value }) => (
   <div className="text">
-    <label htmlFor="telefon">ALAMAT:</label>
+    <label htmlFor="Alamat">ALAMAT:</label>
     <input
       id="alamat"
       type="text"
@@ -123,10 +110,9 @@ const Profile = ({
   src,
   nama,
   myKad,
-  emelrasmi,
   emelperibadi,
-  gelaran,
-  telefon,
+  jawatan,
+  telefonperibadi,
   alamat,
 }) => (
   <div className="card">
@@ -137,7 +123,7 @@ const Profile = ({
         </div>
 
         <button type="submit" className="editbutton">
-          Edit Profile{" "}
+          KEMASKINI PROFIL{" "}
         </button>
       </div>
       <div className="frame">
@@ -152,20 +138,16 @@ const Profile = ({
             <div className="myKad text">
               NO.MYKAD: <div className="textinput">{myKad}</div>
             </div>
-            <div className="emelrasmi text">
-              ALAMAT EMEL RASMI: <div className="textinput">{emelrasmi}</div>
-            </div>
             <div className="emelperibadi text">
-              ALAMAT EMEL PERIBADI:{" "}
-              <div className="textinput">{emelperibadi}</div>
+              ALAMAT EMEL PERIBADI:<div className="textinput" >{emelperibadi}</div>
             </div>
           </div>
           <div className="formright">
-            <div className="gelaran text">
-              GELARAN:<div className="textinput">{gelaran}</div>
+            <div className="jawatan text">
+              JAWATAN:<div className="textinput">{jawatan}</div>
             </div>
             <div className="telefon text">
-              TELEFON PEJABAT:<div className="textinput">{telefon}</div>
+              TELEFON PERIBADI:<div className="textinput">{telefonperibadi}</div>
             </div>
             <div className="alamat text">
               ALAMAT: <div className="textinput">{alamat}</div>
@@ -188,15 +170,14 @@ export default class profile extends React.Component {
       file: "",
       imagePreviewUrl:
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
-      imageOriginalUrl:"",
+      imageOriginalUrl: "",
       imageUrl:
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
       nama: "teoh",
       myKad: "ic",
-      emelrasmi: "",
       emelperibadi: "",
-      gelaran: "",
-      telefon: "",
+      jawatan: "",
+      telefonperibadi: "",
       alamat: "",
       active: "profile",
     };
@@ -206,20 +187,16 @@ export default class profile extends React.Component {
       const docRef = doc(db, "User", userID);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data().emelPeribadi);
-        await this.setState({
+        this.setState({
           nama: docSnap.data().nama,
           myKad: docSnap.data().ic,
-          emelrasmi: docSnap.data().emelRasmi,
           emelperibadi: docSnap.data().emelPeribadi,
-          gelaran: docSnap.data().gelaran,
-          telefon: docSnap.data().telefonPejabat,
+          jawatan: docSnap.data().jawatan,
+          telefonperibadi: docSnap.data().telefonPeribadi,
           alamat: docSnap.data().alamat,
           imageOriginalUrl: docSnap.data().imageUrl,
           imageUrl: docSnap.data().imageUrl,
         });
-        console.log(docSnap.data().emelRasmi)
-        console.log(this.state.emelrasmi)
       } else {
         // docSnap.data() will be undefined in this case
         alert("!!Something Wrong Occur!! Please try later");
@@ -230,7 +207,7 @@ export default class profile extends React.Component {
 
 
 
-//File upload handler that uses FileReader to read a selected file and display a preview of the image
+  //File upload handler that uses FileReader to read a selected file and display a preview of the image
   photoUpload = (e) => {
     e.preventDefault();
     const reader = new FileReader();
@@ -262,38 +239,31 @@ export default class profile extends React.Component {
     }
   };
 
-  editemelrasmi = (e) => {
-    const emelrasmi = e.target.value;
-    this.setState({
-      emelrasmi:emelrasmi,
-    });
-  };
-
   editemelperibadi = (e) => {
     const emelperibadi = e.target.value;
     this.setState({
-      emelperibadi:emelperibadi,
+      emelperibadi: emelperibadi,
     });
   };
 
-  editgelaran = (e) => {
-    const gelaran = e.target.value;
+  editjawatan = (e) => {
+    const jawatan = e.target.value;
     this.setState({
-      gelaran:gelaran,
+      jawatan: jawatan,
     });
   };
 
-  edittelefon = (e) => {
-    const telefon = e.target.value;
+  edittelefonperibadi = (e) => {
+    const telefonperibadi = e.target.value;
     this.setState({
-      telefon:telefon,
+      telefonperibadi: telefonperibadi,
     });
   };
 
   editalamat = (e) => {
     const alamat = e.target.value;
     this.setState({
-      alamat:alamat,
+      alamat: alamat,
     });
   };
 
@@ -305,55 +275,55 @@ export default class profile extends React.Component {
     });
     this.updateProfile();
   };
- // When the user clicks the "Save" button, the information will be submitted and displayed.
- // When the user clicks the "Edit Profile" button, the form becomes editable, allowing the user to update their personal information.
+  // When the user clicks the "Save" button, the information will be submitted and displayed.
+  // When the user clicks the "Edit Profile" button, the form becomes editable, allowing the user to update their personal information.
   async updateProfile() {
-    if (this.state.active== "edit"){
+    if (this.state.active == "edit") {
       console.log(this.state.nama);
       const userID = localStorage.getItem("userID");
       const docRef = doc(db, "User", userID);
-      
-      if(this.state.file == ""){
+
+      if (this.state.file == "") {
         await updateDoc(docRef, {
           nama: this.state.nama,
           ic: this.state.myKad,
-          emelRasmi: this.state.emelrasmi,
           emelPeribadi: this.state.emelperibadi,
-          gelaran: this.state.gelaran,
-          telefonPejabat: this.state.telefon,
+          jawatan: this.state.jawatan,
+          telefonPeribadi: this.state.telefonperibadi,
           alamat: this.state.alamat,
         }).then(() => {
           alert("update successful!");
         });
-      } else{
-        let text = this.state.imageOriginalUrl;
-        const myArray = text.split("images%2F");
-        const text2 = myArray[1];
-        const myArray2 = text2.split("?alt");
-        const imageName = myArray2[0];
-        const desertRef = ref(storage, `images/${imageName}`);
-        deleteObject(desertRef).then(() => {
-          const imageRef = ref(storage, `images/${this.state.file.name + v4()}`);
-          uploadBytes(imageRef, this.state.file).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then(async (url) => {
-              await updateDoc(docRef, {
-                nama: this.state.nama,
-                ic: this.state.myKad,
-                emelRasmi: this.state.emelrasmi,
-                emelPeribadi: this.state.emelperibadi,
-                gelaran: this.state.gelaran,
-                telefonPejabat: this.state.telefon,
-                alamat: this.state.alamat,
-                imageUrl: url,
-              }).then(() => {
-                alert("update successful!");
-              });
+      } else {
+        if (this.state.imageOriginalUrl != "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480") {
+          let text = this.state.imageOriginalUrl;
+          let myArray = text.split("images%2F");
+          let text2 = myArray[1];
+          let myArray2 = text2.split("?alt");
+          let imageName = myArray2[0];
+          const desertRef = ref(storage, `images/${imageName}`);
+          deleteObject(desertRef).catch((error) => {
+            alert("Something error happend, please contact adminstrator!!");
+            console.log(error);
+          });
+        }
+        const imageRef = ref(storage, `images/${this.state.file.name + v4()}`);
+        uploadBytes(imageRef, this.state.file).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then(async (url) => {
+            await updateDoc(docRef, {
+              nama: this.state.nama,
+              ic: this.state.myKad,
+              emelPeribadi: this.state.emelperibadi,
+              jawatan: this.state.jawatan,
+              telefonPeribadi: this.state.telefonperibadi,
+              alamat: this.state.alamat,
+              imageUrl: url,
+            }).then(() => {
+              alert("update successful!");
             });
           });
-        }).catch((error) => {
-          alert("Something error happend, please contact adminstrator!!");
-          console.log(error);
         });
+
       }
     }
   }
@@ -363,10 +333,9 @@ export default class profile extends React.Component {
       imageUrl,
       nama,
       myKad,
-      emelrasmi,
       emelperibadi,
-      gelaran,
-      telefon,
+      jawatan,
+      telefonperibadi,
       alamat,
       active,
     } = this.state;
@@ -390,18 +359,14 @@ export default class profile extends React.Component {
                   <div className="formleft">
                     <Nama onChange={this.editNama} value={nama} />
                     <MyKad onChange={this.editmyKad} value={myKad} />
-                    <Emelrasmi
-                      onChange={this.editemelrasmi}
-                      value={emelrasmi}
-                    />
                     <Emelperibadi
                       onChange={this.editemelperibadi}
                       value={emelperibadi}
                     />
                   </div>
                   <div className="formright">
-                    <Gelaran onChange={this.editgelaran} value={gelaran} />
-                    <Telefon onChange={this.edittelefon} value={telefon} />
+                    <Jawatan onChange={this.editjawatan} value={jawatan} />
+                    <TelefonPeribadi onChange={this.edittelefonperibadi} value={telefonperibadi} />
                     <Alamat onChange={this.editalamat} value={alamat} />
                   </div>
                 </div>
@@ -414,10 +379,9 @@ export default class profile extends React.Component {
             src={imageUrl}
             nama={nama}
             myKad={myKad}
-            emelrasmi={emelrasmi}
             emelperibadi={emelperibadi}
-            gelaran={gelaran}
-            telefon={telefon}
+            jawatan={jawatan}
+            telefonperibadi={telefonperibadi}
             alamat={alamat}
           />
         )}

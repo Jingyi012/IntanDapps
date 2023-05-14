@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 import MyAlgo from '@randlabs/myalgo-connect';
 import { PeraWalletConnect } from "@perawallet/connect";
-import AppContext, { AppContextProvider } from "../../Context/AppContext";
+import AppContext from "../../Context/AppContext";
 import { db } from '../../Backend/firebase/firebase-config'
 import { getDoc, doc } from 'firebase/firestore'
 import SimpleButton from '../../Component/button/SimpleButton';
@@ -72,8 +72,6 @@ function AdminLogin() {
       // docSnap.data() will be undefined in this case
       alert("Salah IC !, Sila Masukan Semula !");
     }
-    localStorage.setItem("user", JSON.stringify({role: "ADMIN"}));
-    navigate("/admin/home");
   }
 
   return (
@@ -87,7 +85,7 @@ function AdminLogin() {
           {/*Amin login form */}
           <form className='adminLoginForm' method="post" action="/admin/home" onSubmit={adminLogin}>
             <label htmlFor='LoginMykad'>No. MyKad:
-              <input id='LoginMykad' name='LoginMykad' type='text' placeholder='No. MyKad' minLength='14' maxLength='14' onChange={(event) => {
+              <input id='LoginMykad' name='LoginMykad' type='text' placeholder='000000-00-0000' minLength='14' maxLength='14' onChange={(event) => {
                 setMykad(event.target.value)
               }} />
             </label>
@@ -101,7 +99,7 @@ function AdminLogin() {
             <div className='displayAcc'>
               <div>{account}</div>
             </div>
-            <button type='Submit'>Daftar Masuk</button>
+            <button type='Submit'>Masuk</button>
 
           </form>
           <div className='otherLinks'>

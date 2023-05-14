@@ -94,14 +94,14 @@ const EditSijil = ({ backpage }) => {
       <div className='semakdaftarheader'>
         {/* back to previous page */}
         <button className='backbutton' onClick={() => navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon" /></button>
-        <h1 className='semakdaftaradmin'>EDIT SIJIL</h1>
+        <h1 className='semakdaftaradmin'>KEMASKINI SIJIL</h1>
         {backpage === '/peserta-semak' &&
-          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PESERTA</NavLink>/EDIT SIJIL</div>}
+          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PESERTA</NavLink>/KEMASKINI SIJIL</div>}
         {backpage === '/semak' &&
-          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PROGRAM</NavLink>/EDIT SIJIL</div>}
+          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PROGRAM</NavLink>/KEMASKINI SIJIL</div>}
       </div>
 
-      {/* Information input section for Edit Sijil */}
+      {/* Information input section for KEMASKINI Sijil */}
       <div>
         <div className='maklumatadminbahru'>
           MAKLUMAT SIJIL

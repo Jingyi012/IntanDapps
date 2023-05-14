@@ -11,7 +11,7 @@ const ProgramEdit = () => {
     <div className='app_box'>
       <div className='daftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
-      <h1 className='daftaradmin'>EDIT SIJIL</h1>
+      <h1 className='daftaradmin'>KEMASKINI SIJIL</h1>
       </div>
         <form>
       <div>

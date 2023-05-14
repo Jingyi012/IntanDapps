@@ -86,7 +86,7 @@ const EditProgram = () => {
       <div className='semakdaftarheader'>
       {/* back to previous page */}
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
-      <h1 className='semakdaftaradmin'>Edit Program</h1>
+      <h1 className='semakdaftaradmin'>KEMASKINI PROGRAM</h1>
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/ADD PROGRAM</div></div>
       {/*Information input section for Edit Program */}
       <form className='maklumatbox' onSubmit={editProgram}>
