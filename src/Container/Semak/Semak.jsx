@@ -17,6 +17,7 @@ const Semak = () => {
   const [alertDelete, setDeleteAlert] = useState(false);
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
+  const [reload,setReload]=useState(0);
   const txnId = 'OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
   const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
   const [appId, setAppId] = useState("");
@@ -28,8 +29,8 @@ const Semak = () => {
   const [tamat, setTamat] = useState("");
   const [pesertaNama, setPesertaNama] = useState([]);
   const [pesertaStatus, setPesertaStatus] = useState([]);
-  //console.log(account[0]);
-  //get the transaction id of the user
+
+  //Delete the cert at firestore
   const deleteCert = async (deleteId, appId) => {
     //delete the sijil at sijil section in firebase
     const sijilDoc = doc(db, "Sijil", appId.toString());
@@ -56,9 +57,10 @@ const Semak = () => {
     await addDoc(actionRef, {
       admin: `${account[0]}`,
       date: `${date.toString()}`,
-      transactionId: `any`,
+      transactionId: deleteId,
       type: 'Delete',
     });
+    setReload(reload+1);
   }
   const getUserTxn = async (user) => {
     //obtain the app id for the particular user cert in the program 
@@ -75,6 +77,7 @@ const Semak = () => {
 
   let { programID } = useParams();
 
+  //get all the information of the program when entering into this page
   useEffect(() => {
     const getPeserta = async () => {
       const docRef = doc(db, "Program", programID.toString());
@@ -88,7 +91,8 @@ const Semak = () => {
       setPesertaNama(detail.data().pesertaNama);
     }
     getPeserta();
-  }, []);
+  }, [reload]);
+
   return (
     <div className='app_box'>
       <div className='semakdaftarheader'>
@@ -132,7 +136,6 @@ const Semak = () => {
           </thead>
           <tbody>
             {Object.entries(pesertaStatus).map(([key, value]) => {
-
               return (
                 <tr className='row2'>
                   <td>{key}</td>
