@@ -26,6 +26,7 @@ import AdminRoutes from './adminRoutes';
 import PublicRoutes from "./publicRoutes";
 import UserRoutes from "./userRoutes";
 import DisplaySijil from "../Container/CiptaSijil/DisplaySijil";
+import InformasiErrorPage from "../Public/InformasiSijil/ErrorPage";
 function Router() {
   return (
     <>
@@ -39,6 +40,7 @@ function Router() {
           <Route path='admin-login' element={<AdminLogin />} />
           <Route path='maklumat-penyemak/:transId?' element={<Penyemak />} />
           <Route path='informasi-sijil/:transId' element={<InformasiSijil />} />
+          <Route path="errorPage/:appid"  element={<InformasiErrorPage />} />
         </Route>
         {/*Admin */}
         <Route element={<AdminRoutes />}>
