@@ -15,7 +15,7 @@ const menuheader = () => {
             <li>
               <NavLink to="/admin/daftar-admin" className='last'>Daftar Admin</NavLink>
               </li>
-            <li>
+            <li className="noborder">
               <NavLink to="/admin/log" className='last'>Log Aktiviti</NavLink>
               </li>
           </ul>

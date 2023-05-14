@@ -6,6 +6,7 @@ import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from 'firebas
 import { v4 } from 'uuid';
 import NavbarU from "../Component/userNavbar/NavbarU";
 
+//function for updating and showing the personal information
 const ImgUpload = ({ onChange, src }) => (
   <div className="upload-file">
     <label htmlFor="photo-upload" >
@@ -114,6 +115,8 @@ const Alamat = ({ onChange, value }) => (
     />
   </div>
 );
+
+//A function that will show the user's personal information after the user clicks the 'Save' button
 
 const Profile = ({
   onSubmit,
@@ -226,6 +229,8 @@ export default class profile extends React.Component {
   }
 
 
+
+//File upload handler that uses FileReader to read a selected file and display a preview of the image
   photoUpload = (e) => {
     e.preventDefault();
     const reader = new FileReader();
@@ -239,6 +244,8 @@ export default class profile extends React.Component {
     reader.readAsDataURL(file);
   };
 
+
+  // function that is triggered when there is a change in a form input element
   editNama = (e) => {
     const nama = e.target.value;
     this.setState({
@@ -298,7 +305,8 @@ export default class profile extends React.Component {
     });
     this.updateProfile();
   };
-
+ // When the user clicks the "Save" button, the information will be submitted and displayed.
+ // When the user clicks the "Edit Profile" button, the form becomes editable, allowing the user to update their personal information.
   async updateProfile() {
     if (this.state.active== "edit"){
       console.log(this.state.nama);

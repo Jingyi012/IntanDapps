@@ -78,6 +78,7 @@ const CiptaSijil = ({ backpage }) => {
     <div className='app_box'>
 
       <div className='semakdaftarheader'>
+        {/* back to previous page */}
         <button className='backbutton' onClick={() => navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon" /></button>
         <h1 className='semakdaftaradmin'>CIPTA SIJIL</h1>
         {backpage === '/peserta-semak' &&

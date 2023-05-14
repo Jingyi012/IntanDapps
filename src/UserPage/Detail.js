@@ -6,7 +6,9 @@ import { db } from '../Backend/firebase/firebase-config'
 import { collection, getDoc, deleteDoc, doc, updateDoc,} from 'firebase/firestore'
 import { LocalActivity } from "@mui/icons-material";
 
+
 function SenaraiProgramSediaAda() {
+  //state for showing the pop out page
   const [showDaftar, setShowDaftar] = useState(false);
   const [isiProgram,setIsiProgram] = useState("");
   const [mula,setMula] = useState("");
