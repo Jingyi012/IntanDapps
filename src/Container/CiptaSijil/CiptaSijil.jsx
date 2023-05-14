@@ -32,10 +32,7 @@ const CiptaSijil = ({ backpage }) => {
     console.log(date.toLocaleString());
     await setDoc(sijilCollectionRef, {
       txnId: `${transId}`,
-      period: `${tarikhMula}-${tarikhTamat}`,
-      kursus: `${tajukSijil}`,
-      mykad: `${NRIC}`,
-      nama: `${nama}`,
+      action: 'Create'
     });
     await addDoc(actionCollectionRef, {
       admin: `${sender}`,
@@ -60,7 +57,7 @@ const CiptaSijil = ({ backpage }) => {
 
   //ask user to insert his/her mnemonic before deploy the contract 
   const handleClick = async (event) => {
-    const enteredInput = await prompt('Please enter wallet mnemonic')
+    const enteredInput = await window.prompt('Please enter wallet mnemonic')
     if(enteredInput==null) setLoading(false);
     return enteredInput;
   }
@@ -167,7 +164,7 @@ const CiptaSijil = ({ backpage }) => {
       </div>
       <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is adding into blockchain and database ...</div></center></div>:<Buttons title="Deploy Contract" onClick={async () => {
         setLoading(true);
-        const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }];
+        const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }, { NRIC }];
         const mnemonic = await handleClick();
         if(mnemonic!=null){
         //   let txn; 

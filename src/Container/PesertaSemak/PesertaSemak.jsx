@@ -21,6 +21,7 @@ const PesertaSemak = () => {
 
   let { pesertaID } = useParams();
 
+  //Delete the cert at firestore
   const deleteCert = async (deleteId, appId) => {
     //delete the sijil at sijil section in firebase
     const sijilDoc = doc(db, "Sijil", appId.toString());
@@ -47,7 +48,7 @@ const PesertaSemak = () => {
     await addDoc(actionRef, {
       admin: `${account[0]}`,
       date: `${date.toString()}`,
-      transactionId: `any`,
+      transactionId: deleteId,
       type: 'Delete',
     });
   }
@@ -65,6 +66,7 @@ const PesertaSemak = () => {
     navigate(`/informasi-sijil/${userTxnId}`);
   };
 
+   //get all the information of the program when entering into this page
   useEffect(()=>{
     const getPesertaInfo = async () => {
       const pesertaRef = doc(db, "User", pesertaID)
