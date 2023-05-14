@@ -4,16 +4,15 @@ import {useNavigate, useParams} from 'react-router-dom';
 import './InformasiSijil.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import backicon from '../../img/arrow.png';
-import sijilExp from '../../SijilExample.pdf';
-import { db } from '../../Backend/firebase/firebase-config'
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, connectFirestoreEmulator } from 'firebase/firestore'
 
 import { Certificate, getQrCodeDataUrl } from '../../Utils/utils';
-import { PDFViewer } from '@react-pdf/renderer';
+import { PDFViewer, pdf } from '@react-pdf/renderer';
 import templateSrc from '../../Certificate.png';
-import qrCodeImage from '../../intan.png'
 import { indexerClient } from '../../Constant/ALGOkey';
 import ErrorBoundary from '../../Utils/ErrorBoundary';
+import {isMobile} from 'react-device-detect';
+import { Button } from '@mui/material';
+
 
 
 function InformasiSijil(){
@@ -21,13 +20,15 @@ function InformasiSijil(){
     const navigate = useNavigate();
     const [formData, setFormData] = useState(null);
     const [qrCodeDataUrl, setQrCodeDataUrl] = useState(null);
-
+    const [fileUrl, setFileUrl] = useState(null);
     console.log(transId.transId);
 
     useEffect(() => {
         async function fetchData() {
             const data = await fetchformDataFromBlockchain();
             setFormData(data);
+
+           
             }
         fetchData();
     }, []);
@@ -35,7 +36,7 @@ function InformasiSijil(){
 
     async function fetchformDataFromBlockchain() {
         const info = await indexerClient.lookupTransactionByID(transId.transId);
-        const data = await info.do().then((transInfo)=>{
+        const data = await info.do().then(async (transInfo)=>{
             console.log(transInfo.transaction["application-transaction"]["application-args"][0]);
             const decoder = new TextDecoder();
             const dTajuk = window.atob(transInfo.transaction["application-transaction"]["application-args"][0]);
@@ -55,24 +56,17 @@ function InformasiSijil(){
                 courseDate: mula && tamat ? `${mula} - ${tamat}` : 'TARIKH KURSUS',
                 algorandExplorer: `https://testnet.algoexplorer.io/tx/${transId.transId}`
             };
+
+            const newQrCodeDataUrl = await getQrCodeDataUrl(`https://intan-dapps.azurewebsites.net/maklumat-penyemak/${transId.transId}`);
+            setQrCodeDataUrl(newQrCodeDataUrl);
+
+            const blob = await pdf(<Certificate {...data} templateSrc={templateSrc} qrCodeImage={newQrCodeDataUrl} />).toBlob();
+            setFileUrl(URL.createObjectURL(blob));
+            
         
             return data;
         });
-
-        // TODO: Get the QR code image from the database
-        // TODO: change the QRcode to become the URL of the transaction
-        const qrCodeImage = null;
-
-            if (qrCodeImage) {
-                // Set the existing QR code image data URL
-                setQrCodeDataUrl(qrCodeImage);
-            } else {
-                // Generate a new QR code data URL
-                const newQrCodeDataUrl = await getQrCodeDataUrl(`https://intan-dapps.azurewebsites.net/maklumat-penyemak/${transId.transId}`);
-                setQrCodeDataUrl(newQrCodeDataUrl);
-     }
-       
-
+ 
         return data;
     }
 
@@ -101,9 +95,15 @@ function InformasiSijil(){
                     Display sijil pdf
                     <div className="viewPdf">
                         <ErrorBoundary>
-                        <PDFViewer width="100%" height="100%">
+                        {isMobile?
+                        <>
+                        <Button variant="contained" color="primary" href={fileUrl} target="_blank" rel="noreferrer">
+                        Preview Sijil
+                        </Button> 
+                        </>
+                        :<PDFViewer width="100%" height="100%" >
                             <Certificate {...formData} templateSrc={templateSrc} qrCodeImage={qrCodeDataUrl} />
-                        </PDFViewer>
+                        </PDFViewer>}
                         </ErrorBoundary>
                     </div>
                     
