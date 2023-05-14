@@ -8,10 +8,11 @@ const Register = () => {
   const [mykad, setMykad] = useState("");
   const [alamat, setAlamat] = useState("");
   const [emelPeribadi, setEmelPeribadi] = useState("");
-  const [emelRasmi, setEmelRasmi] = useState("");
-  const [gelaran, setGelaran] = useState("");
+  const [kataLaluan, setKataLaluan] = useState("");
+  const [sahkataLaluan, setPengesahanKataLaluan] = useState("");
+  const [jawatan, setJawatan] = useState("");
   const [nama, setNama] = useState("");
-  const [telefonPejabat, setTelefonPejabat] = useState("");
+  const [TelefonPeribadi, setTelefonPeribadi] = useState("");
   const navigate = useNavigate();
 
   //navigate to login page after register
@@ -22,17 +23,20 @@ const Register = () => {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
+    if(kataLaluan!=sahkataLaluan){
+      alert('kata laluan tidak sama dengan kata laluan yang sah \n Sila pastikan kata laluan sama dengan pengesahan kata laluan');
+      return;
+    }
     const userCollectionRef = doc(db, "User",mykad)//crud 1,collection(reference, collectionName)
     await setDoc(userCollectionRef, {// create 2
       alamat: alamat,
       emelPeribadi: emelPeribadi,
-      emelRasmi: emelRasmi,
-      gelaran: gelaran,
+      kataLaluan: kataLaluan,
+      jawatan: jawatan,
       ic: mykad,
       nama: nama,
-      pass: "password",
       imageUrl: "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
-      telefonPejabat: telefonPejabat,
+      telefonPeribadi: TelefonPeribadi,
     });//create 2 end
     navigate('/login');
   }
@@ -48,38 +52,44 @@ const Register = () => {
           {/* Register Form */}
           <form className='RegisterForm' onSubmit={handleSubmit}>
             <label htmlFor='RegisterMyKad'>No. MyKad:
-              <input id='RegisterMyKad' name='RegisterMyKad' type='text' placeholder='No. MyKad' minLength='14' maxLength='14' onChange= {(event) => {
+              <input id='RegisterMyKad' name='RegisterMyKad' type='text' placeholder='000000-00-0000' minLength='14' maxLength='14' onChange= {(event) => {
                 setMykad(event.target.value)
               }}/>
             </label>
             <label htmlFor='RegisterMyKad'><br></br>Nama:
-              <input id='RegisterMyKad' name='Nama' type='text' placeholder='Nama' onChange= {(event) => {
+              <input id='RegisterMyKad' name='Nama' type='text' placeholder='Ali bin Ahmad' onChange= {(event) => {
                 setNama(event.target.value)
               }}/>
             </label>
             <label htmlFor='RegisterMyKad'><br></br>Alamat:
-              <input id='RegisterMyKad' name='Alamat' type='text' placeholder='Alamat' onChange= {(event) => {
+              <input id='RegisterMyKad' name='Alamat' type='text' placeholder='23, Jalan Teknologi, Shah Alam' onChange= {(event) => {
                 setAlamat(event.target.value)
               }}/>
             </label>
             <label htmlFor='RegisterMyKad'><br></br>Emel Peribadi:
-              <input id='RegisterMyKad' name='Emel Peribadi' type='text' placeholder='Emel Peribadi' onChange= {(event) => {
+              <input id='RegisterMyKad' name='Emel Peribadi' type='email' placeholder='aliAhmad@gmail.com' onChange= {(event) => {
                 setEmelPeribadi(event.target.value)
               }}/>
             </label>
-            <label htmlFor='RegisterMyKad'><br></br>Emel Rasmi:
-              <input id='RegisterMyKad' name='EmelRasmi' type='text' placeholder='Emel Rasmi' onChange= {(event) => {
-                setEmelRasmi(event.target.value)
+        
+            <label htmlFor='RegisterMyKad'><br></br>Jawatan/Gred:
+              <input id='RegisterMyKad' name='Jawatan/Gred' type='text' placeholder='Jurutera V027' onChange= {(event) => {
+                setJawatan(event.target.value)
               }}/>
             </label>
-            <label htmlFor='RegisterMyKad'><br></br>Gelaran:
-              <input id='RegisterMyKad' name='Gelaran' type='text' placeholder='Gelaran' onChange= {(event) => {
-                setGelaran(event.target.value)
+            <label htmlFor='RegisterMyKad'><br></br>Telefon Peribadi:
+              <input id='RegisterMyKad' name='TelefonPeribadi' type='tel' placeholder='012-34567819' onChange= {(event) => {
+                setTelefonPeribadi(event.target.value)
               }}/>
             </label>
-            <label htmlFor='RegisterMyKad'><br></br>TelefonPejabat:
-              <input id='RegisterMyKad' name='TelefonPejabat' type='text' placeholder=' TelefonPejabat' onChange= {(event) => {
-                setTelefonPejabat(event.target.value)
+            <label htmlFor='RegisterMyKad'><br></br>Kata Laluan:
+              <input id='RegisterMyKad' name='KataLaluan' type='password' placeholder='******' onChange= {(event) => {
+                setKataLaluan(event.target.value)
+              }}/>
+            </label>
+            <label htmlFor='RegisterMyKad'><br></br>Pengesahan Kata Laluan:
+              <input id='RegisterMyKad' name='PengesahanKataLaluan' type='password' placeholder='******' onChange= {(event) => {
+                setPengesahanKataLaluan(event.target.value)
               }}/>
             </label>
             <button className='register' type='Submit'>Daftar Akaun</button>

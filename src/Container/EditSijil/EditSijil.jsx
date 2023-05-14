@@ -59,10 +59,7 @@ const EditSijil = ({ backpage }) => {
     //update the sijil in sijil section
     await updateDoc(sijilCollectionRef, {
       txnId: `${transId}`,
-      period: `${tarikhMula}-${tarikhTamat}`,
-      kursus: `${tajukSijil}`,
-      mykad: `${NRIC}`,
-      nama: `${nama}`,
+      action: `Update`
     });
     //update the sijil in program section
     const data = await getDoc(programDocRef);
@@ -84,6 +81,7 @@ const EditSijil = ({ backpage }) => {
 
 
   };
+  
   //ask user to insert his/her mnemonic before deploy the contract 
   const handleClick = async (event) => {
     const enteredInput = await prompt('Please enter wallet mnemonic');
@@ -186,7 +184,7 @@ const EditSijil = ({ backpage }) => {
        setLoading(true);
        const mnemonic = await handleClick();
        if(mnemonic!=null){
-        const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }];
+        const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }, { NRIC }];
         //   let txn; 
         const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
         const txnId = await updateCertificateAction(userAcc, appId, arr);
