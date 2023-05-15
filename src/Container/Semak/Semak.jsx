@@ -17,7 +17,7 @@ const Semak = () => {
   const [alertDelete, setDeleteAlert] = useState(false);
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
-  const [reload,setReload]=useState(0);
+  const [reload, setReload] = useState(0);
   const txnId = 'OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
   const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
   const [appId, setAppId] = useState("");
@@ -25,7 +25,8 @@ const Semak = () => {
   const [nama, setNama] = useState("");
   const [loading, setLoading] = useState(false);
   const [penganjur, setPenganjur] = useState("");
-  const [jumPeserta, setJumPeserta] = useState("");
+  const [maksimumPeserta, setMaksimumPeserta] = useState("");
+  const [jumlahPeserta, setJumlahPeserta] = useState("");
   const [tamat, setTamat] = useState("");
   const [pesertaNama, setPesertaNama] = useState([]);
   const [pesertaStatus, setPesertaStatus] = useState([]);
@@ -60,7 +61,7 @@ const Semak = () => {
       transactionId: deleteId,
       type: 'Delete',
     });
-    setReload(reload+1);
+    setReload(reload + 1);
   }
   const getUserTxn = async (user) => {
     //obtain the app id for the particular user cert in the program 
@@ -85,7 +86,8 @@ const Semak = () => {
       setMula(detail.data().mula);
       setNama(detail.data().nama);
       setPenganjur(detail.data().penganjur);
-      setJumPeserta(detail.data().jumPeserta);
+      setMaksimumPeserta(detail.data().maksimumPeserta);
+      setJumlahPeserta(detail.data().jumlahPeserta);
       setTamat(detail.data().tamat);
       setPesertaStatus(detail.data().pesertaStatus);
       setPesertaNama(detail.data().pesertaNama);
@@ -117,9 +119,14 @@ const Semak = () => {
             <p className='informasicontent'>{mula} - {tamat}</p>
           </div>
           <div className='informasiprogram'>
+            <label>Maksimum Peserta</label>
+            <p>:</p>
+            <p className='informasicontent'>{maksimumPeserta}</p>
+          </div>
+          <div className='informasiprogram'>
             <label>Jumlah Peserta</label>
             <p>:</p>
-            <p className='informasicontent'>{jumPeserta}</p>
+            <p className='informasicontent'>{jumlahPeserta}</p>
           </div>
         </div>
       </div>
@@ -128,6 +135,7 @@ const Semak = () => {
         <table className='progtable'>
           <thead>
             <tr>
+              <th className='kehadiran'>Index</th>
               <th className='nomykad'>No. MyKad</th>
               <th className='pesertaname'>Nama Peserta</th>
               <th className='kehadiran'>Kehadiran</th>
@@ -136,9 +144,10 @@ const Semak = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(pesertaStatus).map(([key, value]) => {
+            {Object.entries(pesertaStatus).map(([key, value],index) => {
               return (
                 <tr className='row2'>
+                  <td>{index}</td>
                   <td>{key}</td>
                   <td>{pesertaNama[key]}</td>
                   <td className='centerdata'>80%</td>
@@ -181,34 +190,34 @@ const Semak = () => {
                   <div><p>
                     Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                   </p></div>
-                  <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
-                  :<Buttons title="Padam" onClick={async () => {
-                    setLoading(true);
-                    console.log(account[0]);
+                  <div className='padamconfirmbutton'>{(loading) ? <div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
+                    : <Buttons title="Padam" onClick={async () => {
+                      setLoading(true);
+                      console.log(account[0]);
 
-                    //obtain the app id for the particular user cert in the program 
-                    const userTxnId = await getUserTxn(currentUser);
-                    console.log(userTxnId);
-                    const info = await indexerClient.lookupTransactionByID(userTxnId).do();
-                    const appId = await info.transaction["application-transaction"]["application-id"];
-                    console.log(appId);
+                      //obtain the app id for the particular user cert in the program 
+                      const userTxnId = await getUserTxn(currentUser);
+                      console.log(userTxnId);
+                      const info = await indexerClient.lookupTransactionByID(userTxnId).do();
+                      const appId = await info.transaction["application-transaction"]["application-id"];
+                      console.log(appId);
 
-                    //delete the cert at algorand blockchain
-                    const deleteId = await deleteProductAction(appId);
-                    console.log(deleteId);
+                      //delete the cert at algorand blockchain
+                      const deleteId = await deleteProductAction(appId);
+                      console.log(deleteId);
 
-                    //delete the cert in firebase
-                    deleteCert(deleteId,appId)
+                      //delete the cert in firebase
+                      deleteCert(deleteId, appId)
 
-                    // const transId=payContract(deleteId);
-                    setDeleteAlert(true);
-                  }} />}</div>
+                      // const transId=payContract(deleteId);
+                      setDeleteAlert(true);
+                    }} />}</div>
                 </div>
               ) :
                 <div className='contentdelete'>
-                    <div><p>
-                      This cert was successfully deleted in the algorand blockchain!!
-                    </p></div>
+                  <div><p>
+                    This cert was successfully deleted in the algorand blockchain!!
+                  </p></div>
                 </div>}
             </div>
           </div>

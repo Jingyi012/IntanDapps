@@ -52,11 +52,11 @@ td {
 }
 
 .Rekod .Aktiviti {
-	width: 30%;
+	width: 10%;
 }
 
 .Aktiviti .AktivitiContainer {
-	display:flex;
+	display: flex;
 	justify-content: space-around;
 }
 
@@ -126,7 +126,7 @@ td {
 	color: black;
 	margin-top: 1rem;
 	padding: 0;
-	border:none;
+	border: none;
 }
 
 .Rekod-modal .confirmation-message p {
@@ -146,25 +146,27 @@ td {
 	top: 0rem;
 	right: 0.5rem;
 	cursor: pointer;
-	border:none;
+	border: none;
 }
-.Rekod-modal .headpopout{
-	position:absolute;
-	top:1.2rem;
-	left:2.25rem;
+
+.Rekod-modal .headpopout {
+	position: absolute;
+	top: 1.2rem;
+	left: 2.25rem;
 }
-.Rekod-modal .headpopout p{
+
+.Rekod-modal .headpopout p {
 	margin: 0;
 	padding: 0;
 	font-weight: bold;
-	font-size:23px;
+	font-size: 23px;
 }
 
 
-.Rekod-modal .contentpopout{
-	width:85%;
+.Rekod-modal .contentpopout {
+	width: 85%;
 	text-align: justify;
-	margin:1.5rem auto;
+	margin: 1.5rem auto;
 }
 
 .Search {
@@ -222,7 +224,6 @@ td {
 .Printbutton {
 	margin-top: 0;
 	background-color: transparent;
-	margin-left: 1rem;
 	color: black;
 	font-family: inherit;
 	font-weight: normal;
@@ -231,5 +232,20 @@ td {
 	cursor: pointer;
 	letter-spacing: 0px;
 	border: none;
+	text-align: center;
 
+}
+
+.centered {
+	text-align: center;
+}
+
+.semakbutton {
+	border: none;
+	background: none;
+	font-size: 17px;
+	text-align: center;
+	cursor: pointer;
+	padding: 2.93px 10px 0 0;
+	text-decoration: underline;
 }

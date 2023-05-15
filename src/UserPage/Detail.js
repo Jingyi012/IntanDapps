@@ -1,23 +1,24 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/Detail.css";
 import Modal from "./Modal";
-import { NavLink,useParams,useNavigate } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { db } from '../Backend/firebase/firebase-config'
-import { collection, getDoc, deleteDoc, doc, updateDoc,} from 'firebase/firestore'
+import { collection, getDoc, deleteDoc, doc, updateDoc, } from 'firebase/firestore'
 import { LocalActivity } from "@mui/icons-material";
 
 
 function SenaraiProgramSediaAda() {
   //state for showing the pop out page
   const [showDaftar, setShowDaftar] = useState(false);
-  const [isiProgram,setIsiProgram] = useState("");
-  const [mula,setMula] = useState("");
-  const [nama,setNama] = useState("");
-  const [penganjur,setPenganjur] = useState("");
-  const [jumPeserta,setJumPeserta] = useState("");
-  const [tamat,setTamat] = useState("");
+  const [isiProgram, setIsiProgram] = useState("");
+  const [mula, setMula] = useState("");
+  const [nama, setNama] = useState("");
+  const [penganjur, setPenganjur] = useState("");
+  const [jumlahPeserta, setJumlahPeserta] = useState("");
+  const [maksimumPeserta, setMaksimumPeserta] = useState("");
+  const [tamat, setTamat] = useState("");
   const navigate = useNavigate();
-  
+
   const handleShowDaftar = () => {
     setShowDaftar(true);
   };
@@ -25,27 +26,33 @@ function SenaraiProgramSediaAda() {
     setShowDaftar(false);
   };
 
-  let {programID} = useParams();
+  let { programID } = useParams();
 
   useEffect(() => {
-    const getProgram = async() =>{
-      const docRef = doc(db,"Program",programID.toString());
+    const getProgram = async () => {
+      const docRef = doc(db, "Program", programID.toString());
       const data1 = await getDoc(docRef);
       setIsiProgram(data1.data().isiProgram);
       setMula(data1.data().mula);
       setNama(data1.data().nama);
       setPenganjur(data1.data().penganjur);
-      setJumPeserta(data1.data().jumPeserta);
+      setJumlahPeserta(data1.data().jumlahPeserta);
+      setMaksimumPeserta(data1.data().maksimumPeserta);
       setTamat(data1.data().tamat);
     }
 
     getProgram();
-    
-  },[]);
 
-  const programDaftar = async () =>{
-    const docRef = doc(db,"Program",programID);
+  }, []);
+
+  const programDaftar = async () => {
+    const docRef = doc(db, "Program", programID);
     const data = await getDoc(docRef);
+    const tempMaksimumPesertaString = data.data().maksimumPeserta;
+    var tempMaksimumPesertaNum = Number(tempMaksimumPesertaString);
+    const tempJumlahPeserta = data.data().jumlahPeserta;
+    var newJumlahPesertaNum = Number(tempJumlahPeserta) + 1;
+    var newJumlahPesertaString = newJumlahPesertaNum.toString();
     const tempList = data.data().pesertaList;
     const tempNama = data.data().pesertaNama;
     const tempStatus = data.data().pesertaStatus;
@@ -57,14 +64,20 @@ function SenaraiProgramSediaAda() {
     const userID = localStorage.getItem("userID");
     const userNama = localStorage.getItem("userNama");
     const check = true;
-    
+
     tempList.forEach((id) => {
       if (id == userID) {
         alert("Anda tidak dibenarkan untuk daftar semula program yang and telah mendaftar")
         check = false;
       }
     })
-    if(check){
+
+    if (newJumlahPesertaString > tempMaksimumPesertaNum){
+      alert("Anda tidak dibenarkan untuk daftar program yang telah mempunyai maksimum peserta")
+      check = false;
+    }
+
+    if (check) {
       newList.push(userID);
       newNama[userID] = userNama;
       newStatus[userID] = "-";
@@ -74,6 +87,7 @@ function SenaraiProgramSediaAda() {
         pesertaNama: newNama,
         pesertaStatus: newStatus,
         transactionId: newTran,
+        jumlahPeserta: newJumlahPesertaString,
       }).then(() => {
         alert("And telah berjaya mendaftar program ini!!");
         navigate(-1);
@@ -109,6 +123,7 @@ function SenaraiProgramSediaAda() {
         <div class="info1">
           <p>Nama Pengajur</p>
           <p>Tempoh</p>
+          <p>Maksimum peserta</p>
           <p>Jumlah peserta</p>
           <p>Yuran</p>
         </div>
@@ -121,7 +136,8 @@ function SenaraiProgramSediaAda() {
         <div class="info3">
           <p>{penganjur}</p>
           <p>{mula} - {tamat}</p>
-          <p>{jumPeserta}</p>
+          <p>{maksimumPeserta}</p>
+          <p>{jumlahPeserta}</p>
           <p>Percuma</p>
         </div>
       </div>
