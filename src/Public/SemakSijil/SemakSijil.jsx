@@ -32,6 +32,7 @@ export default function SemakSijil() {
     e.preventDefault(); // Prevent form submission from refreshing the page
     try {
       //get the latest transaction id from the firestore database using app id
+      console.log(appId);
       const sijilRef = doc(db, "Sijil", appId);
       const docSnap = await getDoc(sijilRef);
       const transId = docSnap.data().txnId;
