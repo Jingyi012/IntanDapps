@@ -14,7 +14,7 @@ const Add = () => {
   const [mula, setMula] = useState("");
   const [nama, setNama] = useState("");
   const [penganjur, setPenganjur] = useState("");
-  const [jumPeserta, setJumPeserta] = useState("");
+  const [maksimumPeserta, setMaksimumPeserta] = useState("");
   const [tamat, setTamat] = useState("");
 
   const onChangeIsiProgram = (e) => {
@@ -32,8 +32,8 @@ const Add = () => {
   const onChangePenganjur = (e) => {
     setPenganjur(e.target.value);
   }
-  const onChangeJumPeserta = (e) => {
-    setJumPeserta(e.target.value);
+  const onChangeMaksimumPeserta = (e) => {
+    setMaksimumPeserta(e.target.value);
   }
   const onChangeTamat = (e) => {
     setTamat(e.target.value);
@@ -48,7 +48,8 @@ const Add = () => {
       mula: mula,
       nama: nama,
       penganjur: penganjur,
-      jumPeserta: jumPeserta,
+      maksimumPeserta: maksimumPeserta,
+      jumlahPeserta: "0",
       pesertaStatus: {},
       pesertaList: [],
       transactionId: {},
@@ -60,7 +61,7 @@ const Add = () => {
       setMula("");
       setNama("");
       setPenganjur("");
-      setJumPeserta("");
+      setMaksimumPeserta("");
       setTamat("");
       alert("Program Registerd!!");
       navigate(-1);
@@ -114,11 +115,11 @@ const Add = () => {
               {/* Input for Tarikh Tamat */}
             </div>
             <div className='maklumat'>
-              <label className="kik">JUMLAH PESERTA</label>
+              <label className="kik">MAKSIMUM PESERTA</label>
               <div className='textarea'>
                 <p className="kik">:</p>
-                <input type="text" className='inputtext' onChange={onChangeJumPeserta} value={jumPeserta} /></div>
-              {/* Input for JUMLAH PESERTA */}
+                <input type="text" className='inputtext' onChange={onChangeMaksimumPeserta} value={maksimumPeserta} /></div>
+              {/* Input for MAKSIMUM PESERTA */}
             </div>
             <div className='maklumat'>
               <label className="kik">ISI PROGRAM</label>
