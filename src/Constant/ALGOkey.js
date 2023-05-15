@@ -8,13 +8,13 @@ and blockchain-related tasks. (manage)
 query and search blockchain data (query)
 */
 //private key that will be used for algosdk to sign transactions send to the network
-export const ALGOkey = 'QZ584lQ7DF7U2somENFzV7GwLGNbiNdB82oPh7j3';
+export const ALGOkey = '';
 //this is the url that the client will communicate with
-export const ALGOD_TESTNET_URL = 'https://node.testnet.algoexplorerapi.io';
+export const ALGOD_TESTNET_URL = 'https://testnet-api.algonode.cloud';
 export const ALGOD_PORT = '';
 
 //here, indexerServer use algorand node's indexer API, which provides advanced query capabilities on the blockchain data
-const indexerServer = "https://algoindexer.testnet.algoexplorerapi.io";
+const indexerServer = "https://testnet-idx.algonode.cloud";
 
 export const MNEMONIC_KEY = 'leg cage army someone purse hurt imitate reform impulse west girl find abuse empty bone employ air post bid custom guilt surge weather abstract bulb';
 export const systemAccount = algosdk.mnemonicToSecretKey(MNEMONIC_KEY);
