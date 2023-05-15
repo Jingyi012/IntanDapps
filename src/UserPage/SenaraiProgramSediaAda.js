@@ -6,20 +6,13 @@ import NavbarU from "../Component/userNavbar/NavbarU";
 import { db } from '../Backend/firebase/firebase-config'
 import { collection, getDocs, deleteDoc, doc,} from 'firebase/firestore'
 
-const data=[
-  {kod:"SECD2523",nama:"Database",Tarikh:"14.3.2023-14.6.2023"},
-  {kod:"SECR3253",nama:"Komunikasi",Tarikh:"20.4.2023-17.8.2023"},
-  {kod:"SECD2523",nama:"Database",Tarikh:"14.3.2023-14.6.2023"}
-  
-];
-
 function SenaraiProgramSediaAda() {
   //state for showing the pop out page
   const [searchValue, setSearchValue] = useState("");
   const [programs,setPrograms] = useState([]);
 
   //Filter the data array based on the nama or kod value entered by the user.
-  const filteredData = data.filter(
+  const filteredData = programs.filter(
     (item) =>
       item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
       item.kod.toLowerCase().includes(searchValue.toLowerCase())
@@ -96,9 +89,9 @@ function SenaraiProgramSediaAda() {
           <tr key={index} className={index % 2 === 0 ? "even" : "odd"}>
             <td className="Kod">{item.kod}</td>
             <td className="NameKursus">{item.nama}</td>
-            <td className="Tarikh">{item.Tarikh}</td>
+            <td className="Tarikh">{item.mula}-{item.tamat}</td>
             <td className="Aktiviti">
-            <NavLink to="/user/detail" className="Semaklink">Semak</NavLink>
+            <NavLink to={`/user/Detail/${item.id}`} className="Semaklink">Semak</NavLink>
             </td>
           </tr>
         )

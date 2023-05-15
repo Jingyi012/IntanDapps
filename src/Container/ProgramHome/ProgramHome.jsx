@@ -18,9 +18,7 @@ const ProgramHome = () => {
   const [isOpen,setIsOpen]= useState(false);
   const { account, setAccount } = useContext(AppContext);
   console.log(account);
-  const data=[{kod:"SECJ2023",name:"Databse",tarikhMula:"12/05/2023",tarikhTamat:"14/05/2023"},
-  {kod:"SECK2023",name:"OOP",tarikhMula:"11/05/2023",tarikhTamat:"12/05/2023"}
-  ]
+
   const [programs,setPrograms] = useState([]);
   const [programID,setProgramID] = useState("");
   const [reload,setReload] = useState(0);
