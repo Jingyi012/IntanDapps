@@ -47,7 +47,7 @@ const Semak = () => {
     await updateDoc(programDocRef, {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,
-    }).then(response => {
+    }).then(() => {
       alert("the cert was deleted")
     }).catch(error => {
       console.log(error.message)
@@ -190,10 +190,11 @@ const Semak = () => {
                   <div><p>
                     Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                   </p></div>
-                  <div className='padamconfirmbutton'>{(loading) ? <div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
-                    : <Buttons title="Padam" onClick={async () => {
-                      setLoading(true);
-                      console.log(account[0]);
+                  <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
+                  :<Buttons title="Padam" onClick={async () => {
+                    setLoading(true);
+                    console.log(account);
+                    console.log(currentUser);
 
                       //obtain the app id for the particular user cert in the program 
                       const userTxnId = await getUserTxn(currentUser);

@@ -99,3 +99,9 @@
     width: 100%;
     padding-left: 1rem;
 }
+
+.filter  {
+    display: flex;
+  align-items: center;
+  gap: 0;
+}

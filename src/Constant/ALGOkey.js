@@ -18,5 +18,7 @@ const indexerServer = "https://testnet-idx.algonode.cloud";
 
 export const MNEMONIC_KEY = 'leg cage army someone purse hurt imitate reform impulse west girl find abuse empty bone employ air post bid custom guilt surge weather abstract bulb';
 export const systemAccount = algosdk.mnemonicToSecretKey(MNEMONIC_KEY);
+ const token = '';
 //indexerClient is used here because of the need for advanced querying data from the algorand blockchain
-export const indexerClient = new algosdk.Indexer('', indexerServer, '');
+export const indexerClient = new algosdk.Indexer(token, indexerServer, '');
+

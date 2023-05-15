@@ -25,19 +25,17 @@ const Log = () => {
     getLog().then(console.log(logs));
   }, [])
 
-  const data = [{ tarikh: "10 May 2023 04:00 PM", name: "Admin z", aktiviti: "Add the admin" },
-  { tarikh: "20 May 2023 04:00 PM", name: "Admin C", aktiviti: "Delete the admin" }
-  ]
 
   // sort by using tarikh
   const tarikhfilter = () => {
-    const sorted = data.sort((a, b) => a.tarikh - b.tarikh);
+    const sorted = logs.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     setSearchValue(sorted)
   }
 
   // sort by using name
   const namefilter = () => {
-    const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+    console.log(logs);
+    const sorted = logs.sort((a, b) => a.admin.localeCompare(b.admin));
     setSearchValue(sorted)
   }
 
@@ -53,7 +51,7 @@ const Log = () => {
     setSelectedValue(selectedOption.value);
     if (selectedOption.value === "Tarikh&Masa") { tarikhfilter(); }
     else if (selectedOption.value === "NamaAdmin") { namefilter(); }
-    else if (selectedOption.value === "Susunan") { setSearchValue(data) }
+    else if (selectedOption.value === "Susunan") { setSearchValue(logs) }
 
 
   };
@@ -65,7 +63,7 @@ const Log = () => {
     setIsSearching(true);
     try {
        // Search by using the value that they input
-      const filtered = data.filter(item => item.name.toLowerCase().includes(filteredValue.toLowerCase()));
+      const filtered = logs.filter(item => item.admin.toLowerCase().includes(filteredValue.toLowerCase()));
       setSearchValue(filtered);
       await new Promise((resolve) => setTimeout(resolve, 2000));
     }
@@ -129,7 +127,7 @@ const Log = () => {
                       <td>{log.date}</td>
                       <td>{log.admin}</td>
                       <td>{log.type}</td>
-                      <td><a href={`https://testnet.algoexplorer.io/tx/${log.transactionId}`}>{log.transactionId}</a></td>
+                      <td><a href={`https://testnet.algoscan.app/tx/${log.transactionId}`}>{log.transactionId}</a></td>
                     </tr>
                 )
               })}
@@ -137,11 +135,10 @@ const Log = () => {
             <tbody>
               {searchValue.map((item, index) => (
                 <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
-                  <td>{item.tarikh}</td>
-                  <td>{item.name}</td>
+                  <td>{item.date}</td>
+                  <td>{item.admin}</td>
                   <td>{item.type}</td>
-                  <td>{item.aktiviti}</td>
-                  <td>{item.transactionId}</td>
+                  <td><a href={`https://testnet.algoscan.app/tx/${item.transactionId}`}>{item.transactionId}</a></td>
                 </tr>
               ))}
             </tbody>
