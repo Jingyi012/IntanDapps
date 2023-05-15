@@ -37,7 +37,19 @@ const EditSijil = ({ backpage }) => {
       console.log(userTxnId);
       const info = await indexerClient.lookupTransactionByID(userTxnId).do();
       setAppId(info.transaction["application-transaction"]["application-id"]);
-      console.log(appId);
+      console.log(info);
+      const dTajuk = window.atob(info.transaction["application-transaction"]["application-args"][0]);
+      const dMula = window.atob(info.transaction["application-transaction"]["application-args"][1]);
+      const dTamat = window.atob(info.transaction["application-transaction"]["application-args"][2]);
+      const dNama = window.atob(info.transaction["application-transaction"]["application-args"][3]);
+      const dNRIC = window.atob(info.transaction["application-transaction"]["application-args"][4]);
+
+      //  Convert all the bytes variables into string object and assign them to particular varibles based on their variable names 
+      setTajukSijil(Object.values(JSON.parse(dTajuk))[0]);
+      setTarikhMula(Object.values(JSON.parse(dMula))[0]);
+      setTarikhTamat(Object.values(JSON.parse(dTamat))[0]);
+      setNama(Object.values(JSON.parse(dNama))[0]);
+      setNRIC(Object.values(JSON.parse(dNRIC))[0]);
     }
 
     getUser();

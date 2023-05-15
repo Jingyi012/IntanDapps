@@ -1,4 +1,4 @@
-import { React, useState, useContext } from 'react';
+import { React, useState, useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 import MyAlgo from '@randlabs/myalgo-connect';
@@ -15,7 +15,10 @@ function AdminLogin() {
     account,
     setAccount,
   } = useContext(AppContext);
-
+  //clear the local storage after refresh
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   const connectMyAlgoWallet = async () => {
     let account = "";
     try {
