@@ -16,9 +16,7 @@ const Semak = () => {
   const [currentUser, setCurrentUser] = useState("");
   const [alertDelete, setDeleteAlert] = useState(false);
   const navigate = useNavigate();
-  const { account, setAccount } = useContext(AppContext);
-  const txnId = 'OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
-  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  const { account } = useContext(AppContext);
   const [appId, setAppId] = useState("");
   const [mula, setMula] = useState("");
   const [nama, setNama] = useState("");
@@ -45,7 +43,7 @@ const Semak = () => {
     await updateDoc(programDocRef, {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,
-    }).then(response => {
+    }).then(() => {
       alert("the cert was deleted")
     }).catch(error => {
       console.log(error.message)
@@ -179,7 +177,8 @@ const Semak = () => {
                   <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
                   :<Buttons title="Padam" onClick={async () => {
                     setLoading(true);
-                    console.log(account[0]);
+                    console.log(account);
+                    console.log(currentUser);
 
                     //obtain the app id for the particular user cert in the program 
                     const userTxnId = await getUserTxn(currentUser);

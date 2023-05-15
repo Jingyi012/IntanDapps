@@ -54,7 +54,7 @@ function InformasiSijil(){
                 participantMykad: 'PESERTA NO. MYKAD',
                 courseName: tajuk? tajuk:'NAMA KURSUS',
                 courseDate: mula && tamat ? `${mula} - ${tamat}` : 'TARIKH KURSUS',
-                algorandExplorer: `https://testnet.algoexplorer.io/tx/${transId.transId}`
+                algorandExplorer: `https://testnet.algoscan.app/tx/${transId.transId}`
             };
 
             const newQrCodeDataUrl = await getQrCodeDataUrl(`https://intan-dapps.azurewebsites.net/maklumat-penyemak/${transId.transId}`);
