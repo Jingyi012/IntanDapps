@@ -13,15 +13,16 @@ const data=[
   
 ];
 
-
 function SenaraiProgramSediaAda() {
-
+  //state for showing the pop out page
   const [searchValue, setSearchValue] = useState("");
   const [programs,setPrograms] = useState([]);
 
-  const filteredData = data.filter(item =>
-    item.nama.toLowerCase().includes(searchValue.toLowerCase())||
-    item.kod.toLowerCase().includes(searchValue.toLowerCase())
+  //Filter the data array based on the nama or kod value entered by the user.
+  const filteredData = data.filter(
+    (item) =>
+      item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.kod.toLowerCase().includes(searchValue.toLowerCase())
   );
   
   const userCollectionRef = collection(db, "Program")//crud 1,collection(reference, collectionName)
@@ -34,7 +35,7 @@ function SenaraiProgramSediaAda() {
     }
     getProgram().then(console.log(programs));
   }, [])
-
+//If there is a search value, show the filtered data array. Otherwise, show the whole data array
   return (
     <>
     <div className="navbarU">
@@ -108,8 +109,7 @@ function SenaraiProgramSediaAda() {
     </div>
     </div>
     </>
-  )
+  );
 }
 
-export default SenaraiProgramSediaAda
-
+export default SenaraiProgramSediaAda;

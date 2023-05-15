@@ -6,7 +6,9 @@ import { db } from '../Backend/firebase/firebase-config'
 import { collection, getDoc, deleteDoc, doc, updateDoc,} from 'firebase/firestore'
 import { LocalActivity } from "@mui/icons-material";
 
+
 function SenaraiProgramSediaAda() {
+  //state for showing the pop out page
   const [showDaftar, setShowDaftar] = useState(false);
   const [isiProgram,setIsiProgram] = useState("");
   const [mula,setMula] = useState("");
@@ -168,7 +170,7 @@ function SenaraiProgramSediaAda() {
                   <button className="option" onClick={programDaftar}>Ya</button>
                 </div>
                 <div className="comfirmno">
-                  <button className="option">Tidak</button>
+                  <button className="option" onClick={handleCloseDaftar}>Tidak</button>
                 </div>
               </div>
             </div>

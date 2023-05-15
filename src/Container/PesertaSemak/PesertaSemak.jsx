@@ -21,6 +21,7 @@ const PesertaSemak = () => {
 
   let { pesertaID } = useParams();
 
+  //Delete the cert at firestore
   const deleteCert = async (deleteId, appId) => {
     //delete the sijil at sijil section in firebase
     const sijilDoc = doc(db, "Sijil", appId.toString());
@@ -47,7 +48,7 @@ const PesertaSemak = () => {
     await addDoc(actionRef, {
       admin: `${account[0]}`,
       date: `${date.toString()}`,
-      transactionId: `any`,
+      transactionId: deleteId,
       type: 'Delete',
     });
   }
@@ -65,6 +66,7 @@ const PesertaSemak = () => {
     navigate(`/informasi-sijil/${userTxnId}`);
   };
 
+   //get all the information of the program when entering into this page
   useEffect(()=>{
     const getPesertaInfo = async () => {
       const pesertaRef = doc(db, "User", pesertaID)
@@ -91,6 +93,7 @@ const PesertaSemak = () => {
       <h1 className='semakdaftaradmin'>{pesertaInfo.nama}</h1>
       <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/PESERTA</div>
       </div>
+      {/* Peserta Information */}
       <div className='informasibox'>
         <div className='informasiprogramtitle'>
           INFORMASI PESERTA
@@ -113,6 +116,7 @@ const PesertaSemak = () => {
         </div>
         </div>
         </div>
+        {/* Senarai program peserta menyertai */}
     <div className='subtitle'>SENARAI PROGRAM</div>
     <div className='program'>
       <table className='progtable'>
@@ -158,6 +162,7 @@ const PesertaSemak = () => {
         </tbody>
       </table>
       </div>
+      {/* padam sijil peserta */}
       {isOpen && (
         <div className='semaksijil'>
            <div className='contentdeletesijil'>

@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./header.css";
+import AppContext from "../../Context/AppContext";
 
 //function to return the menu item
 function NavItem(props) {
@@ -18,6 +19,10 @@ function Header() {
   //menu icon click, will invert each time clicking
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
+  const {
+    account,
+    setAccount,
+  } = useContext(AppContext);
 
   //Account Pengguna click, will invert each time clicking
   const [subMenuClick, setSubmenuClick] = useState(false);
@@ -76,6 +81,7 @@ function Header() {
   //logout
   const logout = () =>{
     localStorage.clear();
+    setAccount("");
     navigate("");
   }
 

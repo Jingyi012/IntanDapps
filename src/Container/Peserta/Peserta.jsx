@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Menuheader } from '../../Component'
-import '../Peserta/peserta.css'
+import './peserta.css'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
 import { db } from '../../Backend/firebase/firebase-config'
@@ -44,6 +44,8 @@ const Peserta = () => {
       const displayValue = selectedOption.getAttribute('data-display-value');
       selectedOption.textContent = displayValue;
       
+      // By default the display value should be Susunan to indicate this is for the susunan filter function
+      // There don't have any "Susunan" in the list instead of "None" to indicate that they are filtering nothing
       if (selectedOption.value === "None"){
         selectedOption.value = "Susunan";
       }
@@ -61,6 +63,7 @@ const Peserta = () => {
       }
       setIsSearching(true);
       try{
+        // Check the value whether it is number, if so, filter using nomykad, or else using name
         if(!isNaN(filteredValue)){
       const filtered = data.filter(item => item.nomykad.toString().startsWith(filteredValue));
       setSearchValue(filtered);
@@ -120,6 +123,7 @@ const Peserta = () => {
               <th className='pesertaaktiviti'>Aktiviti</th>
             </tr>
         </thead>
+        {/* if no search value, it will display all data, else it will display search value */}
       {searchValue===""?(
         <tbody>
         {users.map((item,index)=>(

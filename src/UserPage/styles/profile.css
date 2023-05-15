@@ -141,3 +141,7 @@ img.profile-pic{
 	width: auto;
 	height: 100%;
 }
+
+#emelperibadi{
+	wordWrap: break-word;
+}
