@@ -55,12 +55,14 @@ const Admin = () => {
             <div className='textarea'>
             <p className="kik">:</p>
             <input type="text" className='inputtext' onChange={onChangeMykad} value={mykad}/></div>
+            {/* Input for NO.MYKAD */}
           </div>
           <div className='maklumat'>
             <label className="kik">ALAMAT DOMPET</label>
             <div className='textarea'>
             <p className="kik">:</p>
             <input type="text" className='inputtext' onChange={onChangeAcc} value={account}/></div>
+            {/* Input for ALAMAT DOMPET */}
           </div>
           <div className="submitBtn"><button className='register' type='Submit'>Daftar Akaun</button></div>
         </form>

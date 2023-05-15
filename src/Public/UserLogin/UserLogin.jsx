@@ -7,14 +7,7 @@ import './UserLogin.css';
 function UserLogin() {
   const navigate = useNavigate();
   const [mykad, setMykad] = useState("");
-
-  //restrict the input only number
-  // const onChangeMykad = (e) => {
-  //   const regex = /^[0-9\b]+$/;
-  //   if (e.target.value === "" || regex.test(e.target.value)) {
-  //     setMykad(e.target.value);
-  //   }
-  // }
+  const [password, setPassword] = useState("");
 
   //after login, direct user to user home page (program list), set the role as USER
   const userLogin = async (e) => {
@@ -29,14 +22,14 @@ function UserLogin() {
     const docRef = doc(db, "User", mykad);
     const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
+    if (docSnap.exists() && password == docSnap.data().kataLaluan) {
       localStorage.setItem("user", JSON.stringify({ role: "USER" }));
       localStorage.setItem("userID",mykad);
       localStorage.setItem("userNama",docSnap.data().nama);
       navigate("/user/senarai-program-sedia-ada");
       } else {
       // docSnap.data() will be undefined in this case
-      alert("Salah IC !, Sila Masukan Semula !");
+      alert("Salah IC atau Kata Laluan!, Sila Masukan Semula !");
     }
 
 
@@ -57,7 +50,13 @@ function UserLogin() {
                 setMykad(event.target.value)
               }} />
             </label>
-            <button className='login' type='Submit'>Daftar Masuk</button>
+            <br></br>
+            <label htmlFor='LoginMyKad'>Password:
+              <input id='LoginMyKad' name='LoginMyKad' type='password' placeholder='Password' onChange={(event) => {
+                setPassword(event.target.value)
+              }} />
+            </label>
+            <button className='login' type='Submit'>Masuk</button>
           </form>
           <div className='otherLinks'>
             <NavLink className='otherlink' to='/register'>Tidak mempunyai akaun? Daftar akaun</NavLink>

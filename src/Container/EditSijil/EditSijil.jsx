@@ -59,10 +59,7 @@ const EditSijil = ({ backpage }) => {
     //update the sijil in sijil section
     await updateDoc(sijilCollectionRef, {
       txnId: `${transId}`,
-      period: `${tarikhMula}-${tarikhTamat}`,
-      kursus: `${tajukSijil}`,
-      mykad: `${NRIC}`,
-      nama: `${nama}`,
+      action: `Update`
     });
     //update the sijil in program section
     const data = await getDoc(programDocRef);
@@ -79,9 +76,12 @@ const EditSijil = ({ backpage }) => {
       console.log(error.message)
     })
 
+  //sijil collection
+  const programDocRef = doc(db, "Program", programId); //program collection
 
 
   };
+  
   //ask user to insert his/her mnemonic before deploy the contract 
   const handleClick = async (event) => {
     const enteredInput = await prompt('Please enter wallet mnemonic');
@@ -92,14 +92,16 @@ const EditSijil = ({ backpage }) => {
     <div className='app_box'>
 
       <div className='semakdaftarheader'>
+        {/* back to previous page */}
         <button className='backbutton' onClick={() => navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon" /></button>
-        <h1 className='semakdaftaradmin'>EDIT SIJIL</h1>
+        <h1 className='semakdaftaradmin'>KEMASKINI SIJIL</h1>
         {backpage === '/peserta-semak' &&
-          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PESERTA</NavLink>/EDIT SIJIL</div>}
+          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PESERTA</NavLink>/KEMASKINI SIJIL</div>}
         {backpage === '/semak' &&
-          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PROGRAM</NavLink>/EDIT SIJIL</div>}
+          <div className='smallback'><NavLink to="/admin/home">LAMAN UTAMA</NavLink>/<NavLink to={backpage}>PROGRAM</NavLink>/KEMASKINI SIJIL</div>}
       </div>
 
+      {/* Information input section for KEMASKINI Sijil */}
       <div>
         <div className='maklumatadminbahru'>
           MAKLUMAT SIJIL
@@ -182,7 +184,7 @@ const EditSijil = ({ backpage }) => {
        setLoading(true);
        const mnemonic = await handleClick();
        if(mnemonic!=null){
-        const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }];
+        const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }, { NRIC }];
         //   let txn; 
         const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
         const txnId = await updateCertificateAction(userAcc, appId, arr);

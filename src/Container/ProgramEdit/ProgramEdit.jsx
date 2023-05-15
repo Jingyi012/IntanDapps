@@ -2,15 +2,16 @@ import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Buttons } from '../../Component'
 import backicon from '../../img/arrow.png'
-import '../ProgramEdit/programedit.css'
+import './programedit.css'
 
+{/* Unused check back*/}
 const ProgramEdit = () => {
   const navigate = useNavigate();
   return (
     <div className='app_box'>
       <div className='daftarheader'>
       <button className='backbutton' onClick={()=>navigate(-1)}><img src={backicon} alt='This is a back button.' className="backicon"/></button>
-      <h1 className='daftaradmin'>EDIT SIJIL</h1>
+      <h1 className='daftaradmin'>KEMASKINI SIJIL</h1>
       </div>
         <form>
       <div>

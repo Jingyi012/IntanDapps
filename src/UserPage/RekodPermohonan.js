@@ -6,19 +6,66 @@ import NavbarU from "../Component/userNavbar/NavbarU";
 import { db } from '../Backend/firebase/firebase-config'
 import { collection, getDoc, deleteDoc, doc, getDocs, query, where, updateDoc,} from 'firebase/firestore'
 
+// array to store the information of the Rekod Permohonan
 const data = [
-    { kod: "SECD2523", nama: "Database", Tarikh: "14.3.2023-14.6.2023", Status: "Sedang diproses" },
-    { kod: "SECR3253", nama: "Komunikasi", Tarikh: "20.4.2023-17.8.2023", Status: "-" },
-    { kod: "SECK2323", nama: "Sistem Analysis Dan Cipta", Tarikh: "14.3.2023-14.6.2023", Status: "Berjaya" },
-    { kod: "SECD2523", nama: "Database", Tarikh: "14.3.2023-14.6.2023", Status: "Sedang diproses" },
-    { kod: "SECR3253", nama: "Komunikasi", Tarikh: "20.4.2023-17.8.2023", Status: "-" },
-    { kod: "SECD2523", nama: "Database", Tarikh: "14.3.2023-14.6.2023", Status: "Berjaya" },
-    { kod: "SECH2513", nama: "HTML CSS REACT", Tarikh: "14.3.2023-14.6.2023", Status: "Sedang diproses" },
-    { kod: "SECR3253", nama: "Komunikasi", Tarikh: "20.4.2023-17.8.2023", Status: "-" },
-    { kod: "SECD2523", nama: "Database", Tarikh: "14.3.2023-14.6.2023", Status: "Berjaya" }
+  {
+    kod: "SECD2523",
+    nama: "Database",
+    Tarikh: "14.3.2023-14.6.2023",
+    Status: "Sedang diproses",
+  },
+  {
+    kod: "SECR3253",
+    nama: "Komunikasi",
+    Tarikh: "20.4.2023-17.8.2023",
+    Status: "-",
+  },
+  {
+    kod: "SECK2323",
+    nama: "Sistem Analysis Dan Cipta",
+    Tarikh: "14.3.2023-14.6.2023",
+    Status: "Berjaya",
+  },
+  {
+    kod: "SECD2523",
+    nama: "Database",
+    Tarikh: "14.3.2023-14.6.2023",
+    Status: "Sedang diproses",
+  },
+  {
+    kod: "SECR3253",
+    nama: "Komunikasi",
+    Tarikh: "20.4.2023-17.8.2023",
+    Status: "-",
+  },
+  {
+    kod: "SECD2523",
+    nama: "Database",
+    Tarikh: "14.3.2023-14.6.2023",
+    Status: "Berjaya",
+  },
+  {
+    kod: "SECH2513",
+    nama: "HTML CSS REACT",
+    Tarikh: "14.3.2023-14.6.2023",
+    Status: "Sedang diproses",
+  },
+  {
+    kod: "SECR3253",
+    nama: "Komunikasi",
+    Tarikh: "20.4.2023-17.8.2023",
+    Status: "-",
+  },
+  {
+    kod: "SECD2523",
+    nama: "Database",
+    Tarikh: "14.3.2023-14.6.2023",
+    Status: "Berjaya",
+  },
 ];
 
 function RekodPermohonan() {
+  //state for showing the pop out page
     const [showMohon, setShowMohon] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [programs, setPrograms] = useState([]);
@@ -27,10 +74,12 @@ function RekodPermohonan() {
     const userRef = doc(db, "User", userID)//crud 1,collection(reference, collectionName)
     const [reload, setReload] = useState(0);
 
-    const filteredData = data.filter(item =>
-        item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
-        item.kod.toLowerCase().includes(searchValue.toLowerCase())
-    );
+  //Filter the data array based on the nama or kod value entered by the user.
+  const filteredData = data.filter(
+    (item) =>
+      item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
+      item.kod.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
     useEffect(() => {
         const getUserProgram = async () => {
@@ -86,7 +135,7 @@ function RekodPermohonan() {
             })
         })
     }
-
+    //If there is a search value, show the filtered data array. Otherwise, show the whole data array
     return (
         <div>
             <div className="navbarU">
@@ -209,40 +258,30 @@ function RekodPermohonan() {
                                                 </svg>
                                             </button>
 
-                                            <div className="contentpopout">
-                                                <p>
-                                                    Tekan ya untuk sahkan permohonan kursus, tekan tidak untuk
-                                                    batalkan perdaftaran kursus
-                                                </p>
-                                            </div>
-                                            <div className="buttonrekod">
-                                                <div className="comfirmya">
-                                                    <button className="option">Ya</button>
-                                                </div>
-                                                <div className="comfirmno">
-                                                    <button className="option">Tidak</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Modal>
-                                </div>
-                            )}
+                      <div className="contentpopout">
+                        <p>
+                          Tekan ya untuk sahkan permohonan kursus, tekan tidak
+                          untuk batalkan perdaftaran kursus
+                        </p>
+                      </div>
+                      <div className="buttonrekod">
+                        <div className="comfirmya">
+                          <button className="option">Ya</button>
                         </div>
-                    )}
-
-
-
-
+                        <div className="comfirmno">
+                          <button className="option">Tidak</button>
+                        </div>
+                      </div>
+                    </div>
+                  </Modal>
                 </div>
-
-
+              )}
             </div>
-
+          )}
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-
-export default RekodPermohonan
-
-
+export default RekodPermohonan;

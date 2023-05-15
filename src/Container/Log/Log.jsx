@@ -29,12 +29,13 @@ const Log = () => {
   { tarikh: "20 May 2023 04:00 PM", name: "Admin C", aktiviti: "Delete the admin" }
   ]
 
-
+  // sort by using tarikh
   const tarikhfilter = () => {
     const sorted = data.sort((a, b) => a.tarikh - b.tarikh);
     setSearchValue(sorted)
   }
 
+  // sort by using name
   const namefilter = () => {
     const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
     setSearchValue(sorted)
@@ -44,7 +45,8 @@ const Log = () => {
     const selectedOption = event.target.options[event.target.selectedIndex];
     const displayValue = selectedOption.getAttribute('data-display-value');
     selectedOption.textContent = displayValue;
-
+      // By default the display value should be Susunan to indicate this is for the susunan filter function
+      // There don't have any "Susunan" in the list instead of "None" to indicate that they are filtering nothing
     if (selectedOption.value === "None") {
       selectedOption.value = "Susunan";
     }
@@ -62,6 +64,7 @@ const Log = () => {
     }
     setIsSearching(true);
     try {
+       // Search by using the value that they input
       const filtered = data.filter(item => item.name.toLowerCase().includes(filteredValue.toLowerCase()));
       setSearchValue(filtered);
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -82,6 +85,7 @@ const Log = () => {
           LOG AKTIVITI
         </h1>
         <div className='features'>
+          {/* Sorting */}
           <form className='filter'>
             <div className='filtericon'>
               <img src={filterpic} alt='This is a filter icon.' className="filterpic" />
