@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../CiptaSijil/ciptasijil.css'
 import { Buttons } from '../../Component'
 
@@ -24,6 +24,23 @@ const CiptaSijil = ({ backpage }) => {
   const actionCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
 
   const programDocRef = doc(db, "Program", programId)
+  const userDocRef = doc(db, "User", key)//crud 1,collection(reference, collectionName)
+
+  useEffect(() => {
+    const getProgramAndUser = async () => {
+
+      const programData = await getDoc(programDocRef);
+      const userData = await getDoc(userDocRef);
+      console.log(programData);
+      setTajukSijil(programData.data().nama);
+      setTarikhMula(programData.data().mula);
+      setTarikhTamat(programData.data().tamat);
+      setNRIC(userData.data().ic);
+      setNama(userData.data().nama);
+    }
+
+   getProgramAndUser()
+  }, [])
   //add created cert into program, sijil and action log section in firestore
   const createSijil = async (sender, transId, appid) => {//creat 2
     console.log(appid);
