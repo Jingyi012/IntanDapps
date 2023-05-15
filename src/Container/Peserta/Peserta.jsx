@@ -31,11 +31,12 @@ const Peserta = () => {
 
 
   const nomykadfilter = () => {
-      const sorted = data.sort((a, b) => a.nomykad - b.nomykad);
+    console.log(users);
+      const sorted = users.sort((a, b) => a.ic - b.ic);
       setSearchValue(sorted)}
 
   const namefilter = () => {
-      const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+      const sorted = users.sort((a, b) => a.nama.localeCompare(b.nama));
       setSearchValue(sorted)}
 
     const handleSelectChange = (event) => {
@@ -49,7 +50,7 @@ const Peserta = () => {
       setSelectedValue(selectedOption.value);
       if (selectedOption.value === "No.MyKad"){nomykadfilter();}
       else if (selectedOption.value === "Nama"){namefilter();}
-      else if (selectedOption.value === "Susunan"){setSearchValue(data)}
+      else if (selectedOption.value === "Susunan"){setSearchValue(users)}
 
 
     };

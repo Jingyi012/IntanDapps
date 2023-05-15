@@ -60,7 +60,7 @@ const ProgramHome = () => {
       if (selectedOption.value === "KodKursus"){kodfilter();}
       else if (selectedOption.value === "TarikhMula"){tmfilter();}
       else if (selectedOption.value === "TarikhTamat"){ttfilter();}
-      else if (selectedOption.value === "Susunan"){setSearchValue(data)}
+      else if (selectedOption.value === "Susunan"){setSearchValue(programs)}
 
 
     };
