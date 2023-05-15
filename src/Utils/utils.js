@@ -120,7 +120,7 @@ export const deployContract = async (sender, arr) => {
     //the block will still in pending due to no confirm it yet.
     console.log(algodClient.pendingTransactionInformation(tx.txId).do());
 
-    const roundsTowait = 2;
+    const roundsTowait = 4;
     //wait the transaction be confirmed by the network.
     const confirmedTxn = await algosdk.waitForConfirmation(algodClient, tx.txId, roundsTowait);
 

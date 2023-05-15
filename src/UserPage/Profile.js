@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/profile.css";
 import { db, storage } from '../Backend/firebase/firebase-config'
 import { getDoc, doc, updateDoc } from 'firebase/firestore'
 import { ref, uploadBytes, listAll, getDownloadURL, deleteObject } from 'firebase/storage';
 import { v4 } from 'uuid';
 import NavbarU from "../Component/userNavbar/NavbarU";
+import Avatar from "react-avatar-edit";
+
 
 //function for updating and showing the personal information
 const ImgUpload = ({ onChange, src }) => (
@@ -173,6 +175,8 @@ export default class profile extends React.Component {
       imageOriginalUrl: "",
       imageUrl:
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
+      src:null,
+      preview: null,
       nama: "teoh",
       myKad: "ic",
       emelperibadi: "",
@@ -203,6 +207,19 @@ export default class profile extends React.Component {
       }
     }
     getProfile();
+  }
+
+  onClose = ()  => {
+    this.setState({ preview: null })
+  }
+
+  onCrop = (preview) => {
+    this.setState({ 
+      preview,
+      file: preview,
+      imageUrl: preview, })
+
+
   }
 
 
@@ -338,6 +355,8 @@ export default class profile extends React.Component {
       telefonperibadi,
       alamat,
       active,
+      src, 
+      preview
     } = this.state;
     return (
       <div>
@@ -346,7 +365,20 @@ export default class profile extends React.Component {
           <div className="card">
             <form onSubmit={this.handleSubmit} className="profileform">
               <div className="leftSide">
-                <ImgUpload onChange={this.photoUpload} src={imageUrl} />
+              <Avatar
+                  width={250}
+                  height={250}
+                  onCrop={this.onCrop}
+                  onClose={this.onClose}
+                  src={src}
+                />
+
+                {preview && (
+                  <img
+                    src={preview}
+                    alt="Preview"
+                  />
+                )}
                 <button type="submit" className="savebutton">
                   Save{" "}
                 </button>

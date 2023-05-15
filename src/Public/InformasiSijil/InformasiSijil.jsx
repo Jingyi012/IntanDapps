@@ -68,7 +68,7 @@ function InformasiSijil() {
                 participantMykad: mykad ? mykad : 'PESERTA NO. MYKAD',
                 courseName: tajuk ? tajuk : 'NAMA KURSUS',
                 courseDate: mula && tamat ? `${mula} - ${tamat}` : 'TARIKH KURSUS',
-                algorandExplorer: `https://testnet.algoexplorer.io/tx/${transId.transId}`
+                algorandExplorer: `https://testnet.algoscan.app/tx/${transId.transId}`
             };
 
             /*
