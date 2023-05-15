@@ -25,14 +25,9 @@ const Peserta = () => {
     getUser().then(console.log(users));
   },[])
 
-  const data=[{nomykad:"020923105888",name:"Tan Zeng Chai",aktiviti:"Semak"},
-  {nomykad:"010230505450",name:"Tee Zeng Chai",aktiviti:"Semak"}
-  ]
-
-
   const nomykadfilter = () => {
     console.log(users);
-      const sorted = users.sort((a, b) => a.ic - b.ic);
+      const sorted = users.sort((a, b) => a.ic.localeCompare(b.ic));
       setSearchValue(sorted)}
 
   const namefilter = () => {
@@ -64,14 +59,14 @@ const Peserta = () => {
       setIsSearching(true);
       try{
         // Check the value whether it is number, if so, filter using nomykad, or else using name
-        if(!isNaN(filteredValue)){
-      const filtered = data.filter(item => item.nomykad.toString().startsWith(filteredValue));
-      setSearchValue(filtered);
-      }
-      else{
-    const filtered = data.filter(item => item.name.toLowerCase().includes(filteredValue.toLowerCase()));
-    setSearchValue(filtered);
-    }
+        const lowerCaseFilteredValue = filteredValue.toLowerCase();
+
+        const filtered = users.filter(item =>
+          Object.values(item).some(val =>
+            val.toString().toLowerCase().includes(lowerCaseFilteredValue)
+          )
+        );
+        setSearchValue(filtered);
       await new Promise((resolve) => setTimeout(resolve, 2000));}
       catch (error) {
         console.error('Search failed:', error);
@@ -140,10 +135,10 @@ const Peserta = () => {
         <tbody>
         {searchValue.map((item,index)=>(
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
-          <td>{item.nomykad}</td>
-          <td>{item.name}</td>
+          <td>{item.ic}</td>
+          <td>{item.nama}</td>
           <td>
-            <NavLink to='/admin/peserta-semak' className='aktiviti'>Semak</NavLink>
+            <NavLink to={`/admin/peserta-semak/${item.ic}`} className='aktiviti'>Semak</NavLink>
           </td>
       </tr>
         ))}
