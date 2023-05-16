@@ -129,7 +129,8 @@ const Log = () => {
                       <td>{log.date}</td>
                       <td>{log.admin}</td>
                       <td>{log.type}</td>
-                      <td><a href={`https://testnet.algoexplorer.io/tx/${log.transactionId}`}>{log.transactionId}</a></td>
+
+                      <td><a href={`https://testnet.algoscan.app/tx/${log.transactionId}`}>{log.transactionId}</a></td>
                     </tr>
                 )
               })}
