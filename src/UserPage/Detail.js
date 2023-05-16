@@ -63,8 +63,8 @@ function SenaraiProgramSediaAda() {
     var newNama = tempNama;
     var newStatus = tempStatus;
     var newTran = tempTran;
-    const userID = localStorage.getItem("userID");
-    const userNama = localStorage.getItem("userNama");
+    const userID = sessionStorage.getItem("userID");
+    const userNama = sessionStorage.getItem("userNama");
     const check = true;
 
     tempList.forEach((id) => {
@@ -74,7 +74,7 @@ function SenaraiProgramSediaAda() {
       }
     })
 
-    if (newJumlahPesertaString > tempMaksimumPesertaNum){
+    if (newJumlahPesertaString > tempMaksimumPesertaNum) {
       alert("Anda tidak dibenarkan untuk daftar program yang telah mempunyai maksimum peserta")
       check = false;
     }

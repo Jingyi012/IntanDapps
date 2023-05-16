@@ -3,9 +3,9 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
-	//get user from localstorage, if there exist user means the user had logged in
+	//get user from sessionStorage, if there exist user means the user had logged in
 	let user;
-	const _user = localStorage.getItem("user");
+	const _user = sessionStorage.getItem("user");
 
 	if (_user) {
 		user = JSON.parse(_user);
@@ -26,7 +26,7 @@ const useAuth = () => {
 
 const AdminRoutes = () => {
 	const { auth, role } = useAuth();
-	{/* If user is authenticated and the role is ADMIN, the user can access the admin pages, else direct to login page */}
+	{/* If user is authenticated and the role is ADMIN, the user can access the admin pages, else direct to login page */ }
 	if (auth) {
 		return role === "ADMIN" ? (
 			<>

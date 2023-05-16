@@ -17,7 +17,7 @@ function AdminLogin() {
   } = useContext(AppContext);
   //clear the local storage after refresh
   useEffect(() => {
-    localStorage.clear();
+    sessionStorage.clear();
   }, []);
   const connectMyAlgoWallet = async () => {
     let account = "";
@@ -65,8 +65,8 @@ function AdminLogin() {
 
     if (docSnap.exists()) {
       if (docSnap.data().acc == account) {
-        localStorage.setItem("user", JSON.stringify({ role: "ADMIN" }));
-        localStorage.setItem("userID", mykad);
+        sessionStorage.setItem("user", JSON.stringify({ role: "ADMIN" }));
+        sessionStorage.setItem("userID", mykad);
         navigate("/admin/home");
         //window.location.reload();
       } else {
@@ -98,8 +98,8 @@ function AdminLogin() {
             <div>Sila log masuk dengan salah satu algorand wallet untuk dapatkan algorand akaun</div>
             <br></br>
             <div>
-            <SimpleButton title="Connect to Pera Algo Wallet" onClick={connectPeraAlgoWallet}></SimpleButton>
-            <SimpleButton title="Connect to MyAlgo Wallet" onClick={connectMyAlgoWallet}></SimpleButton></div>
+              <SimpleButton title="Connect to Pera Algo Wallet" onClick={connectPeraAlgoWallet}></SimpleButton>
+              <SimpleButton title="Connect to MyAlgo Wallet" onClick={connectMyAlgoWallet}></SimpleButton></div>
             <div>Your Login Account: </div>
             <div className='displayAcc'>
               <div>{account}</div>
