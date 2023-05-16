@@ -68,6 +68,7 @@ const EditSijil = ({ backpage }) => {
       transactionId: `${transId}`,
       type: 'Update',
     });
+
     //update the sijil in sijil section
     await updateDoc(sijilCollectionRef, {
       txnId: `${transId}`,
@@ -87,9 +88,6 @@ const EditSijil = ({ backpage }) => {
     }).catch(error => {
       console.log(error.message)
     })
-
-  //sijil collection
-  const programDocRef = doc(db, "Program", programId); //program collection
 
 
   };
