@@ -190,6 +190,7 @@ export default class profile extends React.Component {
 
     const getProfile = async () => {
       const userID = localStorage.getItem("userID");
+      //get the user profile info
       const docRef = doc(db, "User", userID);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
@@ -309,6 +310,7 @@ export default class profile extends React.Component {
       const docRef = doc(db, "User", userID);
 
       if (this.state.file == "") {
+        //update the user profile info with the new personal info
         await updateDoc(docRef, {
           nama: this.state.nama,
           ic: this.state.myKad,
@@ -327,6 +329,7 @@ export default class profile extends React.Component {
           let myArray2 = text2.split("?alt");
           let imageName = myArray2[0];
           const desertRef = ref(storage, `images/${imageName}`);
+          //delete the previous uploaded profile picture
           deleteObject(desertRef).catch((error) => {
             alert("Something error happend, please contact adminstrator!!");
             console.log(error);
@@ -335,6 +338,7 @@ export default class profile extends React.Component {
         const imageRef = ref(storage, `images/${this.state.file.name + v4()}`);
         uploadBytes(imageRef, this.state.file).then((snapshot) => {
           getDownloadURL(snapshot.ref).then(async (url) => {
+            //update the new personal info and also the new uploaded profile pic
             await updateDoc(docRef, {
               nama: this.state.nama,
               ic: this.state.myKad,

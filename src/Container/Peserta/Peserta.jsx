@@ -14,13 +14,15 @@ const Peserta = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [users, setUsers] = useState([]);
 
-  const userCollectionRef = collection(db, "User")//crud 1,collection(reference, collectionName)
+  //collection path to the User collection
+  const userCollectionRef = collection(db, "User")
 
   useEffect(() => {
     const getUser = async () => {
-      const data = await getDocs(userCollectionRef);//read 2
+      //fetch down the all document data from the User collection
+      const data = await getDocs(userCollectionRef);
       console.log(data);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
     getUser().then(console.log(users));
   },[])

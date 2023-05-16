@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Buttons,Menuheader} from '../../Component'
+import {Menuheader} from '../../Component'
 import { doc,getDoc,setDoc } from 'firebase/firestore'
 import { db } from '../../Backend/firebase/firebase-config'
 import '../Admin/admin.css'
@@ -29,20 +29,24 @@ const Admin = () => {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
-    const userCollectionRef = doc(db, "Admin",mykad)//crud 1,collection(reference, collectionName)
+    //doc() will define the path to the document data 
+    const userCollectionRef = doc(db, "Admin",mykad)
     
+    //getDoc() will get the document data based on the path of doc()
+    //in this case, getDoc() will get the info of admin to test whether the admin ic has been registered or not
     await getDoc(userCollectionRef).then(async (data) => {
       console.log(data.data())
       if (data.data() != undefined) {
         alert("No. MyKad telah didaftar !!");
       } else {
-        await setDoc(userCollectionRef, {// create 2
+        //setDoc() will add the document data with the specific document id
+        await setDoc(userCollectionRef, {
           acc: account,
         }).then(() => {
           setMykad("");
           setAccount("");
           alert("Admin Registerd!!");
-        });//create 2 end
+        });
       }
     })
 

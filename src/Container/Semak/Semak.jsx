@@ -3,11 +3,9 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import backicon from '../../img/arrow.png'
 import '../Semak/semak.css'
 import closeicon from '../../img/close.png'
-import { Buttons, Sejarah } from '../../Component'
-import { systemAccount } from '../../Constant/ALGOkey';
-import AppContext, { AppContextProvider, } from '../../Context/AppContext'
-import { deleteProductAction, payContract } from '../../Utils/utils'
-import { SignalWifiStatusbarNullSharp } from '@mui/icons-material'
+import { Buttons } from '../../Component'
+import AppContext from '../../Context/AppContext'
+import { deleteProductAction } from '../../Utils/utils'
 import { db } from '../../Backend/firebase/firebase-config';
 import { collection, getDoc, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { indexerClient } from '../../Constant/ALGOkey';
@@ -19,7 +17,7 @@ const Semak = () => {
   const { account, setAccount } = useContext(AppContext);
   const [reload, setReload] = useState(0);
   const txnId = 'OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
-  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  const userCollectionRef = collection(db, "ActionLog")
   const [appId, setAppId] = useState("");
   const [mula, setMula] = useState("");
   const [nama, setNama] = useState("");
@@ -40,11 +38,13 @@ const Semak = () => {
     //set the txnid at program section to delete transaction id
     //set the peserta of the person to dipadam
     const programDocRef = doc(db, "Program", programID);
+    //get the program info and modify the info
     const data = await getDoc(programDocRef);
     const pesertaStatusList = data.data().pesertaStatus;
     const txnIdList = data.data().transactionId;
     pesertaStatusList[currentUser] = "dipadam";
     txnIdList[currentUser] = deleteId;
+    //update the new program info
     await updateDoc(programDocRef, {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,
@@ -82,6 +82,7 @@ const Semak = () => {
   //get all the information of the program when entering into this page
   useEffect(() => {
     const getPeserta = async () => {
+      //define the program info document path and get the document data
       const docRef = doc(db, "Program", programID.toString());
       const detail = await getDoc(docRef);
       setMula(detail.data().mula);

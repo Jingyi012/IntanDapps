@@ -30,6 +30,8 @@ function RekodPermohonan() {
 
     useEffect(() => {
         const getUserProgram = async () => {
+            //define the document path with the specific requirement
+            //which is the document data in the document path must have the userID in the array fields
             const docRef = query(collection(db, "Program"), where("pesertaList", "array-contains", userID));
             const data = await getDocs(docRef);
             setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
@@ -58,6 +60,7 @@ function RekodPermohonan() {
     const padamPermohonan = async () => {
         console.log(progrmaID);
         const progRef = doc(db, "Program", progrmaID);
+        //fetch the program info and reduce the total peserta
         await getDoc(progRef).then(async (data) => {
             const tempJumlahPeserta = data.data().jumlahPeserta;
             var newJumlahPesertaNum = Number(tempJumlahPeserta) - 1;
@@ -78,6 +81,7 @@ function RekodPermohonan() {
             delete newStatus[userID];
             delete newTran[userID];
 
+            //update the new total peserta
             await updateDoc((progRef), {
                 pesertaList: newList,
                 pesertaNama: newNama,

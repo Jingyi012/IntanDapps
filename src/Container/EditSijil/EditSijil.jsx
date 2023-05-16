@@ -4,10 +4,10 @@ import { NavLink, useParams } from 'react-router-dom'
 import { Buttons } from '../../Component'
 import backicon from '../../img/arrow.png'
 import { useNavigate } from 'react-router-dom'
-import AppContext, { AppContextProvider, } from '../../Context/AppContext'
+import AppContext from '../../Context/AppContext'
 import { updateCertificateAction } from '../../Utils/utils';
 import { db } from '../../Backend/firebase/firebase-config';
-import { collection, getDoc, addDoc, updateDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
+import { collection, getDoc, addDoc, updateDoc, doc } from 'firebase/firestore';
 import algosdk from 'algosdk';
 import { indexerClient } from '../../Constant/ALGOkey'
 const EditSijil = ({ backpage }) => {
@@ -23,16 +23,17 @@ const EditSijil = ({ backpage }) => {
   const [NRIC, setNRIC] = useState('');
   const [appId, setAppId] = useState('');
   const { account, setAccount } = useContext(AppContext);
-  const actionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  const actionRef = collection(db, "ActionLog")
 
-  //sijil collection
-  const programDocRef = doc(db, "Program", programId); //program collection
+  //sijil collection document path
+  const programDocRef = doc(db, "Program", programId); 
 
 
   //fetch the cert app id from the user current transaction id
   useEffect(() => {
     const getUser = async () => {
-      const data = await getDoc(programDocRef);//read 2
+      //getDoc() will get the document data based on the path 
+      const data = await getDoc(programDocRef);
       const userTxnId = data.data().transactionId[key];
       console.log(userTxnId);
       const info = await indexerClient.lookupTransactionByID(userTxnId).do();

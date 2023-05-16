@@ -13,13 +13,15 @@ const Log = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [logs, setLogs] = useState([])
 
-  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  //document path of the ActionLog collection
+  const userCollectionRef = collection(db, "ActionLog")
 
   useEffect(() => {
     const getLog = async () => {
-      const data = await getDocs(userCollectionRef);//read 2
+      //get all the document data in the ActionLog collection
+      const data = await getDocs(userCollectionRef);
       console.log(data);
-      setLogs(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+      setLogs(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
 
     getLog().then(console.log(logs));

@@ -45,8 +45,11 @@ const Add = () => {
 
   const programRegister = async (e) => {
     e.preventDefault();
-    const userCollectionRef = collection(db, "Program")//crud 1,collection(reference, collectionName)
-    await addDoc(userCollectionRef, {// create 2
+    //collection() will define the path to the collection
+    const userCollectionRef = collection(db, "Program")
+    //addDoc() is used for add new document data but with auto generated id in the firestore
+    //in this case it will add new program
+    await addDoc(userCollectionRef, {
       isiProgram: isiProgram,
       kod: kod,
       mula: mula,
