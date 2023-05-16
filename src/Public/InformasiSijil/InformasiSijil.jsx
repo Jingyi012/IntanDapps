@@ -68,7 +68,7 @@ function InformasiSijil() {
                 participantMykad: mykad ? mykad : 'PESERTA NO. MYKAD',
                 courseName: tajuk ? tajuk : 'NAMA KURSUS',
                 courseDate: mula && tamat ? `${mula} - ${tamat}` : 'TARIKH KURSUS',
-                algorandExplorer: `https://testnet.algoexplorer.io/tx/${transId.transId}`
+                algorandExplorer: `https://testnet.algoscan.app/tx/${transId.transId}`
             };
 
             /*
@@ -108,7 +108,7 @@ function InformasiSijil() {
                         <div className='info'><span className='label'>NO. MYKAD</span><span>:</span><div className='data'>{formData.participantMykad}</div></div>
                         <div className='info'><span className='label'>NAMA KURSUS</span><span>:</span><div className='data'>{formData.courseName}</div></div>
                         <div className='info'><span className='label'>TARIKH</span><span>:</span><div className='data'>{formData.courseDate}</div></div>
-                        <div className='info'><span className='label'>ALGORAND EXPLORER</span><span>:</span><a href={formData.algorandExplorer} className='data' blank>Check In ALGO Explorer</a></div>
+                        <div className='info'><span className='label'>ALGOSCAN</span><span>:</span><a href={formData.algorandExplorer} className='data' target="_blank">Check In ALGOSCAN</a></div>
                     </div>
 
                     Display sijil pdf
