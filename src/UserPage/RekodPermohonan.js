@@ -15,7 +15,7 @@ function RekodPermohonan() {
     const [pesertaStatus, setPesertaStatus] = useState([]);
     const [transactionId, setTransactionId] = useState([]);
     const [progrmaID, setProgramID] = useState("");
-    const userID = localStorage.getItem("userID");
+    const userID = sessionStorage.getItem("userID");
     const userRef = doc(db, "User", userID)//crud 1,collection(reference, collectionName)
     const [reload, setReload] = useState(0);
 
@@ -52,7 +52,7 @@ function RekodPermohonan() {
     }
 
     const printSijil = (index) => {
-        const id = localStorage.getItem("userID")
+        const id = sessionStorage.getItem("userID")
         console.log(transactionId[index][id]);
         navigate(`/informasi-sijil/${transactionId[index][id]}`);
     }

@@ -189,7 +189,7 @@ export default class profile extends React.Component {
     };
 
     const getProfile = async () => {
-      const userID = localStorage.getItem("userID");
+      const userID = sessionStorage.getItem("userID");
       //get the user profile info
       const docRef = doc(db, "User", userID);
       const docSnap = await getDoc(docRef);
@@ -233,12 +233,20 @@ export default class profile extends React.Component {
   photoUpload = (e) => {
     e.preventDefault();
     const reader = new FileReader();
+    const image = new Image();
     const file = e.target.files[0];
     reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imageUrl: reader.result,
-      });
+      image.src = reader.result;
+      console.log(`image width=>${image.width}\nimage height=>${image.height}`);
+      if(image.width>200 || image.height>200){
+        alert("Saiz imej perlu rendah dari 200 x 200 pixel!!");        
+        return;
+      }else{
+        this.setState({
+          file: file,
+          imageUrl: reader.result,
+        });
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -306,7 +314,7 @@ export default class profile extends React.Component {
     }
     if (this.state.active == "edit") {
       console.log(this.state.nama);
-      const userID = localStorage.getItem("userID");
+      const userID = sessionStorage.getItem("userID");
       const docRef = doc(db, "User", userID);
 
       if (this.state.file == "") {
@@ -377,7 +385,7 @@ export default class profile extends React.Component {
           <div className="card">
             <form onSubmit={this.handleSubmit} className="profileform">
               <div className="leftSide">
-                <Avatar
+                {/* <Avatar
                   width={250}
                   height={250}
                   onCrop={this.onCrop}
@@ -390,7 +398,8 @@ export default class profile extends React.Component {
                     src={preview}
                     alt="Preview"
                   />
-                )}
+                )} */}
+                 <ImgUpload onChange={this.photoUpload} src={imageUrl} />
                 <button type="submit" className="savebutton">
                   Save{" "}
                 </button>
