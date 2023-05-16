@@ -100,11 +100,6 @@ const PesertaSemak = () => {
         </div>
         <div className='programtitle'>
         <div className='informasiprogram'>
-          <label>No Tel Pejabat</label>
-          <p>:</p>
-            <p className='informasicontent'>{pesertaInfo.telefonPejabat}</p>
-        </div>
-        <div className='informasiprogram'>
           <label>Alamat Emel Peribadi</label>
           <p>:</p>
             <p className='informasicontent'>{pesertaInfo.emelPeribadi}</p>

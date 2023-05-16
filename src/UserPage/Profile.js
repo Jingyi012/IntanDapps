@@ -46,9 +46,10 @@ const MyKad = ({ onChange, value }) => (
       id="mykad"
       type="text"
       onChange={onChange}
-      maxLength="12"
-      minLength="12"
+      maxLength="14"
+      minLength="14"
       value={value}
+      disabled={true}
     />
   </div>
 );
@@ -175,10 +176,11 @@ export default class profile extends React.Component {
       imageOriginalUrl: "",
       imageUrl:
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
-      src:null,
+      src: null,
       preview: null,
       nama: "teoh",
       myKad: "ic",
+      oriMyKad: "",
       emelperibadi: "",
       jawatan: "",
       telefonperibadi: "",
@@ -194,6 +196,7 @@ export default class profile extends React.Component {
         this.setState({
           nama: docSnap.data().nama,
           myKad: docSnap.data().ic,
+          oriMyKad: docSnap.data().ic,
           emelperibadi: docSnap.data().emelPeribadi,
           jawatan: docSnap.data().jawatan,
           telefonperibadi: docSnap.data().telefonPeribadi,
@@ -209,15 +212,16 @@ export default class profile extends React.Component {
     getProfile();
   }
 
-  onClose = ()  => {
+  onClose = () => {
     this.setState({ preview: null })
   }
 
   onCrop = (preview) => {
-    this.setState({ 
+    this.setState({
       preview,
       file: preview,
-      imageUrl: preview, })
+      imageUrl: preview,
+    })
 
 
   }
@@ -248,12 +252,10 @@ export default class profile extends React.Component {
   };
 
   editmyKad = (e) => {
-    const regex = /^[0-9\b]+$/;
-    if (e.target.value === "" || regex.test(e.target.value)) {
-      this.setState({
-        myKad: e.target.value,
-      });
-    }
+    const myKad = e.target.value
+    this.setState({
+      myKad: myKad,
+    });
   };
 
   editemelperibadi = (e) => {
@@ -295,6 +297,12 @@ export default class profile extends React.Component {
   // When the user clicks the "Save" button, the information will be submitted and displayed.
   // When the user clicks the "Edit Profile" button, the form becomes editable, allowing the user to update their personal information.
   async updateProfile() {
+    const regex = /[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]/;
+    const mykad = this.state.myKad;
+    if (!regex.test(mykad)) {
+      alert('Sila masukan ic dengan format "123456-12-1234"');
+      return;
+    }
     if (this.state.active == "edit") {
       console.log(this.state.nama);
       const userID = localStorage.getItem("userID");
@@ -355,7 +363,7 @@ export default class profile extends React.Component {
       telefonperibadi,
       alamat,
       active,
-      src, 
+      src,
       preview
     } = this.state;
     return (
@@ -365,7 +373,7 @@ export default class profile extends React.Component {
           <div className="card">
             <form onSubmit={this.handleSubmit} className="profileform">
               <div className="leftSide">
-              <Avatar
+                <Avatar
                   width={250}
                   height={250}
                   onCrop={this.onCrop}

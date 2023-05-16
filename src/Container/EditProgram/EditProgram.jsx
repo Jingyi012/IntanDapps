@@ -15,6 +15,7 @@ const EditProgram = () => {
   const [nama, setNama] = useState("");
   const [penganjur, setPenganjur] = useState("");
   const [maksimumPeserta, setMaksimumPeserta] = useState("");
+  const [yuran, setYuran] = useState("");
   const [tamat, setTamat] = useState("");
 
   const onChangeIsiProgram = (e) => {
@@ -35,6 +36,9 @@ const EditProgram = () => {
   const onChangeMaksimumPeserta = (e) => {
     setMaksimumPeserta(e.target.value);
   }
+  const onChangeYuran = (e) => {
+    setYuran(e.target.value);
+  }
   const onChangeTamat = (e) => {
     setTamat(e.target.value);
   }
@@ -51,6 +55,7 @@ const EditProgram = () => {
       setNama(data1.data().nama);
       setPenganjur(data1.data().penganjur);
       setMaksimumPeserta(data1.data().maksimumPeserta);
+      setYuran(data1.data().yuran);
       setTamat(data1.data().tamat);
     }
 
@@ -68,6 +73,7 @@ const EditProgram = () => {
       nama: nama,
       penganjur: penganjur,
       maksimumPeserta: maksimumPeserta,
+      yuran: yuran,
       tamat: tamat,
     }).then(() => {
       setIsiProgram("");
@@ -77,6 +83,7 @@ const EditProgram = () => {
       setPenganjur("");
       setMaksimumPeserta("");
       setTamat("");
+      setYuran("");
       alert("Program Updated!!");
       navigate(-1);
     });
@@ -130,6 +137,12 @@ const EditProgram = () => {
               <div className='textarea'>
                 <p className="kik">:</p>
                 <input type="text" className='inputtext' onChange={onChangeMaksimumPeserta} value={maksimumPeserta} /></div>
+            </div>
+            <div className='maklumat'>
+              <label className="kik">YURAN</label>
+              <div className='textarea'>
+                <p className="kik">:</p>
+                <input type="text" className='inputtext' onChange={onChangeYuran} value={yuran} /></div>
             </div>
             <div className='maklumat'>
               <label className="kik">ISI PROGRAM</label>
