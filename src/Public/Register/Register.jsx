@@ -30,10 +30,11 @@ const Register = () => {
     const userCollectionRef = doc(db, "User", mykad)//crud 1,collection(reference, collectionName)
 
     await getDoc(userCollectionRef).then(async (data) => {
-      if (data.exists) {
+      console.log(data.data());
+      if (data.data() != undefined) {
         alert("No. MyKad telah didaftar !!");
       } else {
-        await setDoc(userCollectionRef, {// create 2
+        await (userCollectionRef, {// create 2
           alamat: alamat,
           emelPeribadi: emelPeribadi,
           kataLaluan: kataLaluan,
@@ -43,6 +44,7 @@ const Register = () => {
           imageUrl: "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
           telefonPeribadi: TelefonPeribadi,
         }).then(() => {
+          alert("Berjaya Daftar Account!!");
           navigate('/login');
         });//create 2 end
       }

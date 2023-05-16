@@ -15,6 +15,7 @@ const Add = () => {
   const [nama, setNama] = useState("");
   const [penganjur, setPenganjur] = useState("");
   const [maksimumPeserta, setMaksimumPeserta] = useState("");
+  const [yuran, setYuran] = useState("");
   const [tamat, setTamat] = useState("");
 
   const onChangeIsiProgram = (e) => {
@@ -34,6 +35,9 @@ const Add = () => {
   }
   const onChangeMaksimumPeserta = (e) => {
     setMaksimumPeserta(e.target.value);
+  }
+  const onChangeYuran = (e) => {
+    setYuran(e.target.value);
   }
   const onChangeTamat = (e) => {
     setTamat(e.target.value);
@@ -55,6 +59,7 @@ const Add = () => {
       transactionId: {},
       pesertaNama: {},
       tamat: tamat,
+      yuran: yuran,
     }).then(() => {
       setIsiProgram("");
       setKod("");
@@ -63,6 +68,7 @@ const Add = () => {
       setPenganjur("");
       setMaksimumPeserta("");
       setTamat("");
+      setYuran("");
       alert("Program Registerd!!");
       navigate(-1);
     });//create 2 end
@@ -120,6 +126,13 @@ const Add = () => {
                 <p className="kik">:</p>
                 <input type="text" className='inputtext' onChange={onChangeMaksimumPeserta} value={maksimumPeserta} /></div>
               {/* Input for MAKSIMUM PESERTA */}
+            </div>
+            <div className='maklumat'>
+              <label className="kik">YURAN</label>
+              <div className='textarea'>
+                <p className="kik">:</p>
+                <input type="text" className='inputtext' onChange={onChangeYuran} value={yuran} /></div>
+              {/* Input for Yuran */}
             </div>
             <div className='maklumat'>
               <label className="kik">ISI PROGRAM</label>

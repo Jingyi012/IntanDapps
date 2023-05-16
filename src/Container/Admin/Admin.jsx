@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import {Buttons,Menuheader} from '../../Component'
-import { doc,setDoc } from 'firebase/firestore'
+import { doc,getDoc,setDoc } from 'firebase/firestore'
 import { db } from '../../Backend/firebase/firebase-config'
 import '../Admin/admin.css'
 
@@ -30,13 +30,23 @@ const Admin = () => {
       return;
     }
     const userCollectionRef = doc(db, "Admin",mykad)//crud 1,collection(reference, collectionName)
-    await setDoc(userCollectionRef, {// create 2
-      acc: account,
-    }).then(() => {
-      setMykad("");
-      setAccount("");
-      alert("Admin Registerd!!");
-    });//create 2 end
+    
+    await getDoc(userCollectionRef).then(async (data) => {
+      console.log(data.data())
+      if (data.data() != undefined) {
+        alert("No. MyKad telah didaftar !!");
+      } else {
+        await setDoc(userCollectionRef, {// create 2
+          acc: account,
+        }).then(() => {
+          setMykad("");
+          setAccount("");
+          alert("Admin Registerd!!");
+        });//create 2 end
+      }
+    })
+
+    
   }
 
   return (

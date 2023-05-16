@@ -30,6 +30,7 @@ const Semak = () => {
   const [tamat, setTamat] = useState("");
   const [pesertaNama, setPesertaNama] = useState([]);
   const [pesertaStatus, setPesertaStatus] = useState([]);
+  const [yuran, setYuran] = useState("");
 
   //Delete the cert at firestore
   const deleteCert = async (deleteId, appId) => {
@@ -91,6 +92,7 @@ const Semak = () => {
       setTamat(detail.data().tamat);
       setPesertaStatus(detail.data().pesertaStatus);
       setPesertaNama(detail.data().pesertaNama);
+      setYuran(detail.data().yuran);
     }
     getPeserta();
   }, [reload]);
@@ -117,6 +119,11 @@ const Semak = () => {
             <label>Tempoh</label>
             <p>:</p>
             <p className='informasicontent'>{mula} - {tamat}</p>
+          </div>
+          <div className='informasiprogram'>
+            <label>Tempoh</label>
+            <p>:</p>
+            <p className='informasicontent'>{yuran}</p>
           </div>
           <div className='informasiprogram'>
             <label>Maksimum Peserta</label>
