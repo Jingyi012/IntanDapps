@@ -8,7 +8,7 @@ import { deployContract, payContract } from '../../Utils/utils'
 import { systemAccount } from '../../Constant/ALGOkey';
 import algosdk from 'algosdk';
 import { db } from '../../Backend/firebase/firebase-config';
-import { collection, getDoc, addDoc, setDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDoc, addDoc, setDoc, updateDoc, doc } from 'firebase/firestore';
 
 const CiptaSijil = ({ backpage }) => {
   const navigate = useNavigate();
@@ -21,14 +21,16 @@ const CiptaSijil = ({ backpage }) => {
   const [nama, setNama] = useState('');
   const [loading, setLoading] = useState(false);
   const [NRIC, setNRIC] = useState('');
-  const actionCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  const actionCollectionRef = collection(db, "ActionLog")
 
+  //doc() will define the path to the document data 
   const programDocRef = doc(db, "Program", programId)
-  const userDocRef = doc(db, "User", key)//crud 1,collection(reference, collectionName)
+  const userDocRef = doc(db, "User", key)
 
+  //useEffect() will be executed once when the web is initialize  
   useEffect(() => {
     const getProgramAndUser = async () => {
-
+      //getDoc() will get the document data based on the path of doc()
       const programData = await getDoc(programDocRef);
       const userData = await getDoc(userDocRef);
       console.log(programData);
@@ -42,26 +44,30 @@ const CiptaSijil = ({ backpage }) => {
    getProgramAndUser()
   }, [])
   //add created cert into program, sijil and action log section in firestore
-  const createSijil = async (sender, transId, appid) => {//creat 2
+  const createSijil = async (sender, transId, appid) => {
     console.log(appid);
     const date = new Date();
     const sijilCollectionRef = doc(db, "Sijil", appid.toString())
     console.log(date.toLocaleString());
+    //setDoc() will add the document data with the specific document id
     await setDoc(sijilCollectionRef, {
       txnId: `${transId}`,
       action: 'Create'
     });
+    //addDoc() is used for add new document data but with auto generated id in the firestore
     await addDoc(actionCollectionRef, {
       admin: `${sender}`,
       date: `${date.toString()}`,
       transactionId: `${transId}`,
       type: 'Create',
     });
+    //getDoc() will get the document data based on the path 
     const data = await getDoc(programDocRef);
     const txnIdList = data.data().transactionId;
     const pesertaStatusList = data.data().pesertaStatus;
     txnIdList[key] = transId;
     pesertaStatusList[key] = "dicipta";
+    //updateDoc() will update the document data that stored at the specified path
     await updateDoc(programDocRef, {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,

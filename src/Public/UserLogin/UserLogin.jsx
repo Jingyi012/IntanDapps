@@ -17,8 +17,8 @@ function UserLogin() {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
-    // localStorage.setItem("user", JSON.stringify({ role: "USER" }));
-    // navigate("/user/senarai-program-sedia-ada");
+
+    //checking whether the user input ic document data is exist or not
     const docRef = doc(db, "User", mykad);
     const docSnap = await getDoc(docRef);
 

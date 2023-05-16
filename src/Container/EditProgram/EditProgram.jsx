@@ -4,7 +4,7 @@ import backicon from '../../img/arrow.png'
 import { Buttons } from '../../Component'
 import '../EditProgram/editprogram.css'
 import { db } from '../../Backend/firebase/firebase-config'
-import { collection, getDoc, updateDoc, doc } from 'firebase/firestore'
+import { getDoc, updateDoc, doc } from 'firebase/firestore'
 
 
 const EditProgram = () => {
@@ -45,9 +45,12 @@ const EditProgram = () => {
 
   let { programID } = useParams();
 
+  //useEffect() will be executed once when the web is initialize  
   useEffect(() => {
     const getProgram = async () => {
+      //doc() will define the path to the document data 
       const docRef = doc(db, "Program", programID.toString());
+      //getDoc() will get the document data based on the path 
       const data1 = await getDoc(docRef);
       setIsiProgram(data1.data().isiProgram);
       setKod(data1.data().kod);
@@ -65,8 +68,9 @@ const EditProgram = () => {
 
   const editProgram = async (e) => {
     e.preventDefault();
-    const userCollectionRef = doc(db, "Program", programID)//crud 1,collection(reference, collectionName)
-    await updateDoc(userCollectionRef, {// create 2
+    const userCollectionRef = doc(db, "Program", programID)
+    //updateDoc() will update the document data that stored at the specified path
+    await updateDoc(userCollectionRef, {
       isiProgram: isiProgram,
       kod: kod,
       mula: mula,

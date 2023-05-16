@@ -27,7 +27,9 @@ const Register = () => {
       alert('kata laluan tidak sama dengan kata laluan yang sah \n Sila pastikan kata laluan sama dengan pengesahan kata laluan');
       return;
     }
-    const userCollectionRef = doc(db, "User", mykad)//crud 1,collection(reference, collectionName)
+
+    //verify whether the user input ic document data has been exist or not
+    const userCollectionRef = doc(db, "User", mykad)
 
     await getDoc(userCollectionRef).then(async (data) => {
       console.log(data.data());

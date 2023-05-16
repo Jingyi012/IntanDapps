@@ -28,6 +28,7 @@ function SenaraiProgramSediaAda() {
 
   let { programID } = useParams();
 
+  //get the program info
   useEffect(() => {
     const getProgram = async () => {
       const docRef = doc(db, "Program", programID.toString());
@@ -47,6 +48,7 @@ function SenaraiProgramSediaAda() {
 
   const programDaftar = async () => {
     const docRef = doc(db, "Program", programID);
+    //get the program info and modify the info data
     const data = await getDoc(docRef);
     const tempMaksimumPesertaString = data.data().maksimumPeserta;
     var tempMaksimumPesertaNum = Number(tempMaksimumPesertaString);
@@ -82,6 +84,7 @@ function SenaraiProgramSediaAda() {
       newNama[userID] = userNama;
       newStatus[userID] = "-";
       newTran[userID] = "-";
+      //update the new document data
       await updateDoc(docRef, {
         pesertaList: newList,
         pesertaNama: newNama,

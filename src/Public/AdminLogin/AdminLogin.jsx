@@ -58,6 +58,8 @@ function AdminLogin() {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
+
+    //get the admin document path and check whether the admin account exist
     const docRef = doc(db, "Admin", mykad);
     const docSnap = await getDoc(docRef);
 

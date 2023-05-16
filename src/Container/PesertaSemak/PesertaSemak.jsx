@@ -29,11 +29,13 @@ const PesertaSemak = () => {
     //set the txnid at program section to delete transaction id
     //set the peserta of the person to dipadam
     const programDocRef = doc(db, "Program",currentProgram);
+    //get the document data first and modified its data 
     const data = await getDoc(programDocRef);
     const pesertaStatusList = data.data().pesertaStatus;
     const txnIdList = data.data().transactionId;
     pesertaStatusList[pesertaID] = "dipadam";
     txnIdList[pesertaID] = deleteId;
+    //update the new documnet data
     await updateDoc(programDocRef, {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,
