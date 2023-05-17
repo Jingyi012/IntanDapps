@@ -36,7 +36,7 @@ const Register = () => {
       if (data.data() != undefined) {
         alert("No. MyKad telah didaftar !!");
       } else {
-        await (userCollectionRef, {// create 2
+        await setDoc(userCollectionRef, {// create 2
           alamat: alamat,
           emelPeribadi: emelPeribadi,
           kataLaluan: kataLaluan,
