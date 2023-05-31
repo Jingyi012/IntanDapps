@@ -13,7 +13,7 @@ function App() {
 
 			<AppContextProvider>
 				<Router/>
-				</AppContextProvider>
+			</AppContextProvider>
 			</div>
 			<Footer />
 

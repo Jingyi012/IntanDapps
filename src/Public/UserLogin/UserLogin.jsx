@@ -17,17 +17,17 @@ function UserLogin() {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
-    // localStorage.setItem("user", JSON.stringify({ role: "USER" }));
-    // navigate("/user/senarai-program-sedia-ada");
+
+    //checking whether the user input ic document data is exist or not
     const docRef = doc(db, "User", mykad);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists() && password == docSnap.data().kataLaluan) {
-      localStorage.setItem("user", JSON.stringify({ role: "USER" }));
-      localStorage.setItem("userID",mykad);
-      localStorage.setItem("userNama",docSnap.data().nama);
+      sessionStorage.setItem("user", JSON.stringify({ role: "USER" }));
+      sessionStorage.setItem("userID", mykad);
+      sessionStorage.setItem("userNama", docSnap.data().nama);
       navigate("/user/senarai-program-sedia-ada");
-      } else {
+    } else {
       // docSnap.data() will be undefined in this case
       alert("Salah IC atau Kata Laluan!, Sila Masukan Semula !");
     }

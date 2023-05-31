@@ -109,6 +109,10 @@ export const deployContract = async (sender, arr) => {
         appArgs: appArgs,
         note: note, // Add the note with course information
     });
+    
+    /*wallet -> account -> buat satu contract ->
+     sign contract -> wait contact letak blockchain -> contract id */
+
     console.log(txn);
     // Sign the transaction using secret key from sender
     const signedTxn = txn.signTxn(sender.sk);
@@ -121,6 +125,7 @@ export const deployContract = async (sender, arr) => {
     console.log(algodClient.pendingTransactionInformation(tx.txId).do());
 
     const roundsTowait = 4;
+
     //wait the transaction be confirmed by the network.
     const confirmedTxn = await algosdk.waitForConfirmation(algodClient, tx.txId, roundsTowait);
 

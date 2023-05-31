@@ -1,4 +1,4 @@
-import { React, useState, useContext } from 'react';
+import { React, useState, useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
 import MyAlgo from '@randlabs/myalgo-connect';
@@ -15,7 +15,11 @@ function AdminLogin() {
     account,
     setAccount,
   } = useContext(AppContext);
-
+  //clear the local storage after refresh
+  useEffect(() => {
+    sessionStorage.clear();
+    localStorage.clear();
+  }, []);
   const connectMyAlgoWallet = async () => {
     let account = "";
     try {
@@ -55,13 +59,15 @@ function AdminLogin() {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
+
+    //get the admin document path and check whether the admin account exist
     const docRef = doc(db, "Admin", mykad);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
       if (docSnap.data().acc == account) {
-        localStorage.setItem("user", JSON.stringify({ role: "ADMIN" }));
-        localStorage.setItem("userID", mykad);
+        sessionStorage.setItem("user", JSON.stringify({ role: "ADMIN" }));
+        sessionStorage.setItem("userID", mykad);
         navigate("/admin/home");
         //window.location.reload();
       } else {
@@ -93,8 +99,8 @@ function AdminLogin() {
             <div>Sila log masuk dengan salah satu algorand wallet untuk dapatkan algorand akaun</div>
             <br></br>
             <div>
-            <SimpleButton title="Connect to Pera Algo Wallet" onClick={connectPeraAlgoWallet}></SimpleButton>
-            <SimpleButton title="Connect to MyAlgo Wallet" onClick={connectMyAlgoWallet}></SimpleButton></div>
+              <SimpleButton title="Connect to Pera Algo Wallet" onClick={connectPeraAlgoWallet}></SimpleButton>
+              <SimpleButton title="Connect to MyAlgo Wallet" onClick={connectMyAlgoWallet}></SimpleButton></div>
             <div>Your Login Account: </div>
             <div className='displayAcc'>
               <div>{account}</div>

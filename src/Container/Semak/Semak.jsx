@@ -3,11 +3,9 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import backicon from '../../img/arrow.png'
 import '../Semak/semak.css'
 import closeicon from '../../img/close.png'
-import { Buttons, Sejarah } from '../../Component'
-import { systemAccount } from '../../Constant/ALGOkey';
-import AppContext, { AppContextProvider, } from '../../Context/AppContext'
-import { deleteProductAction, payContract } from '../../Utils/utils'
-import { SignalWifiStatusbarNullSharp } from '@mui/icons-material'
+import { Buttons } from '../../Component'
+import AppContext from '../../Context/AppContext'
+import { deleteProductAction } from '../../Utils/utils'
 import { db } from '../../Backend/firebase/firebase-config';
 import { collection, getDoc, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { indexerClient } from '../../Constant/ALGOkey';
@@ -17,18 +15,20 @@ const Semak = () => {
   const [alertDelete, setDeleteAlert] = useState(false);
   const navigate = useNavigate();
   const { account, setAccount } = useContext(AppContext);
-  const [reload,setReload]=useState(0);
+  const [reload, setReload] = useState(0);
   const txnId = 'OMC2FKODOV3N76MVJGTQWXCLUKNYDIMOTR245VKDFJR3ASYIW5FQ';
-  const userCollectionRef = collection(db, "ActionLog")//crud 1,collection(reference, collectionName)
+  const userCollectionRef = collection(db, "ActionLog")
   const [appId, setAppId] = useState("");
   const [mula, setMula] = useState("");
   const [nama, setNama] = useState("");
   const [loading, setLoading] = useState(false);
   const [penganjur, setPenganjur] = useState("");
-  const [jumPeserta, setJumPeserta] = useState("");
+  const [maksimumPeserta, setMaksimumPeserta] = useState("");
+  const [jumlahPeserta, setJumlahPeserta] = useState("");
   const [tamat, setTamat] = useState("");
   const [pesertaNama, setPesertaNama] = useState([]);
   const [pesertaStatus, setPesertaStatus] = useState([]);
+  const [yuran, setYuran] = useState("");
 
   //Delete the cert at firestore
   const deleteCert = async (deleteId, appId) => {
@@ -38,11 +38,13 @@ const Semak = () => {
     //set the txnid at program section to delete transaction id
     //set the peserta of the person to dipadam
     const programDocRef = doc(db, "Program", programID);
+    //get the program info and modify the info
     const data = await getDoc(programDocRef);
     const pesertaStatusList = data.data().pesertaStatus;
     const txnIdList = data.data().transactionId;
     pesertaStatusList[currentUser] = "dipadam";
     txnIdList[currentUser] = deleteId;
+    //update the new program info
     await updateDoc(programDocRef, {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,
@@ -60,7 +62,7 @@ const Semak = () => {
       transactionId: deleteId,
       type: 'Delete',
     });
-    setReload(reload+1);
+    setReload(reload + 1);
   }
   const getUserTxn = async (user) => {
     //obtain the app id for the particular user cert in the program 
@@ -80,15 +82,18 @@ const Semak = () => {
   //get all the information of the program when entering into this page
   useEffect(() => {
     const getPeserta = async () => {
+      //define the program info document path and get the document data
       const docRef = doc(db, "Program", programID.toString());
       const detail = await getDoc(docRef);
       setMula(detail.data().mula);
       setNama(detail.data().nama);
       setPenganjur(detail.data().penganjur);
-      setJumPeserta(detail.data().jumPeserta);
+      setMaksimumPeserta(detail.data().maksimumPeserta);
+      setJumlahPeserta(detail.data().jumlahPeserta);
       setTamat(detail.data().tamat);
       setPesertaStatus(detail.data().pesertaStatus);
       setPesertaNama(detail.data().pesertaNama);
+      setYuran(detail.data().yuran);
     }
     getPeserta();
   }, [reload]);
@@ -117,9 +122,19 @@ const Semak = () => {
             <p className='informasicontent'>{mula} - {tamat}</p>
           </div>
           <div className='informasiprogram'>
+            <label>Tempoh</label>
+            <p>:</p>
+            <p className='informasicontent'>{yuran}</p>
+          </div>
+          <div className='informasiprogram'>
+            <label>Maksimum Peserta</label>
+            <p>:</p>
+            <p className='informasicontent'>{maksimumPeserta}</p>
+          </div>
+          <div className='informasiprogram'>
             <label>Jumlah Peserta</label>
             <p>:</p>
-            <p className='informasicontent'>{jumPeserta}</p>
+            <p className='informasicontent'>{jumlahPeserta}</p>
           </div>
         </div>
       </div>
@@ -128,6 +143,7 @@ const Semak = () => {
         <table className='progtable'>
           <thead>
             <tr>
+              <th className='kehadiran'>Index</th>
               <th className='nomykad'>No. MyKad</th>
               <th className='pesertaname'>Nama Peserta</th>
               <th className='kehadiran'>Kehadiran</th>
@@ -136,9 +152,10 @@ const Semak = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(pesertaStatus).map(([key, value]) => {
+            {Object.entries(pesertaStatus).map(([key, value],index) => {
               return (
                 <tr className='row2'>
+                  <td>{index}</td>
                   <td>{key}</td>
                   <td>{pesertaNama[key]}</td>
                   <td className='centerdata'>80%</td>
@@ -187,29 +204,29 @@ const Semak = () => {
                     console.log(account);
                     console.log(currentUser);
 
-                    //obtain the app id for the particular user cert in the program 
-                    const userTxnId = await getUserTxn(currentUser);
-                    console.log(userTxnId);
-                    const info = await indexerClient.lookupTransactionByID(userTxnId).do();
-                    const appId = await info.transaction["application-transaction"]["application-id"];
-                    console.log(appId);
+                      //obtain the app id for the particular user cert in the program 
+                      const userTxnId = await getUserTxn(currentUser);
+                      console.log(userTxnId);
+                      const info = await indexerClient.lookupTransactionByID(userTxnId).do();
+                      const appId = await info.transaction["application-transaction"]["application-id"];
+                      console.log(appId);
 
-                    //delete the cert at algorand blockchain
-                    const deleteId = await deleteProductAction(appId);
-                    console.log(deleteId);
+                      //delete the cert at algorand blockchain
+                      const deleteId = await deleteProductAction(appId);
+                      console.log(deleteId);
 
-                    //delete the cert in firebase
-                    deleteCert(deleteId,appId)
+                      //delete the cert in firebase
+                      deleteCert(deleteId, appId)
 
-                    // const transId=payContract(deleteId);
-                    setDeleteAlert(true);
-                  }} />}</div>
+                      // const transId=payContract(deleteId);
+                      setDeleteAlert(true);
+                    }} />}</div>
                 </div>
               ) :
                 <div className='contentdelete'>
-                    <div><p>
-                      This cert was successfully deleted in the algorand blockchain!!
-                    </p></div>
+                  <div><p>
+                    This cert was successfully deleted in the algorand blockchain!!
+                  </p></div>
                 </div>}
             </div>
           </div>
