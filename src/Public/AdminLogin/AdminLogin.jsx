@@ -18,6 +18,7 @@ function AdminLogin() {
   //clear the local storage after refresh
   useEffect(() => {
     sessionStorage.clear();
+    localStorage.clear();
   }, []);
   const connectMyAlgoWallet = async () => {
     let account = "";
