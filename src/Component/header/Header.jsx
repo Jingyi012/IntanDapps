@@ -80,6 +80,7 @@ function Header() {
   //logout
   const logout = () => {
     sessionStorage.clear();
+    localStorage.clear();
     setAccount("");
     navigate("");
   }
