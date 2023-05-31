@@ -18,13 +18,14 @@ function SenaraiProgramSediaAda() {
       item.kod.toLowerCase().includes(searchValue.toLowerCase())
   );
   
-  const userCollectionRef = collection(db, "Program")//crud 1,collection(reference, collectionName)
+  const userCollectionRef = collection(db, "Program")
 
+  //fetch all the document data in the Program collections
   useEffect(() => {
     const getProgram = async () => {
-      const data = await getDocs(userCollectionRef);//read 2
+      const data = await getDocs(userCollectionRef);
       console.log(data);
-      setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+      setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
     getProgram().then(console.log(programs));
   }, [])

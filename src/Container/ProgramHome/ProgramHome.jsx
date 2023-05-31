@@ -23,12 +23,14 @@ const ProgramHome = () => {
   const [programID,setProgramID] = useState("");
   const [reload,setReload] = useState(0);
 
-  const userCollectionRef = collection(db, "Program")//crud 1,collection(reference, collectionName)
+  //define the path to the Program collection
+  const userCollectionRef = collection(db, "Program")
   useEffect(() => {
     const getProgram = async () => {
-      const data = await getDocs(userCollectionRef);//read 2
+      //get all the document data from the Program collection
+      const data = await getDocs(userCollectionRef);
       console.log(data);
-      setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+      setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
     getProgram().then(console.log(programs));
   }, [reload])
@@ -93,6 +95,7 @@ const ProgramHome = () => {
       setIsOpen(true);
     }
 
+    //delete the document data
     const deleteProg = async () => {
       const docRef = doc(db,"Program",programID)
       await deleteDoc(docRef).then(()=>{

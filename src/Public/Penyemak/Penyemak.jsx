@@ -20,8 +20,10 @@ export default function Penyemak() {
       alert('Sila masukan ic dengan format "123456-12-1234"');
       return;
     }
-    const userCollectionRef = collection(db, "Penyemak")//crud 1,collection(reference, collectionName)
-    await addDoc(userCollectionRef, {// create 2
+    
+    //add the new penyemak info into firestore
+    const userCollectionRef = collection(db, "Penyemak")
+    await addDoc(userCollectionRef, {
       ic: mykad,
       nama: nama,
       organisasi: organisasi,

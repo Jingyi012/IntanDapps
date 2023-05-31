@@ -1,6 +1,6 @@
-import { React, useEffect, useState, useRef } from 'react';
+import { React, useEffect, useState } from 'react';
 import './SemakSijil.css';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { db } from '../../Backend/firebase/firebase-config';
 import { getDoc, doc } from 'firebase/firestore';
 

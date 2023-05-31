@@ -46,9 +46,10 @@ const MyKad = ({ onChange, value }) => (
       id="mykad"
       type="text"
       onChange={onChange}
-      maxLength="12"
-      minLength="12"
+      maxLength="14"
+      minLength="14"
       value={value}
+      disabled={true}
     />
   </div>
 );
@@ -175,10 +176,11 @@ export default class profile extends React.Component {
       imageOriginalUrl: "",
       imageUrl:
         "https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg?region=0,0,600,600&width=480",
-      src:null,
+      src: null,
       preview: null,
       nama: "teoh",
       myKad: "ic",
+      oriMyKad: "",
       emelperibadi: "",
       jawatan: "",
       telefonperibadi: "",
@@ -187,13 +189,15 @@ export default class profile extends React.Component {
     };
 
     const getProfile = async () => {
-      const userID = localStorage.getItem("userID");
+      const userID = sessionStorage.getItem("userID");
+      //get the user profile info
       const docRef = doc(db, "User", userID);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         this.setState({
           nama: docSnap.data().nama,
           myKad: docSnap.data().ic,
+          oriMyKad: docSnap.data().ic,
           emelperibadi: docSnap.data().emelPeribadi,
           jawatan: docSnap.data().jawatan,
           telefonperibadi: docSnap.data().telefonPeribadi,
@@ -209,15 +213,16 @@ export default class profile extends React.Component {
     getProfile();
   }
 
-  onClose = ()  => {
+  onClose = () => {
     this.setState({ preview: null })
   }
 
   onCrop = (preview) => {
-    this.setState({ 
+    this.setState({
       preview,
       file: preview,
-      imageUrl: preview, })
+      imageUrl: preview,
+    })
 
 
   }
@@ -228,12 +233,20 @@ export default class profile extends React.Component {
   photoUpload = (e) => {
     e.preventDefault();
     const reader = new FileReader();
+    const image = new Image();
     const file = e.target.files[0];
     reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imageUrl: reader.result,
-      });
+      image.src = reader.result;
+      console.log(`image width=>${image.width}\nimage height=>${image.height}`);
+      if(image.width>200 || image.height>200){
+        alert("Saiz imej perlu rendah dari 200 x 200 pixel!!");        
+        return;
+      }else{
+        this.setState({
+          file: file,
+          imageUrl: reader.result,
+        });
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -248,12 +261,10 @@ export default class profile extends React.Component {
   };
 
   editmyKad = (e) => {
-    const regex = /^[0-9\b]+$/;
-    if (e.target.value === "" || regex.test(e.target.value)) {
-      this.setState({
-        myKad: e.target.value,
-      });
-    }
+    const myKad = e.target.value
+    this.setState({
+      myKad: myKad,
+    });
   };
 
   editemelperibadi = (e) => {
@@ -295,12 +306,19 @@ export default class profile extends React.Component {
   // When the user clicks the "Save" button, the information will be submitted and displayed.
   // When the user clicks the "Edit Profile" button, the form becomes editable, allowing the user to update their personal information.
   async updateProfile() {
+    const regex = /[0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]/;
+    const mykad = this.state.myKad;
+    if (!regex.test(mykad)) {
+      alert('Sila masukan ic dengan format "123456-12-1234"');
+      return;
+    }
     if (this.state.active == "edit") {
       console.log(this.state.nama);
-      const userID = localStorage.getItem("userID");
+      const userID = sessionStorage.getItem("userID");
       const docRef = doc(db, "User", userID);
 
       if (this.state.file == "") {
+        //update the user profile info with the new personal info
         await updateDoc(docRef, {
           nama: this.state.nama,
           ic: this.state.myKad,
@@ -319,6 +337,7 @@ export default class profile extends React.Component {
           let myArray2 = text2.split("?alt");
           let imageName = myArray2[0];
           const desertRef = ref(storage, `images/${imageName}`);
+          //delete the previous uploaded profile picture
           deleteObject(desertRef).catch((error) => {
             alert("Something error happend, please contact adminstrator!!");
             console.log(error);
@@ -327,6 +346,7 @@ export default class profile extends React.Component {
         const imageRef = ref(storage, `images/${this.state.file.name + v4()}`);
         uploadBytes(imageRef, this.state.file).then((snapshot) => {
           getDownloadURL(snapshot.ref).then(async (url) => {
+            //update the new personal info and also the new uploaded profile pic
             await updateDoc(docRef, {
               nama: this.state.nama,
               ic: this.state.myKad,
@@ -355,7 +375,7 @@ export default class profile extends React.Component {
       telefonperibadi,
       alamat,
       active,
-      src, 
+      src,
       preview
     } = this.state;
     return (
@@ -365,7 +385,7 @@ export default class profile extends React.Component {
           <div className="card">
             <form onSubmit={this.handleSubmit} className="profileform">
               <div className="leftSide">
-              <Avatar
+                {/* <Avatar
                   width={250}
                   height={250}
                   onCrop={this.onCrop}
@@ -378,7 +398,8 @@ export default class profile extends React.Component {
                     src={preview}
                     alt="Preview"
                   />
-                )}
+                )} */}
+                 <ImgUpload onChange={this.photoUpload} src={imageUrl} />
                 <button type="submit" className="savebutton">
                   Save{" "}
                 </button>

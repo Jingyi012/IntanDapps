@@ -1,118 +1,76 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate, } from 'react-router-dom'
 import "./styles/rekodpermohonan.css"
 import Intan from "../intan.png"
 import Modal from './Modal'
 import NavbarU from "../Component/userNavbar/NavbarU";
 import { db } from '../Backend/firebase/firebase-config'
-import { collection, getDoc, deleteDoc, doc, getDocs, query, where, updateDoc,} from 'firebase/firestore'
-
-// array to store the information of the Rekod Permohonan
-const data = [
-  {
-    kod: "SECD2523",
-    nama: "Database",
-    Tarikh: "14.3.2023-14.6.2023",
-    Status: "Sedang diproses",
-  },
-  {
-    kod: "SECR3253",
-    nama: "Komunikasi",
-    Tarikh: "20.4.2023-17.8.2023",
-    Status: "-",
-  },
-  {
-    kod: "SECK2323",
-    nama: "Sistem Analysis Dan Cipta",
-    Tarikh: "14.3.2023-14.6.2023",
-    Status: "Berjaya",
-  },
-  {
-    kod: "SECD2523",
-    nama: "Database",
-    Tarikh: "14.3.2023-14.6.2023",
-    Status: "Sedang diproses",
-  },
-  {
-    kod: "SECR3253",
-    nama: "Komunikasi",
-    Tarikh: "20.4.2023-17.8.2023",
-    Status: "-",
-  },
-  {
-    kod: "SECD2523",
-    nama: "Database",
-    Tarikh: "14.3.2023-14.6.2023",
-    Status: "Berjaya",
-  },
-  {
-    kod: "SECH2513",
-    nama: "HTML CSS REACT",
-    Tarikh: "14.3.2023-14.6.2023",
-    Status: "Sedang diproses",
-  },
-  {
-    kod: "SECR3253",
-    nama: "Komunikasi",
-    Tarikh: "20.4.2023-17.8.2023",
-    Status: "-",
-  },
-  {
-    kod: "SECD2523",
-    nama: "Database",
-    Tarikh: "14.3.2023-14.6.2023",
-    Status: "Berjaya",
-  },
-];
+import { collection, getDoc, deleteDoc, doc, getDocs, query, where, updateDoc, } from 'firebase/firestore'
 
 function RekodPermohonan() {
-  //state for showing the pop out page
+    //state for showing the pop out page
     const [showMohon, setShowMohon] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [programs, setPrograms] = useState([]);
+    const [pesertaStatus, setPesertaStatus] = useState([]);
+    const [transactionId, setTransactionId] = useState([]);
     const [progrmaID, setProgramID] = useState("");
-    const userID = localStorage.getItem("userID");
+    const userID = sessionStorage.getItem("userID");
     const userRef = doc(db, "User", userID)//crud 1,collection(reference, collectionName)
     const [reload, setReload] = useState(0);
 
-  //Filter the data array based on the nama or kod value entered by the user.
-  const filteredData = data.filter(
-    (item) =>
-      item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
-      item.kod.toLowerCase().includes(searchValue.toLowerCase())
-  );
+    const navigate = useNavigate();
+
+    //Filter the data array based on the nama or kod value entered by the user.
+    const filteredData = programs.filter(
+        (item) =>
+            item.nama.toLowerCase().includes(searchValue.toLowerCase()) ||
+            item.kod.toLowerCase().includes(searchValue.toLowerCase())
+    );
 
     useEffect(() => {
         const getUserProgram = async () => {
-            const docRef = query(collection(db,"Program"), where("pesertaList", "array-contains", userID));
+            //define the document path with the specific requirement
+            //which is the document data in the document path must have the userID in the array fields
+            const docRef = query(collection(db, "Program"), where("pesertaList", "array-contains", userID));
             const data = await getDocs(docRef);
             setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));//read 3
+            setPesertaStatus(data.docs.map((doc) => ({ ...doc.data().pesertaStatus })))
+            setTransactionId(data.docs.map((doc) => ({ ...doc.data().transactionId })))
         }
         getUserProgram();
         console.log(programs);
-    },[reload])
+    }, [reload])
 
     const handleShowMohon = (progID) => {
         setShowMohon(true);
         console.log(progID);
-        setProgramID(progID);   
+        setProgramID(progID);
     }
     const handleCloseMohon = () => {
         setShowMohon(false);
     }
 
-    const printSijil = () =>{
-        console.log(programs);
+    const printSijil = (index) => {
+        const id = sessionStorage.getItem("userID")
+        console.log(transactionId[index][id]);
+        navigate(`/informasi-sijil/${transactionId[index][id]}`);
     }
 
     const padamPermohonan = async () => {
         console.log(progrmaID);
-        const progRef = doc(db,"Program",progrmaID);
-        await getDoc(progRef).then(async (data) =>{
+        const progRef = doc(db, "Program", progrmaID);
+        //fetch the program info and reduce the total peserta
+        await getDoc(progRef).then(async (data) => {
+            const tempJumlahPeserta = data.data().jumlahPeserta;
+            var newJumlahPesertaNum = Number(tempJumlahPeserta) - 1;
+            var newJumlahPesertaString = newJumlahPesertaNum.toString();
+
             const tempList = data.data().pesertaList;
             const tempNama = data.data().pesertaNama;
             const tempStatus = data.data().pesertaStatus;
             const tempTran = data.data().transactionId;
-            
+
             var oldList = tempList;
             var newNama = tempNama;
             var newStatus = tempStatus;
@@ -123,12 +81,14 @@ function RekodPermohonan() {
             delete newStatus[userID];
             delete newTran[userID];
 
-            await updateDoc((progRef),{
+            //update the new total peserta
+            await updateDoc((progRef), {
                 pesertaList: newList,
                 pesertaNama: newNama,
                 pesertaStatus: newStatus,
-                transactionId: newTran
-            }).then(()=>{
+                transactionId: newTran,
+                jumlahPeserta: newJumlahPesertaString,
+            }).then(() => {
                 setShowMohon(false);
                 alert("Anda telah berjaya padam program permohonan");
                 setReload(reload + 1);
@@ -163,8 +123,8 @@ function RekodPermohonan() {
                                         <th>Kod</th>
                                         <th>Nama Kursus</th>
                                         <th>Tarikh</th>
-                                        <th>Status Permohonan</th>
-                                        <th>Aktiviti</th>
+                                        <th>Status Sijil</th>
+                                        <th className="centered">🗑️</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -173,11 +133,14 @@ function RekodPermohonan() {
                                             <td className="kod">{item.kod}</td>
                                             <td className="NameKursus">{item.nama}</td>
                                             <td className="Tarikh">{item.mula} - {item.tamat}</td>
-                                            <td className="Status">Sedang Diprocess</td>
+                                            <td className="Status">
+                                                {(`${pesertaStatus[index][userID]}` === 'dicipta' || `${pesertaStatus[index][userID]}` === 'dikemasKini') ?
+                                                    <button onClick={() => { printSijil(index); }} className="Printbutton">Print</button> :
+                                                    <button disabled={true} className="semakbutton">Print</button>}
+                                            </td>
                                             <td className="Aktiviti">
                                                 <div className="AktivitiContainer">
-                                                    <button onClick={() => {handleShowMohon(item.id)}} className="Mohonbutton">BatalPermohonan</button>
-                                                    <button onClick={printSijil} className="Printbutton">PrintSijil</button>
+                                                    <button onClick={() => { handleShowMohon(item.id) }} className="Mohonbutton">Batal</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -258,30 +221,30 @@ function RekodPermohonan() {
                                                 </svg>
                                             </button>
 
-                      <div className="contentpopout">
-                        <p>
-                          Tekan ya untuk sahkan permohonan kursus, tekan tidak
-                          untuk batalkan perdaftaran kursus
-                        </p>
-                      </div>
-                      <div className="buttonrekod">
-                        <div className="comfirmya">
-                          <button className="option">Ya</button>
+                                            <div className="contentpopout">
+                                                <p>
+                                                    Tekan ya untuk sahkan permohonan kursus, tekan tidak
+                                                    untuk batalkan perdaftaran kursus
+                                                </p>
+                                            </div>
+                                            <div className="buttonrekod">
+                                                <div className="comfirmya">
+                                                    <button className="option">Ya</button>
+                                                </div>
+                                                <div className="comfirmno">
+                                                    <button className="option">Tidak</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal>
+                                </div>
+                            )}
                         </div>
-                        <div className="comfirmno">
-                          <button className="option">Tidak</button>
-                        </div>
-                      </div>
-                    </div>
-                  </Modal>
+                    )}
                 </div>
-              )}
             </div>
-          )}
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default RekodPermohonan;
