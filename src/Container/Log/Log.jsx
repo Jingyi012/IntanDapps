@@ -108,7 +108,7 @@ const Log = () => {
           </form>
           <form className='search'>
             <div className='searchbox'>
-              <input value={filteredValue} type="text" placeholder="Nama Admin" className='searchtype' onChange={e => setFilteredValue(e.target.value)} />
+              <input value={filteredValue} type="text" placeholder="Nama Admin" className='searchtype' onChange={(e) => { setFilteredValue(e.target.value); handleSubmit();}} />
             </div>
             <div className='filtericon'>
               <button className="searchbutton" onClick={handleSubmit} disabled={isSearching}>

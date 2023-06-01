@@ -94,7 +94,7 @@ function InformasiSijil() {
     if (!formData) return <div>Loading...</div>;
     const handleClick = (event) => {
         event.preventDefault();
-        const newWindow = open(event.target.href, 'newwindow', 'width=600,height=600');
+        const newWindow = window.open(event.target.href, 'newwindow', 'width=600,height=600');
         if (newWindow) {
           newWindow.opener = null;
         }
@@ -135,7 +135,6 @@ function InformasiSijil() {
                                 </PDFViewer>}
                         </ErrorBoundary>
                     </div>
-
                 </div>
             </div>
         </>
