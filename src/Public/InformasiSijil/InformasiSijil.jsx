@@ -27,8 +27,6 @@ function InformasiSijil() {
         async function fetchData() {
             const data = await fetchformDataFromBlockchain();
             setFormData(data);
-
-
         }
         fetchData();
     }, []);
@@ -36,7 +34,7 @@ function InformasiSijil() {
 
     async function fetchformDataFromBlockchain() {
         //  using indexerClient to look up the transaction details by validating with the provided transaction id
-        const info = await indexerClient.lookupTransactionByID(transId.transId);
+        const info = indexerClient.lookupTransactionByID(transId.transId);
         //  obtain all data from algorand blockchain and set them to a constant variable named data 
         const data = await info.do().then(async (transInfo) => {
             console.log(transInfo.transaction["application-transaction"]["application-args"][0]);
@@ -89,8 +87,15 @@ function InformasiSijil() {
     }
 
     if (!formData) return <div>Loading...</div>;
-
+    const handleClick = (event) => {
+        event.preventDefault();
+        const newWindow = open(event.target.href, 'newwindow', 'width=600,height=600');
+        if (newWindow) {
+          newWindow.opener = null;
+        }
+      };
     return (
+        
         <>
             <div className='infoSijil-container'>
                 <div className='infoSection'>
@@ -108,7 +113,7 @@ function InformasiSijil() {
                         <div className='info'><span className='label'>NO. MYKAD</span><span>:</span><div className='data'>{formData.participantMykad}</div></div>
                         <div className='info'><span className='label'>NAMA KURSUS</span><span>:</span><div className='data'>{formData.courseName}</div></div>
                         <div className='info'><span className='label'>TARIKH</span><span>:</span><div className='data'>{formData.courseDate}</div></div>
-                        <div className='info'><span className='label'>ALGOSCAN</span><span>:</span><a href={formData.algorandExplorer} className='data' target="_blank">Check In ALGOSCAN</a></div>
+                        <div className='info'><span className='label'>ALGOSCAN</span><span>:</span><a className='data' href={`${formData.algorandExplorer}`}   onClick={handleClick}>Check In ALGOSCAN</a></div>
                     </div>
 
                     Display sijil pdf
