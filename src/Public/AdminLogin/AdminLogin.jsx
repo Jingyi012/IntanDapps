@@ -68,6 +68,8 @@ function AdminLogin() {
       if (docSnap.data().acc == account) {
         sessionStorage.setItem("user", JSON.stringify({ role: "ADMIN" }));
         sessionStorage.setItem("userID", mykad);
+        sessionStorage.setItem("adminName", docSnap.data().name);
+        sessionStorage.setItem("adminRole", docSnap.data().role);
         navigate("/admin/home");
         //window.location.reload();
       } else {

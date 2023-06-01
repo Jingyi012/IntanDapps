@@ -44,6 +44,10 @@ const Semak = () => {
     const txnIdList = data.data().transactionId;
     pesertaStatusList[currentUser] = "dipadam";
     txnIdList[currentUser] = deleteId;
+
+    const adminName = sessionStorage.getItem("adminName");
+    const adminID = sessionStorage.getItem("userID");
+
     //update the new program info
     await updateDoc(programDocRef, {
       transactionId: txnIdList,
@@ -58,6 +62,8 @@ const Semak = () => {
     const date = new Date();
     await addDoc(actionRef, {
       admin: `${account[0]}`,
+      adminName: adminName,
+      adminID: adminID, 
       date: `${date.toString()}`,
       transactionId: deleteId,
       type: 'Delete',

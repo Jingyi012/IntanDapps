@@ -18,6 +18,7 @@ const PesertaSemak = () => {
   const [alertDelete, setDeleteAlert] = useState(false);
   const [currentProgram,setCurrentProgram] = useState('');
   const { account, setAccount } = useContext(AppContext);
+  const [reload, setReload] = useState(0);
 
   let { pesertaID } = useParams();
 
@@ -40,19 +41,25 @@ const PesertaSemak = () => {
       transactionId: txnIdList,
       pesertaStatus: pesertaStatusList,
     }).then(response => {
-      alert("the cert was deleted")
+      //alert("the cert was deleted")
     }).catch(error => {
       console.log(error.message)
     })
+    
+    const adminName = sessionStorage.getItem("adminName");
+    const adminID = sessionStorage.getItem("userID");
+
     //add this action to the action log
     const actionRef = collection(db, "ActionLog")
     const date = new Date();
     await addDoc(actionRef, {
       admin: `${account[0]}`,
+      adminName: adminName,
+      adminID: adminID, 
       date: `${date.toString()}`,
       transactionId: deleteId,
       type: 'Delete',
-    });
+    }).then(setReload(reload+1));
   }
   const getUserTxn = async (programID) => {
     console.log(programID)
@@ -86,7 +93,7 @@ const PesertaSemak = () => {
     //getPesertaProgram();
     console.log(pesertaInfo);
     console.log(pesertaPrograms);
-  },[])
+  },[reload])
   
   return (
     <div className='app_box'>

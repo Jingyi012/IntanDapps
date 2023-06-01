@@ -127,7 +127,7 @@ const Log = () => {
                 return (
                     <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
                       <td>{log.date}</td>
-                      <td>{log.admin}</td>
+                      <td>{log.adminName}</td>
                       <td>{log.type}</td>
                       <td><a href={`https://testnet.algoscan.app/tx/${log.transactionId}`}>{log.transactionId}</a></td>
                     </tr>
@@ -138,7 +138,7 @@ const Log = () => {
               {searchValue.map((item, index) => (
                 <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
                   <td>{item.date}</td>
-                  <td>{item.admin}</td>
+                  <td>{item.adminName}</td>
                   <td>{item.type}</td>
                   <td><a href={`https://testnet.algoscan.app/tx/${item.transactionId}`}>{item.transactionId}</a></td>
                 </tr>

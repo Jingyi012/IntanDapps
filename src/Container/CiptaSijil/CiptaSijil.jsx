@@ -49,6 +49,9 @@ const CiptaSijil = ({ backpage }) => {
     const date = new Date();
     const sijilCollectionRef = doc(db, "Sijil", appid.toString())
     console.log(date.toLocaleString());
+
+    const adminName = sessionStorage.getItem("adminName");
+    const adminID = sessionStorage.getItem("userID");
     //setDoc() will add the document data with the specific document id
     await setDoc(sijilCollectionRef, {
       txnId: `${transId}`,
@@ -57,6 +60,8 @@ const CiptaSijil = ({ backpage }) => {
     //addDoc() is used for add new document data but with auto generated id in the firestore
     await addDoc(actionCollectionRef, {
       admin: `${sender}`,
+      adminName : adminName,
+      adminID : adminID, 
       date: `${date.toString()}`,
       transactionId: `${transId}`,
       type: 'Create',
