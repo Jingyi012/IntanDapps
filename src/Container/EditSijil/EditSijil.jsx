@@ -62,9 +62,14 @@ const EditSijil = ({ backpage }) => {
     console.log(appId.toString());
     const sijilCollectionRef = doc(db, "Sijil", appId.toString());
 
+    const adminName = sessionStorage.getItem("adminName");
+    const adminID = sessionStorage.getItem("userID");
+
     //add this update action to action log
     await addDoc(actionRef, {
       admin: `${sender}`,
+      adminName: adminName,
+      adminID: adminID,
       date: `${date.toString()}`,
       transactionId: `${transId}`,
       type: 'Update',
