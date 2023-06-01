@@ -20,7 +20,7 @@ function InformasiSijil() {
     const [formData, setFormData] = useState(null);
     const [qrCodeDataUrl, setQrCodeDataUrl] = useState(null);
     const [fileUrl, setFileUrl] = useState(null);
-    console.log(transId.transId);
+    // console.log(transId.transId);
 
     //  fetch all the data from blockchain first when entering this page
     useEffect(() => {
@@ -34,10 +34,12 @@ function InformasiSijil() {
 
     async function fetchformDataFromBlockchain() {
         //  using indexerClient to look up the transaction details by validating with the provided transaction id
-        const info = indexerClient.lookupTransactionByID(transId.transId);
+        const info = await indexerClient.lookupTransactionByID(transId.transId);
+        console.log(info);
         //  obtain all data from algorand blockchain and set them to a constant variable named data 
         const data = await info.do().then(async (transInfo) => {
-            console.log(transInfo.transaction["application-transaction"]["application-args"][0]);
+            console.log(transInfo);
+            // console.log(transInfo.transaction["application-transaction"]["application-args"][0]);
 
             /*
                 Assign all the transaction information into these variables
@@ -52,6 +54,7 @@ function InformasiSijil() {
             const dTamat = window.atob(transInfo.transaction["application-transaction"]["application-args"][2]);
             const dNama = window.atob(transInfo.transaction["application-transaction"]["application-args"][3]);
             const dNRIC = window.atob(transInfo.transaction["application-transaction"]["application-args"][4]);
+            const dappID = transInfo.transaction["application-transaction"]["application-id"];
 
             //  Convert all the bytes variables into string object and assign them to particular varibles based on their variable names 
             const tajuk = Object.values(JSON.parse(dTajuk))[0];
@@ -59,6 +62,7 @@ function InformasiSijil() {
             const tamat = Object.values(JSON.parse(dTamat))[0];
             const nama = Object.values(JSON.parse(dNama))[0];
             const mykad = Object.values(JSON.parse(dNRIC))[0];
+            console.log(dappID);
 
             //  Assign all the data into a constant variable named data
             const data = {
@@ -66,7 +70,8 @@ function InformasiSijil() {
                 participantMykad: mykad ? mykad : 'PESERTA NO. MYKAD',
                 courseName: tajuk ? tajuk : 'NAMA KURSUS',
                 courseDate: mula && tamat ? `${mula} - ${tamat}` : 'TARIKH KURSUS',
-                algorandExplorer: `https://testnet.algoscan.app/tx/${transId.transId}`
+                algorandExplorer: `https://testnet.algoscan.app/tx/${transId.transId}`,
+                appId: dappID ? dappID : 'APP ID'
             };
 
             /*

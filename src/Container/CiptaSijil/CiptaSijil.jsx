@@ -13,8 +13,8 @@ import { collection, getDoc, addDoc, setDoc, updateDoc, doc } from 'firebase/fir
 const CiptaSijil = ({ backpage }) => {
   const navigate = useNavigate();
   let { programId, key } = useParams();
-  console.log(programId);
-  console.log(key);
+  //console.log(programId);
+  //console.log(key);
   const [tajukSijil, setTajukSijil] = useState('');
   const [tarikhMula, setTarikhMula] = useState('');
   const [tarikhTamat, setTarikhTamat] = useState('');
@@ -33,7 +33,7 @@ const CiptaSijil = ({ backpage }) => {
       //getDoc() will get the document data based on the path of doc()
       const programData = await getDoc(programDocRef);
       const userData = await getDoc(userDocRef);
-      console.log(programData);
+      //console.log(programData);
       setTajukSijil(programData.data().nama);
       setTarikhMula(programData.data().mula);
       setTarikhTamat(programData.data().tamat);
@@ -45,13 +45,10 @@ const CiptaSijil = ({ backpage }) => {
   }, [])
   //add created cert into program, sijil and action log section in firestore
   const createSijil = async (sender, transId, appid) => {
-    console.log(appid);
+    //console.log(appid);
     const date = new Date();
     const sijilCollectionRef = doc(db, "Sijil", appid.toString())
-    console.log(date.toLocaleString());
-
-    const adminName = sessionStorage.getItem("adminName");
-    const adminID = sessionStorage.getItem("userID");
+    //console.log(date.toLocaleString());
     //setDoc() will add the document data with the specific document id
     await setDoc(sijilCollectionRef, {
       txnId: `${transId}`,
@@ -95,7 +92,7 @@ const CiptaSijil = ({ backpage }) => {
     //setDeployedAddress(Txn);
   };
   const payDeployContract = async (userAcc, appId, arr) => {
-    console.log(userAcc);
+    //console.log(userAcc);
     return await payContract(userAcc, appId, arr);
     //setDeployedAddress(Txn);
   };
@@ -197,13 +194,13 @@ const CiptaSijil = ({ backpage }) => {
         if(mnemonic!=null){
         //   let txn; 
         const appid = await handleDeployContract(arr);
-        console.log(mnemonic);
+        //console.log(mnemonic);
         const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
         //getting the transaction id after the admin paying the contract
         const txnId = await payDeployContract(userAcc, appid, arr)
 
         createSijil(userAcc.addr, txnId, appid);
-        console.log(createSijil);
+        //console.log(createSijil);
         navigate(`/informasi-sijil/${txnId}`);}
       }
       }></Buttons>}</div>

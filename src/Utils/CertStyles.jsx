@@ -23,53 +23,48 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       padding: '10% 0',
       boxSizing: 'border-box',
+      fontFamily : 'Helvetica-Bold',
+      //fontWeight: 'bold',
     },
     title: {
-      position: 'absolute',
-      top: 300,
-      fontSize: 24,
-      textDecoration: 'underline',
       
-      textTransform: 'uppercase',
-    },
-    subTitle: {
       position: 'absolute',
-      top: 350,
-      fontSize: 16,
-      fontWeight: '500',
-      textTransform: 'uppercase',
-      letterSpacing: '3px',
   
+      top: 480,
+      fontSize: 16,
+      textTransform: 'uppercase',
     },
     recipient: {
-      fontSize: 16,
+
+      fontSize: 20,
   
+    },
+    appId: {
+      fontSize: 12,
+      position: 'absolute',
+      top : 60,
+      right: 85,
     },
     description: {
       fontSize: 15,
       fontWeight: '600',
   
     },
-    issuerTitle: {
-      fontSize: 12,
-      textDecoration: 'underline',
-      textTransform: 'uppercase',
-  
-    },
-    issuer: {
-      fontSize: 20,
+    mykad: {
+      fontSize: 14,
       textTransform: 'uppercase',
   
     },
     date: {
+      position: 'absolute',
       fontSize: 12,
-      fontWeight: '600',
+      top: 570,
     },
     qrCode: {
         position: 'absolute',
-        top: 30,
-        right: 30,
-        width: 100,
-        height: 100,
+        top: 70,
+        right: 75,
+        width: 80,
+        height: 80,
       },
   });
