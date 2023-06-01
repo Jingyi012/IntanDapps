@@ -58,7 +58,8 @@ const EditSijil = ({ backpage }) => {
 
   const updateSijil = async (sender, transId) => {//creat 2
     const date = new Date();
-    console.log(date.toLocaleString());
+    const formattedDate = `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(date.getDate())} ${padNumber(date.getHours())}:${padNumber(date.getMinutes())}:${padNumber(date.getSeconds())}`;
+    console.log(formattedDate.toLocaleString());
     console.log(appId.toString());
     const sijilCollectionRef = doc(db, "Sijil", appId.toString());
 
@@ -70,7 +71,7 @@ const EditSijil = ({ backpage }) => {
       admin: `${sender}`,
       adminName: adminName,
       adminID: adminID,
-      date: `${date.toString()}`,
+      date: `${formattedDate.toString()}`,
       transactionId: `${transId}`,
       type: 'Update',
     });
@@ -97,7 +98,11 @@ const EditSijil = ({ backpage }) => {
 
 
   };
-  
+
+  const padNumber = (num) => {
+    return num.toString().padStart(2, '0');
+  };
+
   //ask user to insert his/her mnemonic before deploy the contract 
   const handleClick = async (event) => {
     const enteredInput = await prompt('Please enter wallet mnemonic');

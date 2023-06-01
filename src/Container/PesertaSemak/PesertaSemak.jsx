@@ -52,11 +52,12 @@ const PesertaSemak = () => {
     //add this action to the action log
     const actionRef = collection(db, "ActionLog")
     const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(date.getDate())} ${padNumber(date.getHours())}:${padNumber(date.getMinutes())}:${padNumber(date.getSeconds())}`;
     await addDoc(actionRef, {
       admin: `${account[0]}`,
       adminName: adminName,
       adminID: adminID, 
-      date: `${date.toString()}`,
+      date: `${formattedDate.toString()}`,
       transactionId: deleteId,
       type: 'Delete',
     }).then(setReload(reload+1));
@@ -70,6 +71,11 @@ const PesertaSemak = () => {
     console.log(userTxnId);
     return userTxnId;
   }
+
+  const padNumber = (num) => {
+    return num.toString().padStart(2, '0');
+  };
+
   const semakUser = async (programID) => {
     const userTxnId = await getUserTxn(programID);
     navigate(`/informasi-sijil/${userTxnId}`);

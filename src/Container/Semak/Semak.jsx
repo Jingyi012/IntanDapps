@@ -60,16 +60,22 @@ const Semak = () => {
     //add this action to the action log
     const actionRef = collection(db, "ActionLog")
     const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(date.getDate())} ${padNumber(date.getHours())}:${padNumber(date.getMinutes())}:${padNumber(date.getSeconds())}`;
     await addDoc(actionRef, {
       admin: `${account[0]}`,
       adminName: adminName,
       adminID: adminID, 
-      date: `${date.toString()}`,
+      date: `${formattedDate.toString()}`,
       transactionId: deleteId,
       type: 'Delete',
     });
     setReload(reload + 1);
   }
+
+  const padNumber = (num) => {
+    return num.toString().padStart(2, '0');
+  };
+
   const getUserTxn = async (user) => {
     //obtain the app id for the particular user cert in the program 
     const programDocRef = doc(db, "Program", programID);

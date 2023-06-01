@@ -1,0 +1,23 @@
+.aktiviti {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    border: 0;
+    text-decoration: underline;
+}
+
+.tarikhmasa {
+    width: 15%;
+}
+
+.namaadmin {
+    width: 11%;
+}
+
+.logbutton {
+    border: none;
+    background-color: white;
+    font-size: 14px;
+    padding: 0px;
+    cursor: pointer;
+}

@@ -14,16 +14,19 @@ const menuheader = () => {
         <li>
           <NavLink to="/admin/peserta" className='last'>Senarai Peserta</NavLink>
         </li>
-        <li className="noborder">
+        <li >
           <NavLink to="/admin/log" className='last'>Log Aktiviti</NavLink>
         </li>
         {adminRole == "SuperAdmin" ?
-          <li>
+          <><li>
             <NavLink to="/admin/daftar-admin" className='last'>Daftar Admin</NavLink>
-          </li>
+          </li><li className="noborder">
+              <NavLink to="/admin/admin-list" className='last'>Senarai Admin</NavLink>
+            </li></>
           :
           <div></div>
         }
+        
 
       </ul>
     </div>
