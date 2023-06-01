@@ -9,11 +9,11 @@ const InformasiErrorPage = () => {
   console.log(appid);
   return (
     <div className="error-container">
-    <h1>Oops!</h1>
+    <h1 className='errorh1'>Oops!</h1>
     <h2>😓</h2>
     <br></br>
-    <p>Terdapat sesuatu yang tidak kena.</p>
-    <p>App Id, {appid['appid']} yang dicarikan {location.state.message}</p>
+    <p className='errorp'>Terdapat sesuatu yang tidak kena.</p>
+      <p className='errorp'>App Id, {appid['appid']} yang dicarikan {location.state.message}</p>
     <a href="/semaksijil" className="button">Kembali ke halaman semak sijil</a>
   </div>
   );

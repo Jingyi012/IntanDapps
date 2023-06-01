@@ -22,7 +22,6 @@ function Header() {
   const {
     account,
     setAccount,
-    logout,
   } = useContext(AppContext);
 
   //Account Pengguna click, will invert each time clicking
@@ -80,6 +79,12 @@ function Header() {
   const navigate = useNavigate();
   //logout
 
+  const logout = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+    setAccount("");
+    navigate("");
+  }
 
   return (
     <React.Fragment>

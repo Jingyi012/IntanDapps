@@ -99,7 +99,7 @@ const PesertaSemak = () => {
     //getPesertaProgram();
     // console.log(pesertaInfo);
     // console.log(pesertaPrograms);
-  },[])
+  },[reload])
   
   return (
     <div className='app_box'>
