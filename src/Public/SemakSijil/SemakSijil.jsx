@@ -33,7 +33,7 @@ export default function SemakSijil() {
     try {
       //get the latest transaction id from the firestore database using app id
       console.log(appId);
-      const sijilRef = doc(db, "Sijil", appId);
+      const sijilRef = doc(db, "Sijil", appId.trim());
       const docSnap = await getDoc(sijilRef);
       const transId = docSnap.data().txnId;
       const status = docSnap.data().action;
@@ -42,11 +42,12 @@ export default function SemakSijil() {
       if(status !== 'Delete')
         handleSubmit(transId);
       else
-        navigate(`/errorPage/${appId}`);
+      navigate(`/errorPage/${appId}`,{state:{message:"merupakan sijil yang tidak sah. Sila semak semula!"}});
 
     } catch (error) {
       console.error("Error retrieving data:", error);
       // Handle the error appropriately, e.g., display an error message
+      navigate(`/errorPage/${appId}`,{state:{message:"tidak wujud dalam algorand. Sila semak semula!"}});
     }
   };
   return (
