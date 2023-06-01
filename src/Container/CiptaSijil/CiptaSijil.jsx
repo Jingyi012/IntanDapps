@@ -47,8 +47,9 @@ const CiptaSijil = ({ backpage }) => {
   const createSijil = async (sender, transId, appid) => {
     console.log(appid);
     const date = new Date();
+    const formattedDate = `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(date.getDate())} ${padNumber(date.getHours())}:${padNumber(date.getMinutes())}:${padNumber(date.getSeconds())}`;
     const sijilCollectionRef = doc(db, "Sijil", appid.toString())
-    console.log(date.toLocaleString());
+    console.log(formattedDate.toLocaleString());
 
     const adminName = sessionStorage.getItem("adminName");
     const adminID = sessionStorage.getItem("userID");
@@ -62,7 +63,7 @@ const CiptaSijil = ({ backpage }) => {
       admin: `${sender}`,
       adminName : adminName,
       adminID : adminID, 
-      date: `${date.toString()}`,
+      date: `${formattedDate.toString()}`,
       transactionId: `${transId}`,
       type: 'Create',
     });
@@ -98,6 +99,9 @@ const CiptaSijil = ({ backpage }) => {
     console.log(userAcc);
     return await payContract(userAcc, appId, arr);
     //setDeployedAddress(Txn);
+  };
+  const padNumber = (num) => {
+    return num.toString().padStart(2, '0');
   };
   return (
     <div className='app_box'>

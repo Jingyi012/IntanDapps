@@ -4,6 +4,7 @@ import ProgramHome from '../Container/ProgramHome/ProgramHome';
 import Peserta from "../Container/Peserta/Peserta";
 import Log from "../Container/Log/Log";
 import Admin from "../Container/Admin/Admin";
+import AdminList from "../Container/AdminList/AdminList";
 import Semak from "../Container/Semak/Semak";
 import ProgramEdit from "../Container/ProgramEdit/ProgramEdit";
 import PesertaSemak from "../Container/PesertaSemak/PesertaSemak";
@@ -47,6 +48,7 @@ function Router() {
           <Route path="/admin/home" exact element={<ProgramHome />} />
           <Route path="/admin/peserta" exact element={<Peserta />} />
           <Route path="/admin/daftar-admin" exact element={<Admin />} />
+          <Route path="/admin/admin-list" exact element={<AdminList/>} />
           <Route path="/admin/log" exact element={<Log />} />
           <Route path="/admin/semak/:programID" exact element={<Semak />} />
           <Route path="/admin/program-edit" exact element={<ProgramEdit />} />

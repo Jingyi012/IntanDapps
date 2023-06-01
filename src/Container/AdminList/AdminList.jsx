@@ -2,42 +2,43 @@ import React, { useState, useEffect } from 'react'
 import { Menuheader } from '../../Component'
 import filterpic from '../../img/filter.png'
 import searchpic from '../../img/search.png'
-import '../Log/log.css'
+import '../AdminList/adminList.css'
 import { db } from '../../Backend/firebase/firebase-config'
-import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { collection, getDocs, orderBy, query, doc, deleteDoc} from 'firebase/firestore'
 
-const Log = () => {
+const AdminList = () => {
   const [selectedValue, setSelectedValue] = useState('');
   const [searchValue, setSearchValue] = useState([]);
   const [filteredValue, setFilteredValue] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [logs, setLogs] = useState([])
+  const [adminList, setAdminList] = useState([])
+  const [reload,setReload] = useState(0);
 
   //document path of the ActionLog collection
-  const userCollectionRef = collection(db, "ActionLog")
+  const userCollectionRef = collection(db, "Admin")
 
   useEffect(() => {
-    const getLog = async () => {
+    const getAdminList = async () => {
       //get all the document data in the ActionLog collection
-      const data = await getDocs(query(userCollectionRef, orderBy("date", "desc")));
+      const data = await getDocs(userCollectionRef);
       console.log(data);
-      setLogs(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setAdminList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
 
-    getLog().then(console.log(logs));
-  }, [])
+    getAdminList().then(console.log(adminList));
+  }, [reload])
 
 
   // sort by using tarikh
   const tarikhfilter = () => {
-    const sorted = logs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const sorted = adminList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     setSearchValue(sorted)
   }
 
   // sort by using name
   const namefilter = () => {
-    console.log(logs);
-    const sorted = logs.sort((a, b) => new String(a.adminName).localeCompare(new String(b.adminName)));
+    console.log(adminList);
+    const sorted = adminList.sort((a, b) => new String(a.name).localeCompare(new String(b.name)));
     setSearchValue(sorted)
   }
 
@@ -53,7 +54,7 @@ const Log = () => {
     setSelectedValue(selectedOption.value);
     if (selectedOption.value === "Tarikh&Masa") { tarikhfilter(); }
     else if (selectedOption.value === "NamaAdmin") { namefilter(); }
-    else if (selectedOption.value === "Susunan") { setSearchValue(logs) }
+    else if (selectedOption.value === "Susunan") { setSearchValue(adminList) }
 
 
   };
@@ -65,12 +66,12 @@ const Log = () => {
     setIsSearching(true);
     //    try {
     // Search by using the value that they input
-    const filtered = logs.filter(obj =>
+    const filtered = adminList.filter(obj =>
       Object.values(obj).some(value =>
         new String(value).toLowerCase().includes(new String(filteredValue.toLowerCase())) || new String(value).toLowerCase() === new String(filteredValue.toLowerCase())
       )
     );
-    // const filtered = logs.find((item) => new String(item.adminName).toLowerCase().includes(new String(filteredValue.toLowerCase())));
+    // const filtered = adminList.find((item) => new String(item.name).toLowerCase().includes(new String(filteredValue.toLowerCase())));
     console.log(filtered);
     setSearchValue(filtered);
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -84,16 +85,32 @@ const Log = () => {
     // }
   }
 
+  const onClickPadam = (id) =>{
+    if(window.confirm("Adakah anda ingin mamadamkan akaun admin ini?")){
+      deleteAccount(id);
+    }else{
+      return;
+    }
+  }
+
+  const deleteAccount = async (id) =>{
+    const accRef = doc(db, "Admin", id.toString());
+    await deleteDoc(accRef).then(()=>{
+      alert("Akaun Admin telah dipadam!!");
+      setReload(reload+1);
+    });
+  }
+
   return (
     <div className='app_box'>
       <Menuheader />
       <div className='programsec'>
         <h1 className='title'>
-          LOG AKTIVITI
+          Senarai Admin
         </h1>
         <div className='features'>
           {/* Sorting */}
-          <form className='filter'>
+          {/* <form className='filter'>
             <div className='filtericon'>
               <img src={filterpic} alt='This is a filter icon.' className="filterpic" />
             </div>
@@ -105,10 +122,10 @@ const Log = () => {
                 <option value="NamaAdmin" data-display-value="Nama Admin">Nama Admin</option>
               </select>
             </div>
-          </form>
+          </form> */}
           <form className='search'>
             <div className='searchbox'>
-              <input value={filteredValue} type="text" placeholder="Nama Admin" className='searchtype' onChange={e => setFilteredValue(e.target.value)} />
+              <input value={filteredValue} type="text" placeholder="Nama Admin" className='searchtype' onChange={(e) => { setFilteredValue(e.target.value);handleSubmit() } } />
             </div>
             <div className='filtericon'>
               <button className="searchbutton" onClick={handleSubmit} disabled={isSearching}>
@@ -122,23 +139,23 @@ const Log = () => {
         <table className='progtable'>
           <thead>
             <tr>
-              <th className='tarikhmasa'>Tarikh & Masa</th>
+              <th className='tarikhmasa'>Index</th>
               <th className='namaadmin'>Nama Admin</th>
               <th className='namaadmin'>ID Admin</th>
-              <th className='jenisTindakan'>Jenis</th>
-              <th className='tranid'>TransactionID</th>
+              <th className='jenisTindakan'>Wallet Address</th>
+              <th className='tranid'>Padam Account</th>
             </tr>
           </thead>
           {filteredValue == "" ? (
             <tbody>
-              {logs.map((log, index) => {
+              {adminList.map((admin, index) => {
                 return (
                   <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
-                    <td>{log.date}</td>
-                    <td>{log.adminName}</td>
-                    <td>{log.adminID}</td>
-                    <td>{log.type}</td>
-                    <td><a href={`https://testnet.algoscan.app/tx/${log.transactionId}`}>{log.transactionId}</a></td>
+                    <td>{index+1}</td>
+                    <td>{admin.name}</td>
+                    <td>{admin.id}</td>
+                    <td>{admin.acc}</td>
+                    <td><button onClick={(e) => onClickPadam(admin.id)}>Padam</button></td>
                   </tr>
                 )
               })}
@@ -146,11 +163,11 @@ const Log = () => {
             <tbody>
               {searchValue.map((item, index) => (
                 <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
-                  <td>{item.date}</td>
-                  <td>{item.adminName}</td>
-                  <td>{item.adminID}</td>
-                  <td>{item.type}</td>
-                  <td><a href={`https://testnet.algoscan.app/tx/${item.transactionId}`}>{item.transactionId}</a></td>
+                  <td>{index + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.id}</td>
+                  <td>{item.acc}</td>
+                  <td><button onClick={(e)=>onClickPadam(item.id)}>Padam</button></td>
                 </tr>
               ))}
             </tbody>
@@ -161,4 +178,4 @@ const Log = () => {
   )
 }
 
-export default Log
+export default AdminList
