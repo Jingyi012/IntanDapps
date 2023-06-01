@@ -1,14 +1,30 @@
 import React, { useState, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 //create a new context called as AppContext
 const AppContext = createContext(null);
 function AppContextProvider({ children }) {
+
+    const navigate = useNavigate();
+
     
-    const [ account, setAccount ] = useState(null);
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem('account')) || null);
+
+    const setAccountAndStore = (account) => {
+        setAccount(account);
+        localStorage.setItem('account', JSON.stringify(account));
+    };
+
 
     // Put exposed states here
     const state = {
         account, 
-        setAccount,
+        setAccount : setAccountAndStore,
+        logout: () => {
+            sessionStorage.clear();
+            localStorage.clear();
+            setAccount("");
+            navigate("");
+        }
     };
 
 
