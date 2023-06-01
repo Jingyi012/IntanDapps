@@ -13,8 +13,8 @@ import { collection, getDoc, addDoc, setDoc, updateDoc, doc } from 'firebase/fir
 const CiptaSijil = ({ backpage }) => {
   const navigate = useNavigate();
   let { programId, key } = useParams();
-  console.log(programId);
-  console.log(key);
+  //console.log(programId);
+  //console.log(key);
   const [tajukSijil, setTajukSijil] = useState('');
   const [tarikhMula, setTarikhMula] = useState('');
   const [tarikhTamat, setTarikhTamat] = useState('');
@@ -33,7 +33,7 @@ const CiptaSijil = ({ backpage }) => {
       //getDoc() will get the document data based on the path of doc()
       const programData = await getDoc(programDocRef);
       const userData = await getDoc(userDocRef);
-      console.log(programData);
+      //console.log(programData);
       setTajukSijil(programData.data().nama);
       setTarikhMula(programData.data().mula);
       setTarikhTamat(programData.data().tamat);
@@ -41,11 +41,11 @@ const CiptaSijil = ({ backpage }) => {
       setNama(userData.data().nama);
     }
 
-   getProgramAndUser()
+    getProgramAndUser()
   }, [])
   //add created cert into program, sijil and action log section in firestore
   const createSijil = async (sender, transId, appid) => {
-    console.log(appid);
+    //console.log(appid);
     const date = new Date();
     const formattedDate = `${date.getFullYear()}-${padNumber(date.getMonth() + 1)}-${padNumber(date.getDate())} ${padNumber(date.getHours())}:${padNumber(date.getMinutes())}:${padNumber(date.getSeconds())}`;
     const sijilCollectionRef = doc(db, "Sijil", appid.toString())
@@ -61,8 +61,8 @@ const CiptaSijil = ({ backpage }) => {
     //addDoc() is used for add new document data but with auto generated id in the firestore
     await addDoc(actionCollectionRef, {
       admin: `${sender}`,
-      adminName : adminName,
-      adminID : adminID, 
+      adminName: adminName,
+      adminID: adminID,
       date: `${formattedDate.toString()}`,
       transactionId: `${transId}`,
       type: 'Create',
@@ -87,7 +87,7 @@ const CiptaSijil = ({ backpage }) => {
   //ask user to insert his/her mnemonic before deploy the contract 
   const handleClick = async (event) => {
     const enteredInput = await window.prompt('Please enter wallet mnemonic')
-    if(enteredInput==null) setLoading(false);
+    if (enteredInput == null) setLoading(false);
     return enteredInput;
   }
 
@@ -96,7 +96,7 @@ const CiptaSijil = ({ backpage }) => {
     //setDeployedAddress(Txn);
   };
   const payDeployContract = async (userAcc, appId, arr) => {
-    console.log(userAcc);
+    //console.log(userAcc);
     return await payContract(userAcc, appId, arr);
     //setDeployedAddress(Txn);
   };
@@ -194,21 +194,22 @@ const CiptaSijil = ({ backpage }) => {
           </div>
         </div>
       </div>
-      <div className='submitBtn' >{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is adding into blockchain and database ...</div></center></div>:<Buttons title="Deploy Contract" onClick={async () => {
+      <div className='submitBtn' >{(loading) ? <div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  Your data is adding into blockchain and database ...</div></center></div> : <Buttons title="Deploy Contract" onClick={async () => {
         setLoading(true);
         const arr = [{ tajukSijil }, { tarikhMula }, { tarikhTamat }, { nama }, { NRIC }];
         const mnemonic = await handleClick();
-        if(mnemonic!=null){
-        //   let txn; 
-        const appid = await handleDeployContract(arr);
-        console.log(mnemonic);
-        const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
-        //getting the transaction id after the admin paying the contract
-        const txnId = await payDeployContract(userAcc, appid, arr)
+        if (mnemonic != null) {
+          //   let txn; 
+          const appid = await handleDeployContract(arr);
+          //console.log(mnemonic);
+          const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
+          //getting the transaction id after the admin paying the contract
+          const txnId = await payDeployContract(userAcc, appid, arr)
 
-        createSijil(userAcc.addr, txnId, appid);
-        console.log(createSijil);
-        navigate(`/informasi-sijil/${txnId}`);}
+          createSijil(userAcc.addr, txnId, appid);
+          //console.log(createSijil);
+          navigate(`/informasi-sijil/${txnId}`);
+        }
       }
       }></Buttons>}</div>
 

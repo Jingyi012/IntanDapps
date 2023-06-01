@@ -17,7 +17,7 @@ const ProgramHome = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [isOpen,setIsOpen]= useState(false);
   const { account, setAccount } = useContext(AppContext);
-  console.log(account);
+  // console.log(account);
 
   const [programs,setPrograms] = useState([]);
   const [programID,setProgramID] = useState("");
@@ -29,7 +29,7 @@ const ProgramHome = () => {
     const getProgram = async () => {
       //get all the document data from the Program collection
       const data = await getDocs(userCollectionRef);
-      console.log(data);
+      // console.log(data);
       setPrograms(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
     getProgram().then(console.log(programs));
@@ -156,7 +156,7 @@ const ProgramHome = () => {
         {searchValue===""?(
         <tbody>
         {programs.map((item,index)=>(
-          console.log("Before Search", item),
+          // console.log("Before Search", item),
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
             <td>{item.kod}</td>
             <td>{item.nama}</td>
@@ -173,7 +173,7 @@ const ProgramHome = () => {
       ):(
         <tbody>
         {searchValue.map((item,index)=>(
-          console.log("After Search", item),
+          // console.log("After Search", item),
           <tr key={index} className={index % 2 === 0 ? "row2" : "row1"}>
           <td>{item.kod}</td>
           <td>{item.nama}</td>
