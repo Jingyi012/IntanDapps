@@ -19,6 +19,7 @@ function AdminLogin() {
   useEffect(() => {
     sessionStorage.clear();
     localStorage.clear();
+    setAccount("");
   }, []);
   const connectMyAlgoWallet = async () => {
     let account = "";
