@@ -13,8 +13,8 @@ import { indexerClient } from '../../Constant/ALGOkey'
 const EditSijil = ({ backpage }) => {
   const navigate = useNavigate();
   let { programId, key } = useParams();
-  console.log(programId);
-  console.log(key);
+  //console.log(programId);
+  //console.log(key);
   const [loading, setLoading] = useState(false);
   const [tajukSijil, setTajukSijil] = useState('');
   const [tarikhMula, setTarikhMula] = useState('');
@@ -35,10 +35,10 @@ const EditSijil = ({ backpage }) => {
       //getDoc() will get the document data based on the path 
       const data = await getDoc(programDocRef);
       const userTxnId = data.data().transactionId[key];
-      console.log(userTxnId);
+      
       const info = await indexerClient.lookupTransactionByID(userTxnId).do();
       setAppId(info.transaction["application-transaction"]["application-id"]);
-      console.log(info);
+      //console.log(info);
       const dTajuk = window.atob(info.transaction["application-transaction"]["application-args"][0]);
       const dMula = window.atob(info.transaction["application-transaction"]["application-args"][1]);
       const dTamat = window.atob(info.transaction["application-transaction"]["application-args"][2]);
@@ -58,8 +58,8 @@ const EditSijil = ({ backpage }) => {
 
   const updateSijil = async (sender, transId) => {//creat 2
     const date = new Date();
-    console.log(date.toLocaleString());
-    console.log(appId.toString());
+    //console.log(date.toLocaleString());
+    // console.log(appId.toString());
     const sijilCollectionRef = doc(db, "Sijil", appId.toString());
 
     //add this update action to action log
@@ -200,7 +200,7 @@ const EditSijil = ({ backpage }) => {
         const userAcc = await algosdk.mnemonicToSecretKey(mnemonic)
         const txnId = await updateCertificateAction(userAcc, appId, arr);
         updateSijil(userAcc.addr, txnId);
-        console.log(updateSijil);
+        // console.log(updateSijil);
         navigate(`/informasi-sijil/${txnId}`);}
       }
       }></Buttons>}</div>

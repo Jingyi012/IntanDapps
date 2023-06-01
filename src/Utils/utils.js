@@ -26,7 +26,8 @@ Certificate component that renders the certificate on a PDF page.
 @returns {JSX.Element} Certificate PDF page component.
 */
 //use to design the certificate
-export const Certificate = ({ participantName, participantMykad, courseName, courseDate, algorandExplorer, templateSrc, qrCodeImage }) => (
+export const Certificate = ({ participantName, participantMykad, courseName, courseDate, appId , algorandExplorer, templateSrc, qrCodeImage }) => (
+  console.log(appId),
   <>
   <Document>
   <Page size="A4" style={styles.page}>
@@ -35,13 +36,13 @@ export const Certificate = ({ participantName, participantMykad, courseName, cou
   </View>
   {qrCodeImage && <Image src={qrCodeImage} style={styles.qrCode} />}
   <View style={styles.container}>
+    <Text style={styles.appId}>{appId === '' ? 'xxxx-xx-xxxx' : appId}</Text>
   <Text style={styles.title}>{courseName === '' ? 'Course Title' : courseName}</Text>
-  <Text style={styles.subTitle}>This is presented to</Text>
+ 
   <Text style={styles.recipient}>{participantName === '' ? 'Recipient Name' : participantName}</Text>
-  <Text style={styles.description}>For the active participation in the course and for giving efforts, ideas, and knowledge.</Text>
-  <Text style={styles.issuerTitle}>Course Director</Text>
-  <Text style={styles.issuer}>{participantMykad === '' ? 'Issuer Name' : participantMykad}</Text>
-  <Text style={styles.date}>Date: {courseDate === '' ? 'Date' : courseDate}</Text>
+
+  <Text style={styles.mykad}>{participantMykad === '' ? 'Issuer Name' : participantMykad}</Text>
+  <Text style={styles.date}>{courseDate === '' ? 'Date' : courseDate}</Text>
   </View>
   </Page>
   </Document>
@@ -215,7 +216,7 @@ Delete a product from the Algorand blockchain application
 @name deleteProductAction
 
 */
-export const deleteProductAction = async (appIndex) => {
+export const deleteProductAction = async (appIndex, account) => {
   // Log initial information
   console.log('Deleting application...');
   console.log('Default Account Address: ', systemAccount);
@@ -233,7 +234,7 @@ export const deleteProductAction = async (appIndex) => {
   from: systemAccount.addr,
   suggestedParams: params,
   appIndex: Number(appIndex),
-  accounts: ['LBYHFLX4CPWPQOSQNNGHMJAIVOOB33UQAKN6DRB4I5DJGBIDBVYQYRGSK4']
+  accounts: account
   });
   console.log(algodClient.accountApplicationInformation(appIndex));
 

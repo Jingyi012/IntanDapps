@@ -51,7 +51,7 @@ const Semak = () => {
     }).then(() => {
       alert("the cert was deleted")
     }).catch(error => {
-      console.log(error.message)
+      console.error(error.message)
     })
     //add this action to the action log
     const actionRef = collection(db, "ActionLog")
@@ -69,7 +69,7 @@ const Semak = () => {
     const programDocRef = doc(db, "Program", programID);
     const data = await getDoc(programDocRef);//read 2
     const userTxnId = data.data().transactionId[user];
-    console.log(userTxnId);
+    // console.log(userTxnId);
     return userTxnId;
   }
   const semakUser = async (user) => {
@@ -201,19 +201,19 @@ const Semak = () => {
                   <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
                   :<Buttons title="Padam" onClick={async () => {
                     setLoading(true);
-                    console.log(account);
-                    console.log(currentUser);
+                    // console.log('account', account);
+                    // console.log('crntUser', currentUser);
 
                       //obtain the app id for the particular user cert in the program 
                       const userTxnId = await getUserTxn(currentUser);
-                      console.log(userTxnId);
+                      // console.log(userTxnId);
                       const info = await indexerClient.lookupTransactionByID(userTxnId).do();
                       const appId = await info.transaction["application-transaction"]["application-id"];
-                      console.log(appId);
+                      // console.log(appId);
 
                       //delete the cert at algorand blockchain
-                      const deleteId = await deleteProductAction(appId);
-                      console.log(deleteId);
+                      const deleteId = await deleteProductAction(appId, account);
+                      // console.log(deleteId);
 
                       //delete the cert in firebase
                       deleteCert(deleteId, appId)

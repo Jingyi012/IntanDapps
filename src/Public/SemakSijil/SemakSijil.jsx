@@ -11,7 +11,7 @@ export default function SemakSijil() {
   const [txnId, setTxnInfo] = useState(params.transId ||'');
   
   useEffect(() => {
-    console.log(sessionStorage.getItem("navigatingBack"));
+    // console.log(sessionStorage.getItem("navigatingBack"));
     if (txnId && sessionStorage.getItem("navigatingBack") !== "true") {
       navigate(`/informasi-sijil/${txnId}`);
     }
@@ -23,8 +23,8 @@ export default function SemakSijil() {
   
   //navigate to informasi sijil page after submit
   const handleSubmit = (transId) => {
-    console.log(transId);
-    console.log(appId);
+    // console.log(transId);
+    // console.log(appId);
     navigate(`/informasi-sijil/${transId}`);
   };
 
@@ -32,13 +32,13 @@ export default function SemakSijil() {
     e.preventDefault(); // Prevent form submission from refreshing the page
     try {
       //get the latest transaction id from the firestore database using app id
-      console.log(appId);
+      // console.log(appId);
       const sijilRef = doc(db, "Sijil", appId);
       const docSnap = await getDoc(sijilRef);
       const transId = docSnap.data().txnId;
       const status = docSnap.data().action;
       setTxnInfo(transId);
-      console.log(status);
+      // console.log(status);
       if(status !== 'Delete')
         handleSubmit(transId);
       else

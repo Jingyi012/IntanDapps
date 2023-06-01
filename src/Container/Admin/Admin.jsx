@@ -35,7 +35,7 @@ const Admin = () => {
     //getDoc() will get the document data based on the path of doc()
     //in this case, getDoc() will get the info of admin to test whether the admin ic has been registered or not
     await getDoc(userCollectionRef).then(async (data) => {
-      console.log(data.data())
+      //console.log(data.data())
       if (data.data() != undefined) {
         alert("No. MyKad telah didaftar !!");
       } else {
