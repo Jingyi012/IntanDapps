@@ -21,14 +21,14 @@ const Peserta = () => {
     const getUser = async () => {
       //fetch down the all document data from the User collection
       const data = await getDocs(userCollectionRef);
-      console.log(data);
+      // console.log(data);
       setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
     getUser().then(console.log(users));
   },[])
 
   const nomykadfilter = () => {
-    console.log(users);
+    // console.log(users);
       const sorted = users.sort((a, b) => a.ic.localeCompare(b.ic));
       setSearchValue(sorted)}
 

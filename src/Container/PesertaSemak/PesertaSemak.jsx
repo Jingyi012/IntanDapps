@@ -43,7 +43,7 @@ const PesertaSemak = () => {
     }).then(response => {
       //alert("the cert was deleted")
     }).catch(error => {
-      console.log(error.message)
+      console.error(error.message)
     })
     
     const adminName = sessionStorage.getItem("adminName");
@@ -62,12 +62,12 @@ const PesertaSemak = () => {
     }).then(setReload(reload+1));
   }
   const getUserTxn = async (programID) => {
-    console.log(programID)
+    // console.log(programID)
     //obtain the app id for the particular user cert in the program 
     const programDocRef = doc(db, "Program", programID);
     const data = await getDoc(programDocRef);//read 2
     const userTxnId = data.data().transactionId[pesertaID];
-    console.log(userTxnId);
+    // console.log(userTxnId);
     return userTxnId;
   }
   const semakUser = async (programID) => {
@@ -91,9 +91,9 @@ const PesertaSemak = () => {
     getPesertaProgram();
     getPesertaInfo();
     //getPesertaProgram();
-    console.log(pesertaInfo);
-    console.log(pesertaPrograms);
-  },[reload])
+    // console.log(pesertaInfo);
+    // console.log(pesertaPrograms);
+  },[])
   
   return (
     <div className='app_box'>
@@ -181,21 +181,25 @@ const PesertaSemak = () => {
                   <div><p>
                     Please be careful! Your action cannot be undo after you clicked the <b>'Padam'</b> button
                   </p></div>
-                  <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div><br></br><div>Kindly wait a momment...</div><br></br><div>  This cert is erasing from blockchain and database ...</div></center></div>
+                  <div className='padamconfirmbutton'>{(loading)?<div><center><div className="loading-spinner"></div>
+                  <br></br>
+                  <div>Kindly wait a momment...</div>
+                  <br></br>
+                  <div>  This cert is erasing from blockchain and database ...</div></center></div>
                   :<Buttons title="Padam" onClick={async () => {
                     setLoading(true);
-                    console.log(account[0]);
+                    console.log("account: " , account);
 
                     //obtain the app id for the particular user cert in the program 
                     const userTxnId = await getUserTxn(currentProgram);
-                    console.log(userTxnId);
+                    // console.log("TxnID" , userTxnId);
                     const info = await indexerClient.lookupTransactionByID(userTxnId).do();
                     const appId = await info.transaction["application-transaction"]["application-id"];
-                    console.log(appId);
+                    // console.log('appID', appId);
 
                     //delete the cert at algorand blockchain
-                    const deleteId = await deleteProductAction(appId);
-                    console.log(deleteId);
+                    const deleteId = await deleteProductAction(appId, account);
+                    // console.log(deleteId);
 
                     //delete the cert in firebase
                     deleteCert(deleteId,appId)

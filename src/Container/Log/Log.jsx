@@ -20,7 +20,7 @@ const Log = () => {
     const getLog = async () => {
       //get all the document data in the ActionLog collection
       const data = await getDocs(userCollectionRef);
-      console.log(data);
+      // console.log(data);
       setLogs(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     }
 
@@ -36,7 +36,7 @@ const Log = () => {
 
   // sort by using name
   const namefilter = () => {
-    console.log(logs);
+    // console.log(logs);
     const sorted = logs.sort((a, b) => a.admin.localeCompare(b.admin));
     setSearchValue(sorted)
   }

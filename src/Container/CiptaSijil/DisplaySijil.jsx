@@ -11,15 +11,14 @@ const DisplaySijil = () =>{
     const [nama,setNama] = useState('');
     const [courseAction, setCourseAction] = useState('');
 
-    console.log(transId.transId);
+    //console.log(transId.transId);
     useEffect(() => {
       async function fetchData() {
-        console.log("hello");
         //Using indexerClient here to query and search the transaction data in the blockchain using transaction id
         const info = await indexerClient.lookupTransactionByID(transId.transId);
         //get additional header from the transaction by using do function here
         await info.do().then((transInfo)=>{
-          console.log(transInfo.transaction["application-transaction"]["application-args"][0]);
+          //console.log(transInfo.transaction["application-transaction"]["application-args"][0]);
           //from the transInfo variable, we can easily know the application args applied in the transaction
           //using window.atob here to decode the base 64 string fetching from the application arg
           const dTajuk = window.atob(transInfo.transaction["application-transaction"]["application-args"][0]);

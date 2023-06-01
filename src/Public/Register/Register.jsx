@@ -32,7 +32,7 @@ const Register = () => {
     const userCollectionRef = doc(db, "User", mykad)
 
     await getDoc(userCollectionRef).then(async (data) => {
-      console.log(data.data());
+      // console.log(data.data());
       if (data.data() != undefined) {
         alert("No. MyKad telah didaftar !!");
       } else {
