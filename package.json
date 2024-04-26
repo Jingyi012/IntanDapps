@@ -17,8 +17,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "algosdk": "^2.2.0",
+    "ethers": "^6.12.0",
     "firebase": "^9.20.0",
     "js-base64-file": "^2.0.3",
+    "moment": "^2.30.1",
     "pdfjs-dist": "^3.4.120",
     "qrcode": "^1.5.3",
     "react": "^18.2.0",
@@ -33,9 +35,11 @@
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.2",
     "react-to-print": "^2.14.12",
+    "solc": "^0.8.25",
     "styled-components": "^5.3.9",
     "v4": "^0.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "web3": "^4.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
