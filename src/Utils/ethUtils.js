@@ -122,7 +122,7 @@ export const deployContract = async (args) => {
         const accountAddress = await signer.getAddress();
 
         return {
-            contractAddress: contract.getAddress(),
+            contractAddress: await contract.getAddress(),
             transactionId: transactionHash,
             accountAddr: accountAddress
         };
